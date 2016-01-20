@@ -101,3 +101,6 @@ if has('langmap') && exists('+langnoremap')
   " compatible).
   set langnoremap
 endif
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+
