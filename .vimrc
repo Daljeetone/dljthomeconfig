@@ -29,6 +29,14 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 
 Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
 
+Plugin 'scrooloose/nerdtree'
+
+Plugin 'jistr/vim-nerdtree-tabs'
+
+Plugin 'vim-airline/vim-airline'
+
+Plugin 'nanotech/jellybeans.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
