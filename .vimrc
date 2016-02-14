@@ -17,13 +17,13 @@ Plugin 'VundleVim/Vundle.vim'
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
+
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
+
 " Git plugin not hosted on GitHub
 Plugin 'git://git.wincent.com/command-t.git'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+
 " Avoid a name conflict with L9
 " Plugin 'user/L9', {'name': 'newL9'}
 
@@ -36,6 +36,8 @@ Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'vim-airline/vim-airline'
 
 Plugin 'nanotech/jellybeans.vim'
+
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -145,4 +147,7 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 "set runtimepath^=~/.vim/bundle/ctrlp.vim
+
+nmap <F8> :TagbarToggle<CR>
+
 
