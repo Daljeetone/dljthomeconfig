@@ -148,8 +148,9 @@ if has('langmap') && exists('+langnoremap')
 	set langnoremap
 endif
 
-"set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 nmap <F8> :TagbarToggle<CR>
 
+set runtimepath^=~/.vim/bundle/cscope_maps.vim
+source ~/.vim/bundle/cscope_maps.vim/cscope_maps.vim
 
