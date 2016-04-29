@@ -41,6 +41,8 @@ Plugin 'majutsushi/tagbar'
 
 Plugin 'adrianolaru/vim-adio'
 
+Plugin 'terryma/vim-multiple-cursors'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
