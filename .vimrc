@@ -148,6 +148,7 @@ if has('langmap') && exists('+langnoremap')
 	set langnoremap
 endif
 
+set number
 
 nmap <F8> :TagbarToggle<CR>
 
