@@ -151,7 +151,8 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 set number
-
+set tabstop=4 shiftwidth=4 expandtab
+set scrolloff=10
 nmap <F8> :TagbarToggle<CR>
 
 set runtimepath^=~/.vim/bundle/cscope_maps.vim
