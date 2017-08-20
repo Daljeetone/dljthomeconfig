@@ -153,6 +153,9 @@ endif
 set number
 set tabstop=4 shiftwidth=4 expandtab
 set scrolloff=10
+colorscheme jellybeans
+set encoding=utf-8
+
 nmap <F8> :TagbarToggle<CR>
 
 set runtimepath^=~/.vim/bundle/cscope_maps.vim
