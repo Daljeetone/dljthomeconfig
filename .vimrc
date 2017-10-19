@@ -43,6 +43,8 @@ Plugin 'adrianolaru/vim-adio'
 
 Plugin 'terryma/vim-multiple-cursors'
 
+Plugin 'junegunn/fzf.vim'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -159,5 +161,6 @@ set encoding=utf-8
 nmap <F8> :TagbarToggle<CR>
 
 set runtimepath^=~/.vim/bundle/cscope_maps.vim
+set runtimepath^=/usr/local/opt/fzf/
 source ~/.vim/bundle/cscope_maps.vim/cscope_maps.vim
 
