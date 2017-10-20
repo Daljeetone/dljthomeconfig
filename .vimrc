@@ -164,3 +164,5 @@ set runtimepath^=~/.vim/bundle/cscope_maps.vim
 set runtimepath^=/usr/local/opt/fzf/
 source ~/.vim/bundle/cscope_maps.vim/cscope_maps.vim
 
+nmap <C-F> :Files<CR>
+nmap <C-A> :Ag<CR>
