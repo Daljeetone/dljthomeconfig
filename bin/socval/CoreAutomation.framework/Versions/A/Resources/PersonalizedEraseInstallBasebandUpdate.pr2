@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BasedOn</key>
+	<string>PersonalizedEraseInstallBasebandUpdate</string>
+	<key>FlattenedSettings</key>
+	<dict>
+		<key>BootOptions</key>
+		<dict>
+			<key>AuthInstallEnableSso</key>
+			<true/>
+			<key>AuthInstallSigningServerHost</key>
+			<string>gs.apple.com</string>
+			<key>AuthInstallSigningServerPort</key>
+			<integer>443</integer>
+			<key>AuthInstallSigningServerURL</key>
+			<string>https://gs.apple.com:443</string>
+			<key>AuthInstallVariant</key>
+			<string>Internal Development</string>
+			<key>BootImageType</key>
+			<string>Internal</string>
+			<key>DFUFileType</key>
+			<string>DEVELOPMENT</string>
+			<key>KernelCacheType</key>
+			<string>Development</string>
+			<key>NORImageType</key>
+			<string>production</string>
+			<key>RestoreBootArgs</key>
+			<string>debug=0x14e serial=3 rd=md0 nand-enable-reformat=1 -progress</string>
+		</dict>
+		<key>RestoreOptions</key>
+		<dict>
+			<key>AllowUntetheredRestore</key>
+			<false/>
+			<key>AuthInstallEnableSso</key>
+			<true/>
+			<key>AuthInstallSigningServerHost</key>
+			<string>gs.apple.com</string>
+			<key>AuthInstallSigningServerPort</key>
+			<integer>443</integer>
+			<key>AuthInstallSigningServerURL</key>
+			<string>https://gs.apple.com:443</string>
+			<key>AuthInstallVariant</key>
+			<string>Internal Development</string>
+			<key>AutoBootDelay</key>
+			<integer>2</integer>
+			<key>ClearNVRAM</key>
+			<false/>
+			<key>ClearPersistentBootArgs</key>
+			<false/>
+			<key>CloseModemTickets</key>
+			<false/>
+			<key>CreateFactoryRestoreMarker</key>
+			<false/>
+			<key>CreateFilesystemPartitions</key>
+			<true/>
+			<key>DataEncryptionType</key>
+			<string>Device Default</string>
+			<key>EncryptDataPartition</key>
+			<true/>
+			<key>FlashNOR</key>
+			<true/>
+			<key>ForceBasebandUpdate</key>
+			<false/>
+			<key>FormatForLwVM</key>
+			<true/>
+			<key>IgnoreBadStaticEEPBackup</key>
+			<false/>
+			<key>KernelCacheType</key>
+			<string>Development</string>
+			<key>LetBatteryCharge</key>
+			<true/>
+			<key>MinimumBatteryVoltage</key>
+			<integer>0</integer>
+			<key>NORImageType</key>
+			<string>firmwaredevelopment</string>
+			<key>PostRestoreAction</key>
+			<string>Reboot</string>
+			<key>ReadOnlyRootFilesystem</key>
+			<true/>
+			<key>SystemImageType</key>
+			<string>Internal</string>
+			<key>SystemPartitionSize</key>
+			<integer>3500</integer>
+			<key>UncollectedLogsAction</key>
+			<string>Ignore</string>
+			<key>UpdateBaseband</key>
+			<true/>
+			<key>UpdateGasGauge</key>
+			<true/>
+			<key>UpdateStaticEEPOnly</key>
+			<false/>
+			<key>WaitForStorageDevice</key>
+			<true/>
+			<key>WipeStorageDevice</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>Version</key>
+	<integer>1</integer>
+</dict>
+</plist>

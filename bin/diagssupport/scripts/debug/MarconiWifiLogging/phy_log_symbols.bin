@@ -1,0 +1,475 @@
+GTRACE_MARKER_LOG_SYMBOLS
+65611|75|coex_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Failed to take coex semaphore - timeout
+65674|138|coex_funcs__D__c|None|-|WPHY: Fatal Error: Assert: COEX BT arrived in calibration!
+65740|204|coex_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (( sequence > gsCoexParams.uCoexSequenceBitmask ))
+65754|218|coex_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (sequence == (sequence & gsCoexParams.uCoexSequenceBitmask))
+1114474|362|calib_dpd__D__c|None|-|WPHY: DPD debug breakpoint, stage=%d, TxGain=%d
+1114569|457|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: ((( ~(( 0x2000 ) - 1) ) & (uint32_t)&gsCalibResults.dpd) == (( ~(( 0x2000 ) - 1) ) & (sizeof(gsCalibResults.dpd) + (uint32_t)&gsCalibResults.dpd)))
+1114570|458|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: (0 == (((uint32_t)&gsCalibResults.dpd) % ( 0x2000 )))
+1114572|460|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: gsDpdConfig.delayCalFineStart must be greater than 0
+1114573|461|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: gsDpdConfig.delayCalFineStop < gsDpdConfig.delayCalFineStart
+1114574|462|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Too many delay values
+1114575|463|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Coarse delay is too small
+1114576|464|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Headroom is out of range
+1114581|469|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Illegal value for numDpdCoeffs, must be 9/17/33
+1114583|471|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: FDSP currently only supports 5MHz
+1114584|472|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: numPaInAmVals exceeds its limit
+1114585|473|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Currently we only support numPaInAmVals=32
+1114613|501|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Currently only 32 PA IN values are supported
+1114673|561|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: dpdRxInit(): Failure in smsPollCommandStatus()
+1114761|649|calib_dpd__D__c|None|-|WPHY: Fatal Error: Trap: The DPD doesn't support 64 coefficients in FPGA mode
+1114765|653|calib_dpd__D__c|None|-|WPHY: Fatal Error: Trap: Illegal DPD num coefficients configuration
+1114920|808|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: (PHY_SUCCESS == status)
+1115301|1189|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: FDSP Timeout
+1115526|1414|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: (((16) - 1) > bestDelayIdx)
+1115731|1619|calib_dpd__D__c|None|-|WPHY: DPD: Delay cal metric is below minimum at gain idx %d
+1115741|1629|calib_dpd__D__c|None|-|WPHY: DPD: Delay cal could not find local max at gain idx %d
+1115871|1759|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: H RAM offset is out of range
+1115933|1821|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: H RAM offset is out of range
+1116293|2181|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: H RAM offset is out of range
+1117210|3098|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: dpdCleanup(): Failure in smsPollCommandStatus()
+1117266|3154|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: dpdFindParabVertexX: Div by 0
+1117370|3258|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: AM2AM smoothing error, X0-2*xDelta < 0
+1117412|3300|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: Invalid num frac bits in powCalc
+1117463|3351|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: DPD: matSolve, dim > NUM_EQLZR_TAPS
+1117708|3596|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: fxdPntDiv: Division by 0
+1117709|3597|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: fxdPntDiv: numFracBits < scale
+1117721|3609|calib_dpd__D__c|None|-|WPHY: Fatal Error: Assert: fxdPntDiv: Division by 0
+1117726|3614|calib_dpd__D__c|None|-|WPHY: DPD: fxdPntDiv32bitUnSgn, division result is zero
+1179756|108|calib_lo_leakage__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSet)
+1179807|159|calib_lo_leakage__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E> eRfSet)
+1180584|936|calib_lo_leakage__D__c|None|-|WPHY: Bimodal thresold crossed but calibration failed to converge. Using first phase results
+1180593|945|calib_lo_leakage__D__c|None|-|WPHY: TxLOL - No Bimodal transition was found. Using first phase results
+1245325|141|calib_rx_iqmm__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSet)
+1245379|195|calib_rx_iqmm__D__c|None|-|WPHY: Fatal Error: Assert: (eRfSet < NUM_RF_SETS_E)
+1245731|547|calib_rx_iqmm__D__c|None|-|WPHY: Fatal Error: Assert: User Defined Breakpoint: DPD in RX IQMM Apply
+1310837|117|calib_tx_iqmm__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSet)
+1310887|167|calib_tx_iqmm__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E> eRfSet)
+1442216|424|calib_rx_dc__D__c|None|-|WPHY: Fatal Error: Assert: Cannot calibrate RF index higher than 15
+1442288|496|calib_rx_dc__D__c|None|-|WPHY: Fatal Error: Assert: ((50) > pollingCounter)
+1442464|672|calib_rx_dc__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSet)
+1442499|707|calib_rx_dc__D__c|None|-|WPHY: Fatal Error: Assert: DMA memcpy did not complete in time
+1507387|59|calib_callbacks__D__c|None|-|WPHY: Fatal Error: Trap: Functionality not supported - Invalid Calibration.
+1507615|287|calibration_common__D__c|None|-|WPHY: Fatal Error: Assert: Channel Info invalid in channel tune
+1507646|318|calibration_common__D__c|None|-|WPHY: Fatal Error: Assert: API_startCwTxHandler(): Failure in smsSendCmdAndPollStsReg()
+1507951|623|calibration_common__D__c|None|-|WPHY: Fatal Error: Assert: auxadcTxPowerDiscardNextSampleProlouge(): auxadcMeasurementModeSet() returned error
+1638509|109|calibration_manager__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+1638510|110|calibration_manager__D__c|None|-|WPHY: Calib Execute: Calibration #%d completed with status: %d
+1638511|111|calibration_manager__D__c|None|-|WPHY: Calib Execute: Calib exceeded time! Expected and Actual duration: %u and %u [uSec]
+1638518|118|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: Calib Execute: Fatal Error - Calibration exceeded legal time!
+1638563|163|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSetId)
+1638649|249|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: Calibration Executer: Coex: RF Belongs to BT
+1638650|250|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: Calibration Executer: Illegal State (not offline)
+1638651|251|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: Calibration Executer: Illegal RF Set value
+1638659|259|calibration_manager__D__c|None|-|WPHY: Calib Execute: Starting Calibration for RF Set 0x%d, Channel Group %d
+1638672|272|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: CalibrationExecuter(): Invalid Temperature after force
+1638696|296|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: CalibrationExecuter(): Failure in smsSendCmdAndPollStsReg(SAMOS_CMD_BIT_PLL_TX_LOCK_E)
+1638745|345|calibration_manager__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+1638746|346|calibration_manager__D__c|None|-|WPHY: Calib Execute: Calibration ENUM(CalibrationsList_e,%d) Failed because of reason ENUM(PhyStatus_e,%d)
+1638751|351|calibration_manager__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+1638752|352|calibration_manager__D__c|None|-|WPHY: Calib Execute: Calibration ENUM(CalibrationsList_e,%d) Failed because of reason ENUM(PhyStatus_e,%d)
+1638757|357|calibration_manager__D__c|None|-|WPHY: Calib Execute: The Calibration Failed for %d times in a row!
+1638761|361|calibration_manager__D__c|None|-|WPHY: Calib Execute: RF Set #%d invalidated because of calibration ENUM(CalibrationsList_e,%d)
+1638767|367|calibration_manager__D__c|None|-|WPHY: Fatal Error: Trap: Calibration exceeded max retries!
+1638806|406|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: CalibrationExecuter(): Failure in smsSendCmdAndPollStsReg(SAMOS_CMD_BIT_PLL_TX_LOCK_E)
+1639019|619|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > eRfSetId)
+1639100|700|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: (PHY_SUCCESS == eStatus)
+1639135|735|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: Exceeded number of new channel allocations
+1639161|761|calibration_manager__D__c|None|-|WPHY: Fatal Error: Assert: MAC released an RF set that does not exist
+1704502|566|siggen_driver__D__c|None|-|WPHY: WARNING: Sig gen didn't end sweep after %dusec. exit wait loop
+1704537|601|siggen_driver__D__c|None|-|WPHY: Fatal Error: Assert: Number of dwell is odd while using the interwined option. Value must be even
+1704620|684|siggen_driver__D__c|None|-|WPHY: Fatal Error: Assert: number of dwells is higher than the allowed number
+1769538|66|rfset__D__c|None|-|WPHY: Using active RF Set #%d for allocated channel %d
+1769561|89|rfset__D__c|None|-|WPHY: Opened new RF Set for allocated channel %d: RF Set Index #%d
+1769591|119|rfset__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > rfSetIdx)
+1769594|122|rfset__D__c|None|-|WPHY: Fatal Error: Assert: (gsCalMgrParams.sRfSetParams[rfSetIdx].numActiveChannels > 0)
+1900680|136|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: loopbackEnable(): External loopback Failure in smsSendCmdAndPollStsReg()
+1900694|150|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: loopbackEnable(): External loopback Failure in smsSendCmdAndPollStsReg()
+1900708|164|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: loopbackDisble(): Failure in smsSendCmdAndPollStsReg()
+1900774|230|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: rficTxOn(): Failure in femPaEnableOn() - tx mute
+1900776|232|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: (RF_SWITCH_VAL_NOT_VALID != rfSwitchState)
+1900868|324|loopback_driver__D__c|None|-|WPHY: WARNING: Sig gen didn't return response to the FDSP!!!, Starting Retry #%d
+1900873|329|loopback_driver__D__c|None|-|WPHY: Fatal Error: Assert: Timeout from FDSP occured
+1966157|77|aux_adc_measurements__D__c|None|-|WPHY: Fatal Error: Assert: auxadcWiFiInit(): AUX ADC Accumulation time incorrect value
+1966260|180|aux_adc_measurements__D__c|None|-|WPHY: auxadcTemperatureMeasurementTask(): Error ENUM(PhyStatus_e, %d)
+1966262|182|aux_adc_measurements__D__c|None|-|WPHY: Fatal Error: Trap: auxadcTemperatureMeasurementTask(): Calculation Fatal error
+2031811|195|calib_rx_gain__D__c|None|-|WPHY: Fatal Error: Assert: Channel ID for Max gain excees max size
+2031834|218|calib_rx_gain__D__c|None|-|WPHY: Fatal Error: Assert: Channel ID for Max gain exceeds max size
+3211496|232|channel_tune_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Channel Tune Core: Channel tune performed when not in OFFLINE state
+4260040|200|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (gDmaDB.bDmaFree)
+4260069|229|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (gDmaDB.bDmaFree)
+4260072|232|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (((void*)0) != pBuffer)
+4260130|290|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (( 0x2 ) == (dmaIrqStatus & ( 0x3 )))
+4260134|294|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (!gDmaDB.bDmaFree)
+4260137|297|dma_driver__D__c|None|-|WPHY: Fatal Error: Assert: (0 == (dmaStatus.ch1_fifo_rd_err_rdcl | dmaStatus.ch1_fifo_wr_err_rdcl))
+4325661|285|irq_funcs__D__c|None|-|WPHY: Fatal Error: Trap: IRQ bad priority
+4325669|293|irq_funcs__D__c|None|-|WPHY: Fatal Error: Trap: RX Rollback-ee bad priority
+4325675|299|irq_funcs__D__c|None|-|WPHY: Fatal Error: Trap: RX Rollback-ee bad priority
+4325680|304|irq_funcs__D__c|None|-|WPHY: Fatal Error: Assert: ((24) == uIrqCount)
+4325792|416|irq_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (irqIsLegalIrqIdNvic(uIrqId))
+4391088|176|irq_isr__D__c|None|-|WPHY: Irq14_RxBoundaryDetect(): Got BD interrupt when state is: ENUM(RxtGsmStateMachine_e, %d)
+4391089|177|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Irq14_RxBoundaryDetect(): Got BD interrupt when GSM is neither OFDM nor search
+4391129|217|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: Reached SFD with GSM at OFDM and BD not pending!
+4391141|229|irq_isr__D__c|None|-|WPHY: Irq22_Rx11bSfd(): Got GSM interrupt when state is: ENUM(RxtGsmStateMachine_e, %d)
+4391142|230|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Irq22_Rx11bSfd(): Got SFD interrupt when GSM is Pre-11b
+4391213|301|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: Coex BT Interrupt: Coex is already WIFI
+4391219|307|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: Coex BT Interrupt: Coex is not WIFI
+4391254|342|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: MAC Watchdog Assertion (MAC Fatal Error)
+4391308|396|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: Irq52_Timer3_RxTxWatchdog: Received RX Watchdog in RX Init state
+4391309|397|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: Irq52_Timer3_RxTxWatchdog: Received RX Watchdog in RX Search state
+4391311|399|irq_isr__D__c|None|-|WPHY: Fatal Error: Assert: RX Watchdog occured and System is configured to assert!!!
+4391317|405|irq_isr__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+4391322|410|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Irq52_Timer3_RxTxWatchdog: Received TX Watchdog IRQ
+4391326|414|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Irq52_Timer3_RxTxWatchdog: Received RX/TX Watchdog IRQ when state is Offine
+4391354|442|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: PHY FW Watchdog
+4391363|451|irq_isr__D__c|None|-|WPHY: Irq57_ScripterIsr occured, illegal event
+4391364|452|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Functionality not supported - Scripter ISR.
+4391388|476|irq_isr__D__c|None|-|WPHY: Fatal Error: Trap: Modem Fatal Error
+4456854|406|modem_state_machine__D__c|None|-|WPHY: Modem SM Illegal State: Modem state Previous 0x%X and Next 0x%X
+4456855|407|modem_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: Modem SM Illegal State
+4456902|454|modem_state_machine__D__c|None|-|WPHY: Fatal Error: Assert: ModemSM_ValidateBoot(): Unexpected Boot Event
+4456929|481|modem_state_machine__D__c|None|-|WPHY: ModemSM_ValidateDB(): Modem state Previous 0x%X and Next 0x%X
+4456930|482|modem_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: ModemSM_ValidateDB(): Invalid Runtime database
+4457044|596|modem_state_machine__D__c|None|-|WPHY: Modem_SM_Offline(): Illegal event ENUM(PhyModemSmEvent_e, %d) In Offline
+4457045|597|modem_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: Modem_SM_Offline(): Illegal event while In Offline
+4457066|618|modem_state_machine__D__c|None|-|WPHY: Modem_SM_Init(): Received event ENUM(PhyModemSmEvent_e, %d) In Init
+4457067|619|modem_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: Modem_SM_Init(): Illegal event while In Init
+4522088|104|phy_fw_task_manager__D__c|None|-|WPHY: *** EXCEPTION ***: Count %d
+4522092|108|phy_fw_task_manager__D__c|None|-|WPHY: *** EXCEPTION ***: Status-File-Line - 0x%X, Data - 0x%X
+4587646|126|rf_state_machine__D__c|None|-|WPHY: rfsm Illegal State: RF state Previous state=ENUM(PhyRfSmState_e, %d), Current event=ENUM(PhyRfSysEvent_e, %d)
+4587647|127|rf_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: rfsm Illegal State
+4587662|142|rf_state_machine__D__c|None|-|WPHY: rfsmValidateDB(): Modem state Previous 0x%X and Next 0x%X
+4587663|143|rf_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: rfsmValidateDB(): Invalid Runtime database
+4718730|138|mute_state_machine__D__c|None|-|WPHY: mutesmCore: Illegal state=ENUM(PhyMuteSmState_e, %d) event=ENUM(PhyRfSysEvent_e, %d)
+4718731|139|mute_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: mutesmCore: Invalid Runtime database
+4784194|66|tx_mute__D__c|None|-|WPHY: Fatal Error: Assert: ((g_txMuteSourceBitmask & ((uint32_t)1 << (mute_src))) == 0)
+4784223|95|tx_mute__D__c|None|-|WPHY: Fatal Error: Assert: ((g_txMuteSourceBitmask & ((uint32_t)1 << (mute_src))) != 0)
+4915285|85|prepare_to_sleep_funcs__D__c|None|-|WPHY: Fatal Error: Assert: pmgrPrepareToSleep(): Active Phy on Prepare to Sleep
+4915313|113|prepare_to_sleep_funcs__D__c|None|-|WPHY: Fatal Error: Trap: PrepareToSleepExecuter(): Illegal Woke up from WFI
+4980842|106|phy_init__D__c|None|-|WPHY: Fatal Error: Assert: Scripter Scripts Incorrect base address
+4980868|132|phy_init__D__c|None|-|WPHY: Version: FW & Bin ID                     0x%X and 0x%X
+4980869|133|phy_init__D__c|None|-|WPHY: Version: TAC Prefix & API                0x%X and 0x%X
+4980870|134|phy_init__D__c|None|-|WPHY: Version: TAC (Major & Minor)             0x%X and 0x%X
+4980871|135|phy_init__D__c|None|-|WPHY: Version: Tunables (IP & Common)          0x%X and 0x%X
+4980872|136|phy_init__D__c|None|-|WPHY: Version: CSV (IP & Common)               0x%X and 0x%X
+4980873|137|phy_init__D__c|None|-|WPHY: Version: ELNA presence and AGC table     0x%X and 0x%X
+4980874|138|phy_init__D__c|None|-|WPHY: Version: Samos ECID TP (Major & Minor)   0x%X and 0x%X
+4980875|139|phy_init__D__c|None|-|WPHY: Version: Samos and ETIC version          ENUM(SamosChipId_e, %d) and ENUM(EticRevIdx_e, %d)
+4980878|142|phy_init__D__c|None|-|WPHY: Version: FDSP version                    0x%X
+4981038|302|phy_init__D__c|None|-|WPHY: PHY FW running on an unsupported system, status ENUM(PhyBootStatus_e, %d). PHY FW is shutting down now.
+4981082|346|phy_init__D__c|None|-|WPHY: initPhyFw(): Boot type ENUM(MacPhyApi_PhyBootType_e, %d), duration %u uSec
+4981103|367|phy_init__D__c|None|-|WPHY: PHY FW Init Done, Boot type ENUM(MacPhyApi_PhyBootType_e, %d), status ENUM(PhyBootStatus_e, %d)
+4981207|471|phy_init__D__c|None|-|WPHY: TAC Error, status ENUM(PhyBootStatus_e, %d).
+4981212|476|phy_init__D__c|None|-|WPHY: Fatal Error: Trap: TAC Handler Error
+4981265|529|phy_init__D__c|None|-|WPHY: Fatal Error: Trap: INVALID Rfic Config (ELNA) type.
+4981285|549|phy_init__D__c|None|-|WPHY: TAC eLNA = ENUM(ElnaType_e, %d) ; MAC eLNA = %d
+4981286|550|phy_init__D__c|None|-|WPHY: Rf Switch Scheme: btTx: %d, btWifiRx: %d
+4981287|551|phy_init__D__c|None|-|WPHY: Rf Switch Scheme: wifiTx: %d
+4981301|565|phy_init__D__c|None|-|WPHY: RFIC FW Init Error, status ENUM(PhyBootStatus_e, %d).
+4981306|570|phy_init__D__c|None|-|WPHY: Fatal Error: Trap: RFIC FW Init flow
+4981326|590|phy_init__D__c|None|-|WPHY: RFIC HW Init Error, status ENUM(PhyBootStatus_e, %d).
+4981331|595|phy_init__D__c|None|-|WPHY: Fatal Error: Trap: RFIC HW Init flow
+5046321|49|scratchpad__D__c|None|-|WPHY: Fatal Error: Assert: scratchpadAllocate(): Scratchpad allready allocated
+5046337|65|scratchpad__D__c|None|-|WPHY: Fatal Error: Assert: scratchpadGet() not properly allocated
+5046358|86|scratchpad__D__c|None|-|WPHY: Fatal Error: Assert: scratchpadRelease(): Scratchpad not properly allocated
+5177663|319|spi_module__D__c|None|-|WPHY: Fatal Error: Trap: spiFpgaWrenPllWrite(): Loop construct exceeded Timeout
+7405641|73|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Trap: Irq00_ApiHiPriority(): IRQ with MAC Fatal Error indication
+7405644|76|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Irq00_ApiHiPriority(): IRQ with bad IRQ mask
+7405645|77|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Irq00_ApiHiPriority(): Empty FIFO
+7405646|78|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Irq00_ApiHiPriority(): Illegal Command ID
+7405665|97|mac_phy_api_funcs__D__c|None|-|WPHY: PHY FW High Priority Command %d returned status 0x%X
+7405668|100|mac_phy_api_funcs__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+7405692|124|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API 1 IRQ with bad IRQ mask
+7405776|208|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (((16) - sizeof(MacPhyApi_FifoElementHeader_t)) >= uDataLen)
+7405843|275|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Illegal notification ID
+7405847|279|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: MAC-PHY IF: Notification FIFO is full
+7405850|282|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (((16) - sizeof(MacPhyApi_FifoElementHeader_t)) >= uDataLen)
+7405893|325|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_LOW_PRIORITY_CMDS > cmdNorm)
+7405910|342|mac_phy_api_funcs__D__c|None|-|WPHY: PHY FW Low Priority Command 0x%X returned bad status %d
+7405913|345|mac_phy_api_funcs__D__c|None|-|WPHY: *** EXCEPTION ***: ENUM(PhyStatus_e, %d), Data: 0x%X
+7405933|365|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API Unsupported Handler - Low Priority Command
+7405965|397|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API Unsupported Handler - High Priority Command
+7405980|412|mac_phy_api_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (0x20020000 == (uint32_t)&gsMacPhyApi_Shared)
+7602222|46|reg_domain_update_handler__D__c|None|-|WPHY: Fatal Error: Assert: (0 == pParams->RegDomainUpdate.chBitMap2)
+7602249|73|reg_domain_update_handler__D__c|None|-|WPHY: Fatal Error: Trap: Functionality not supported - Non-Serving RF Set channel change.
+7602276|100|reg_domain_update_handler__D__c|None|-|WPHY: Fatal Error: Trap: Functionality not supported - RF Set Deallocation.
+7667760|48|channel_tune_handler__D__c|None|-|WPHY: Channel Tune API to channel #%d
+7667762|50|channel_tune_handler__D__c|None|-|WPHY: Fatal Error: Assert: API_ChannelTuneHandler while not offline
+7733301|53|alloc_rf_channel_handler__D__c|None|-|WPHY: Allocate Channel API ChannelIndex = %d
+7798866|82|tx_power_control_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: API_DebugUpdateRfchannelPower is trying to update power to a non active channel
+7864372|52|free_rf_channel_handler__D__c|None|-|WPHY: Free Channel API, Channel Number = %d
+7929924|68|rfic_init_execute_handler__D__c|None|-|WPHY: API_RficInitExecuteHandler: not enough time
+7929937|81|rfic_init_execute_handler__D__c|None|-|WPHY: Fatal Error: Assert: BT_SD==0 in rfic init!
+7929940|84|rfic_init_execute_handler__D__c|None|-|WPHY: Warning: Coex Wifi interrupt not received, running sequence on rfic init exec
+7929944|88|rfic_init_execute_handler__D__c|None|-|WPHY: Fatal Error: Assert: API_RficInitExecuteHandler(): RFIC init in coex_bt state
+7929958|102|rfic_init_execute_handler__D__c|None|-|WPHY: RFIC init passed the requested time! max_end_time=%u, end_time=%u
+7995433|41|dynamic_cca_config_handler__D__c|None|-|WPHY: Fatal Error: Assert: API_UpdateDynamicCCAConfig: Received from MAC Illegal Profile ID!
+7995434|42|dynamic_cca_config_handler__D__c|None|-|WPHY: Fatal Error: Assert: API_UpdateDynamicCCAConfig: Received from MAC in INIT State - Illegal
+8061014|86|mac_buffer__D__c|None|-|WPHY: Fatal Error: Assert: Error opening a mem block
+8061018|90|mac_buffer__D__c|None|-|WPHY: Opening a mem block, StartAddress = 0x%X, Next Meb block = 0x%X
+8061041|113|mac_buffer__D__c|None|-|WPHY: Fatal Error: Assert: Unexpected mem block size!
+8061042|114|mac_buffer__D__c|None|-|WPHY: Fatal Error: Assert: MAC Buffer: trying to open a Buffer - while busy!
+8061079|151|mac_buffer__D__c|None|-|WPHY: Fatal Error: Assert:  Trying to write to a freee MAC buffer
+8061080|152|mac_buffer__D__c|None|-|WPHY: Fatal Error: Assert: MAC Buffer: Trying to write a buffer longer than allowed!
+10551353|57|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_init run when PHY is already TOF active
+10551354|58|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_init run but device is not offline
+10551357|61|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: Illegal Initiator / Responder value
+10551383|87|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_start run, but TOf is not active
+10551384|88|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_start run but device is not offline
+10551407|111|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_stop was run, but TOF is not active
+10551408|112|tof_api_handlers__D__c|None|-|WPHY: Fatal Error: Assert: TOF_stop run but device is not offline
+10616892|60|time_of_flight__D__c|None|-|WPHY: Time Of Flight Task wasn't run because tof is inactive. 
+10682469|101|sw_scrambler__D__c|None|-|WPHY: Fatal Error: Assert: Illegal initial scramble state
+10682470|102|sw_scrambler__D__c|None|-|WPHY: Fatal Error: Assert: SW scrambling is only implemented for dwords.
+11599960|88|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Verify scripter is armed
+11600017|145|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.isCwTxOn)
+11600036|164|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: PhyValidation_startSingleTx(): Samos access interrupted by BT Coex ownership change #1
+11600040|168|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: PhyValidation_startSingleTx(): Samos access interrupted by BT Coex ownership change #2
+11600067|195|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: PhyValidation_packetizedTxEnd() - TX End Wait: Loop construct exceeded Timeout
+11600113|241|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: PhyValidation_packetizedTxEop(): Failure in smsSendCmdAndPollStsReg(SAMOS_CMD_BIT_PLL_TX_OFF_E)
+11600136|264|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsRspValidationPacketParams.numTxPacketsLeft > 0)
+11600202|330|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11600251|379|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.isCwTxOn)
+11600252|380|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11600260|388|phy_validation_funcs__D__c|None|-|WPHY: PHY Validation: Packetized TX Does not support packet delay greater than 800us
+11600266|394|phy_validation_funcs__D__c|None|-|WPHY: PHY Validation: Trying to transmit ZERO packets
+11600340|468|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Starting Burst TX with CW On!!!
+11600341|469|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: BurstTx Requires Being in PHY Validation Mode!!
+11600346|474|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Burst TX Bad parameters
+11600353|481|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: TX Burst bad parameters
+11600365|493|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Tx Burst - Insufficient memory allocation!
+11600438|566|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_BurstTxHandler() - TX End Wait: Loop construct exceeded Timeout
+11600458|586|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: Tx Burst - Recieved more than one packet
+11600543|671|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.isCwTxOn)
+11600544|672|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11600576|704|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_validationChannelTune() - TX End Wait: Loop construct exceeded Timeout
+11600600|728|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.isCwTxOn)
+11600601|729|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11600630|758|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RUN_TIME_CALIBRATIONS_E > pParams->validCalibSetMode.eCalibId)
+11600631|759|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (CAL_OP_MODE_REAL >= pParams->validCalibSetMode.eCalMode)
+11600659|787|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11600725|853|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.packetizedTxMode)
+11600736|864|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: ConfigModemForSiggenTransmit(): auxadcMeasurementModeSet() returned error
+11600743|871|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: ConfigModemForSiggenTransmit(): Failure in smsSendCmdAndPollStsReg(SAMOS_CMD_BIT_PLL_TX_LOCK)
+11600810|938|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_stopCwTxHandler(): Failure in smsSendCmdAndPollStsReg()
+11600911|1039|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_EnPhyValidation(): Failure in smsSendCmdAndPollStsReg()
+11600947|1075|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_readRegister: Num bits error
+11600948|1076|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_readRegister: field length is zero!
+11600974|1102|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_writeRegister: Num bits error
+11600975|1103|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_writeRegister: value bigger than possible in length
+11600976|1104|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_readRegister: field length is zero!
+11601070|1198|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (sizeof(guPingData) >= pParams->Ping.uByteCount)
+11601136|1264|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (gsPhyValidationParams.phyValidEn)
+11601137|1265|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (LAST_CAL_OP_CMD >= (uint8_t)pParams->validCalibCmd.eCalCmdType)
+11601159|1287|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_ValidationCalibCmd() - TX End Wait: Loop construct exceeded Timeout
+11601211|1339|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > gsPhyValidationParams.eRfSetId)
+11601239|1367|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > gsPhyValidationParams.eRfSetId)
+11601267|1395|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_RF_SETS_E > gsPhyValidationParams.eRfSetId)
+11601294|1422|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_ValidationCalibCmd: Illegal Command.
+11601392|1520|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_EticModeControl: Illegal Parameter.
+11601413|1541|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_EtPaControl: bad parameter
+11601452|1580|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Trap: API_RfSwitchControl: Illegal Parameter.
+11601596|1724|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.packetizedTxMode)
+11601598|1726|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Siggen PLT mode is not valid
+11601718|1846|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: Siggen DPD mode is not valid
+11601720|1848|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (!gsPhyValidationParams.packetizedTxMode)
+11601751|1879|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: (NUM_IPA_VGA_MIX_GAIN > pParams->siggenDPD.siggen_dpd_tx_gain)
+11601913|2041|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: AGC index exceed max possible value
+11602007|2135|phy_validation_funcs__D__c|None|-|WPHY: Fatal Error: Assert: API_DebugGlobalVarGet(): Bad Variable ID
+12714242|258|drv_samos_wifi__D__c|None|-|WPHY: Fatal Error: Assert: smsPllDcal(): Failure in smsSendCmdAndPollStsRegLongTimeout()
+12714263|279|drv_samos_wifi__D__c|None|-|WPHY: Fatal Error: Assert: smsPllFullFcal(): Failure in smsSendCmdAndPollStsRegLongTimeout()
+12714295|311|drv_samos_wifi__D__c|None|-|WPHY: Fatal Error: Assert: smsPllAcal(): Failure in smsPollCommandStatus() #1
+12714303|319|drv_samos_wifi__D__c|None|-|WPHY: Fatal Error: Assert: smsPllAcal(): Failure in smsPollCommandStatus() #2
+12714383|399|drv_samos_wifi__D__c|None|-|WPHY: Fatal Error: Trap: smsPllChannelChangeConfig(): Invalid pll change config step.
+12845225|169|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: Error, Desired Power is lower than minimum
+12845226|170|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: Error, Desired Power is higher than maximum
+12845267|211|tx_power_control__D__c|None|-|WPHY: tpcUpdateRegDomainLimits(): chLimPerModulationDbm[RF_CHAN_6 ].lim11b =%d
+12845517|461|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: tpcLinInterpYoffset: DIV by 0
+12845570|514|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: Gain search error, analog index not found
+12845835|779|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: Num of active channels exceeds limit
+12845874|818|tx_power_control__D__c|None|-|WPHY: Fatal Error: Assert: Tx Power Control: Trying to free a non active channel
+12910921|329|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficRxOn(): Failure in smsSendCmdWoPolling()
+12910931|339|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficRxOn(): Failure in smsPollCommandStatus()
+12910942|350|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficTxOn(): Failure in smsSendCmdAndPollStsReg()
+12910945|353|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficTxOn(): Failure in femPaEnableOn() - tx mute
+12910975|383|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficTxOff(): Failure in smsSendCmdAndPollStsReg()
+12910987|395|rfic__D__c|None|-|WPHY: Fatal Error: Assert: rficRxOff(): Failure in smsSendCmdAndPollStsReg()
+12976200|72|drv_maxwell__D__c|None|-|WPHY: Fatal Error: Assert: maxwellTurnOnLjPll(): Low Jitter PLL didn't lock in time
+12976203|75|drv_maxwell__D__c|None|-|WPHY: Exception: Low Jitter PLL lock additional time required = 0x%X
+13041918|254|drv_adc_dac__D__c|None|-|WPHY: Fatal Error: Trap: adcdacClockAccessWait() Clock access wait function: Loop construct exceeded Timeout
+13107510|310|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_CMD_NUM_CMDS > eCmdId)
+13107520|320|drv_samos_commands__D__c|None|-|WPHY: smsSendSpiCmd(): Pending command conflict: Command sent ENUM(SAMOS_CMD_ENUM, %d), Existing Command mask 0x%X
+13107521|321|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Trap: smsSendSpiCmd(): Pending command conflict
+13107933|733|drv_samos_commands__D__c|None|-|WPHY: smsFatalErrorHandler(): Status: ENUM(PhyStatus_e, %d), Command #1 ENUM(SAMOS_CMD_ENUM, %d)
+13107934|734|drv_samos_commands__D__c|None|-|WPHY: smsFatalErrorHandler(): Command #2 and #3: ENUM(SAMOS_CMD_ENUM, %d) and ENUM(SAMOS_CMD_ENUM, %d)
+13107935|735|drv_samos_commands__D__c|None|-|WPHY: smsFatalErrorHandler(): Global Command and Status masks: 0x%X, 0x%X
+13107936|736|drv_samos_commands__D__c|None|-|WPHY: smsFatalErrorHandler(): Global TimeStart and TimeNow: 0x%X and 0x%X
+13107937|737|drv_samos_commands__D__c|None|-|WPHY: smsFatalErrorHandler(): Status Register: 0x%X
+13107940|740|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Trap: smsFatalErrorHandler(): Samos Access Error
+13107965|765|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId)
+13107986|786|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId)
+13108007|807|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId1)
+13108008|808|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId2)
+13108029|829|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId1)
+13108030|830|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId2)
+13108031|831|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId3)
+13108052|852|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId)
+13108072|872|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId1)
+13108073|873|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Assert: (SAMOS_STATUS_NUM_RESPONSES > eCmdId2)
+13108121|921|drv_samos_commands__D__c|None|-|WPHY: Fatal Error: Trap: smsAbortAll(): Loop construct exceeded Timeout
+13173220|484|clpc__D__c|None|-|WPHY: Fatal Error: Assert: calcCzBasedClpc(): Invalid temperature
+13238431|159|clpc_state_machine__D__c|None|-|WPHY: CLPC state machine illegal event: current state = ENUM(ClpcSmState_e,%d)
+13238433|161|clpc_state_machine__D__c|None|-|WPHY: Fatal Error: Trap: CLPC SM Illegal state
+13697189|165|rx_driver__D__c|None|-|WPHY: Fatal Error: Assert: Expecting RXT init delay to be small. If change take a look at the NBI search flow
+13762689|129|tx_driver__D__c|None|-|WPHY: Fatal Error: Assert: (scrIsStopped())
+13762882|322|tx_driver__D__c|None|-|WPHY: Fatal Error: Trap: TxHeaderIsrPart2() Wait for TX Header: Loop construct exceeded Timeout
+13762986|426|tx_driver__D__c|None|-|WPHY: Fatal Error: Assert: TxHeaderIsrPart2(): TX header during either Calibration or Channel Tune!!!
+13763143|583|tx_driver__D__c|None|-|WPHY: Fatal Error: Assert: TX CFG Enable - Previous TX Config Transfer still active or completed with errors!
+13828149|53|rx_interrupt_handler__D__c|None|-|WPHY: Fatal Error: Trap: RX Start with unknown packet type
+13828202|106|rx_interrupt_handler__D__c|None|-|WPHY: Fatal Error: Trap: RX Header with unknown packet type
+13828233|137|rx_interrupt_handler__D__c|None|-|WPHY: Fatal Error: Trap: TX TD EOP with unknown packet type
+13893690|58|rxtx_utils__D__c|None|-|WPHY: Fatal Error: Assert: RxTxCallbackRegister(): Callback not free
+13893701|69|rxtx_utils__D__c|None|-|WPHY: Fatal Error: Assert: RxTxCallbackFree(): Callback wasn't allocated
+14745679|79|register_save_restore__D__c|None|-|WPHY: Fatal Error: Assert: utilsCalibRegSave(): Trying to save registers to a non-free buffer
+14745707|107|register_save_restore__D__c|None|-|WPHY: Fatal Error: Assert: utilsCalibRegSave(): Trying to restore registers from an empty buffer
+14811223|87|db2lin__D__c|None|-|WPHY: Fatal Error: Trap: dB2LinHwBased() - Tx Power Control: Loop construct exceeded Timeout
+15794399|223|trace__D__c|None|-|WPHY: PHY FW Logger Dropped Messages: diff: %d, total: %d
+15859776|64|tac_driver__D__c|None|-|WPHY: TAC Parser Illegal Address: 0x%X (Group Index %d)
+15859777|65|tac_driver__D__c|None|-|WPHY: TAC Parser Mask & Value: 0x%X 0x%X
+15859779|67|tac_driver__D__c|None|-|WPHY: Fatal Error: Trap: TAC Parser - Illegal Address
+15859815|103|tac_driver__D__c|None|-|WPHY: Fatal Error: Assert: TAC Parser database error, couldn't find Group Index
+15859820|108|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - TAC Parser Version mismatch: Group and group index %d, %d
+15859821|109|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - TAC Parser Version mismatch: Expected Major ID 0x%X vs. Actual Major.Minor 0x%X
+15859897|185|tac_driver__D__c|None|-|WPHY: TAC Parser Fatal Error: Generic RMW - No free slot available!!!
+15859898|186|tac_driver__D__c|None|-|WPHY: Fatal Error: Trap: TAC Parser - Generic Register memory overflow
+15859931|219|tac_driver__D__c|None|-|WPHY: Fatal Error: Assert: TAC RMW Command - Data-Mask inconsistency!
+15859944|232|tac_driver__D__c|None|-|WPHY: Fatal Error: Assert: TAC Parser: Samos EFUSE RMW Command - Access to illegal register!
+15859967|255|tac_driver__D__c|None|-|WPHY: Fatal Error: Trap: TAC Parser: Illegal access type
+15860165|453|tac_driver__D__c|None|-|WPHY: Fatal Error: Assert: TAC Parser: Illegal SubType ID
+15860173|461|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Data structure Size Problem. Header 0x%X
+15860174|462|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Data structure Size Problem. Expected & received length: %d vs. %d
+15860194|482|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Header: Function handler 0x%X returned status %d
+15860216|504|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Ignoring Non-supported Subtype: Header 0x%X
+15860226|514|tac_driver__D__c|None|-|WPHY: Fatal Error: Trap: TAC Parser - Unrecognized SubType
+15860234|522|tac_driver__D__c|None|-|WPHY: Fatal Error: Assert: TAC Parser: TLV Length Inconsistency (Sum of all TLV entries is longer than expected)
+15860244|532|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Missing mandatory data structure: group index %d, subtype %d
+15860252|540|tac_driver__D__c|None|-|WPHY: Fatal Error: TAC Parser - Null TAC Database.
+15925352|104|errors__D__c|None|-|WPHY: *** EXCEPTION ***: Count %d
+15925356|108|errors__D__c|None|-|WPHY: *** EXCEPTION ***: Status-File-Line - 0x%X, Data - 0x%X
+15925380|132|errors__D__c|None|-|WPHY: Version: FW & Bin ID                     0x%X and 0x%X
+15925381|133|errors__D__c|None|-|WPHY: Version: TAC Prefix & API                0x%X and 0x%X
+15925382|134|errors__D__c|None|-|WPHY: Version: TAC (Major & Minor)             0x%X and 0x%X
+15925383|135|errors__D__c|None|-|WPHY: Version: Tunables (IP & Common)          0x%X and 0x%X
+15925384|136|errors__D__c|None|-|WPHY: Version: CSV (IP & Common)               0x%X and 0x%X
+15925385|137|errors__D__c|None|-|WPHY: Version: ELNA presence and AGC table     0x%X and 0x%X
+15925386|138|errors__D__c|None|-|WPHY: Version: Samos ECID TP (Major & Minor)   0x%X and 0x%X
+15925387|139|errors__D__c|None|-|WPHY: Version: Samos and ETIC version          ENUM(SamosChipId_e, %d) and ENUM(EticRevIdx_e, %d)
+15925390|142|errors__D__c|None|-|WPHY: Version: FDSP version                    0x%X
+15925415|167|errors__D__c|None|-|WPHY: Status ERROR_OK, No Failure Indication
+15925419|171|errors__D__c|None|-|WPHY: Status ERROR_MAC_FATAL_ERROR (MAC Initiated Shutdown)
+15925424|176|errors__D__c|None|-|WPHY: Fatal Error: Error ENUM(PhyError_e, %d), at time %u
+15925429|181|errors__D__c|None|-|WPHY: Fatal Error: Assert ID and Address       0x%X and 0x%X
+15925430|182|errors__D__c|None|-|WPHY: Fatal Error: Data                        0x%X
+15925434|186|errors__D__c|None|-|WPHY: Fatal Error: xPsr, Before and After Error    0x%X and 0x%X
+15925435|187|errors__D__c|None|-|WPHY: Fatal Error: NVIC Active[0] and Pending[0]   0x%X and 0x%X
+15925436|188|errors__D__c|None|-|WPHY: Fatal Error: NVIC Active[1] and Pending[1]   0x%X and 0x%X
+15925437|189|errors__D__c|None|-|WPHY: Fatal Error: NVIC Active[2] and Pending[2]   0x%X and 0x%X
+15925438|190|errors__D__c|None|-|WPHY: Fatal Error: icsr and sys-csr                0x%X and 0x%X
+15925439|191|errors__D__c|None|-|WPHY: Fatal Error: mmfsr and hfsr                  0x%X and 0x%X
+15925440|192|errors__D__c|None|-|WPHY: Fatal Error: bfsr and ufsr                   0x%X and 0x%X
+15925441|193|errors__D__c|None|-|WPHY: Fatal Error: Bus and Memory Fault Address    0x%X and 0x%X
+15925446|198|errors__D__c|None|-|WPHY: Fatal Error: PC and SP                   0x%X and 0x%X
+15925447|199|errors__D__c|None|-|WPHY: Fatal Error: LR #1 and #2                0x%X and 0x%X
+15925448|200|errors__D__c|None|-|WPHY: Fatal Error: R0  and R1                  0x%X and 0x%X
+15925449|201|errors__D__c|None|-|WPHY: Fatal Error: R2  and R3                  0x%X and 0x%X
+15925450|202|errors__D__c|None|-|WPHY: Fatal Error: R4  and R5                  0x%X and 0x%X
+15925451|203|errors__D__c|None|-|WPHY: Fatal Error: R6  and R7                  0x%X and 0x%X
+15925452|204|errors__D__c|None|-|WPHY: Fatal Error: R8  and R9                  0x%X and 0x%X
+15925453|205|errors__D__c|None|-|WPHY: Fatal Error: R10 and R11                 0x%X and 0x%X
+15925454|206|errors__D__c|None|-|WPHY: Fatal Error: R12                         0x%X
+15925480|232|errors__D__c|None|-|WPHY: *** ERROR ***: ENUM(PhyError_e, %d)
+15925518|270|errors__D__c|None|-|WPHY: Fatal Error: Assert: File and Line: 0x%X
+15925532|284|errors__D__c|None|-|WPHY: Fatal Error: Trap: Error: 0x%X, File and Line: 0x%X
+15925552|304|errors__D__c|None|-|WPHY: Fatal Error: Default Interrupt
+15925560|312|errors__D__c|None|-|WPHY: Fatal Error: NMI
+15925568|320|errors__D__c|None|-|WPHY: Fatal Error: Hard Fault
+15925576|328|errors__D__c|None|-|WPHY: Fatal Error: Memory Access
+15925584|336|errors__D__c|None|-|WPHY: Fatal Error: Bus Fault
+15925592|344|errors__D__c|None|-|WPHY: Fatal Error: Usage Fault
+15925600|352|errors__D__c|None|-|WPHY: Fatal Error: Undefined IRQ
+15990882|98|hooks__D__c|None|-|WPHY: Fatal Error: Trap: PHY FW Script - Invalid command Op-Code
+15990893|109|hooks__D__c|None|-|WPHY: Fatal Error: Assert: Hook read parameter error
+15990902|118|hooks__D__c|None|-|WPHY: PHY FW Script - Read Address 0x%X, Value 0x%X
+15990932|148|hooks__D__c|None|-|WPHY: Fatal Error: Assert: Hook RMW parameter error
+16056440|120|utils__D__c|None|-|WPHY: Fatal Error: Assert: utilsLinearInterpolation Fatal Error: Bad length buffer
+16056456|136|utils__D__c|None|-|WPHY: Fatal Error: Assert: utilsLinearInterpolation - Divide by 0.
+16056760|440|utils__D__c|None|-|WPHY: Fatal Error: Assert: (0 == ((len | (uint32_t)pvSrc | (uint32_t)pvDest) & 0x3))
+16056792|472|utils__D__c|None|-|WPHY: Fatal Error: Assert: (0 == ((len | (uint32_t)pvDest) & 0x3))
+16056823|503|utils__D__c|None|-|WPHY: Fatal Error: Assert: (0 == ((len | (uint32_t)pvDest) & 0x3))
+16122016|160|fixed_point__D__c|None|-|WPHY: Fatal Error: Assert: fpDivClip() divide by zero
+16122040|184|fixed_point__D__c|None|-|WPHY: Fatal Error: Assert: fpDivWrap() divide by zero
+16122058|202|fixed_point__D__c|None|-|WPHY: Fatal Error: Assert: fpSquareRoot() negative parameter
+16253149|221|coex_common_init__D__c|None|-|WPHY: Fatal Error: Assert: ((SEMAPHORE_IS_FREE_E == semaphoreStatus))
+16253172|244|coex_common_init__D__c|None|-|WPHY: COEX_COMMON_INIT_GetId(): Error: Unsupported samos chip revision after wait. Expected: %d, Chip: %d
+16253191|263|coex_common_init__D__c|None|-|WPHY: Fatal Error: Assert: UNSUPPORTED SAMOS-B0 UNTRIMMED!
+16253233|305|coex_common_init__D__c|None|-|WPHY: Fatal Error: Assert: Common Init takes too long
+16253290|362|coex_common_init__D__c|None|-|WPHY: COEX_COMMON_INIT_verify_versions(): Common version: 0x%X, peer version: 0x%X
+16253291|363|coex_common_init__D__c|None|-|WPHY: COEX_COMMON_INIT_verify_versions(): TAC version:    0x%X, peer version: 0x%X
+16253292|364|coex_common_init__D__c|None|-|WPHY: COEX_COMMON_INIT_verify_versions(): BT-WiFi Common Version Mismatch!!!
+16253317|389|coex_common_init__D__c|None|-|WPHY: Fatal Error: Trap: COEX_COMMON_INIT_Verify_SPI() - SPI Access Verification: Loop construct exceeded Timeout
+16253334|406|coex_common_init__D__c|None|-|WPHY: SPI access test failed: Expected 0x%X, Actual 0x%X
+16253335|407|coex_common_init__D__c|None|-|WPHY: Fatal Error: Trap: SPI access test failed
+16253399|471|coex_common_init__D__c|None|-|WPHY: Invalid ETIC rev. eticRevCode = %d. etic rev address = 0x%x
+16253400|472|coex_common_init__D__c|None|-|WPHY: Fatal Error: Trap: Invalid ETIC rev
+16253471|543|coex_common_init__D__c|None|-|WPHY: Fatal Error: Trap: COEX_COMMON_INIT_Execute(): Bad Samos Semaphore state
+1431655765|0||||GTRACE_MAGIC_SYNC_LR
+***ENUMS
+PhyError_e|ERROR_RX_RESET_TIMEOUT,49;ERROR_USAGE_FAULT,10;ERROR_WATCHDOG,15;ERROR_BUS_FAULT,8;ERROR_BAD_IRQ,11;ERROR_SW_TRAP,14;ERROR_FDSP_RESPONSE_TIMEOUT,45;ERROR_SAMOS_EFUSE_PROPOGATION_NOT_READY,26;ERROR_SAMOS_ACCESS_TIMEOUT,24;ERROR_TAC_FAIL,39;ERROR_MEMORY_ACCESS,6;ERROR_MODEM_ERROR,18;ERROR_TX_WATCHDOG,17;ERROR_ASSERT,2;ERROR_BAD_PARAMETER,19;ERROR_MODEM_BAD_RESPONSE,22;ERROR_RFIC_SPI_COMMUNICATION_FAULT,34;ERROR_TX_CFG_DMA_DONE_TIMEOUT,46;ERROR_NMI,9;ERROR_BAD_STATUS,5;ERROR_RFIC_HW_INIT,33;ERROR_OK,0;ERROR_RX_PLL_ACCESS_WHEN_OFF,30;ERROR_TX_SA_DONE_ERROR,28;ERROR_UNDEFINED_IRQ,13;ERROR_USER_REQUEST,27;ERROR_SAMOS_ACCESS_CONFLICT,25;ERROR_MAC_FATAL_ERROR,1;ERROR_LOOP_TIMEOUT,43;ERROR_HARD_FAULT,7;ERROR_TAC_ILLEGAL_HW_ADDRESS,40;ERROR_TX_HEADER_TIMEOUT,50;ERROR_RX_SA_DONE_ERROR,29;ERROR_DATABASE_ERROR,20;ERROR_FUNCTIONALITY_NOT_SUPPORTED,21;ERROR_SAMOS_SEQ_CMD_ERROR,23;ERROR_TAC_NO_AVAILABLE_GENERIC_RMW_MEMORY,41;ERROR_FPGA_IRQ_TRANSLATION,36;ERROR_BAD_STATE,4;ERROR_SPI_TIMEOUT,48;ERROR_RFIC_FW_INIT,32;ERROR_DEFAULT_EXCEPTION,12;ERROR_HOOK_USER_REQUESTED_SHUTDOWN,38;ERROR_CALIB_MANAGER_EXCEEDED_FAILURE_THRESHOLD,42;ERROR_ILLEGAL_WAKEUP_FROM_WFI,35;ERROR_SCRATCHPAD_ACCESS_CONFLICT,37;ERROR_ADCDAC_CLOCK_ACCESS_TIMEOUT,47;ERROR_RX_UNKNOWN_PACKET,31;ERROR_PLL_LOCK_TIMEOUT,44;ERROR_BAD_API,3;ERROR_RXTX_WATCHDOG_IN_OFFLINE,16;
+SigGenRamSymbolWriteType_e|SIGGEN_SYMBOLS_WRITE_RMS,4;SIGGEN_SYMBOLS_WRITE_DWELL,1;SIGGEN_SYMBOLS_QAM_WRITE_DATA,2;
+TxPwrFifoAction_e|FIFO_ACTION_PUSH,0;FIFO_ACTION_DONT_PUSH,1;
+TxRateGroups_e|TX_RATE_GRP_1,1;FIRST_TX_RATE_GROUP,0;TX_RATE_GRP_3,3;TX_RATE_GRP_2,2;TX_RATE_GRP_4,4;TX_RATE_GRP_0,0;TX_RATE_GRP_11B,0;NUM_TX_RATE_GROUPS,5;
+PhyRfSysEvent_e|RF_SYS_EVENT_COEX_BT,4;RF_SYS_EVENT_COEX_WIFI,5;RF_SYS_EVENT_TX_OFF,2;RF_SYS_EVENT_UNMUTE_TX,7;RFSM_EVENT_NONE,8;RF_SYS_EVENT_TX_ON,3;RF_SYS_EVENT_NUM_EVENTS,8;RF_SYS_EVENT_MUTE_TX,6;RF_SYS_EVENT_RX_OFF,0;RF_SYS_EVENT_RX_ON,1;RF_SYS_EVENT_NUM_LEGAL_EVENTS,8;
+SAMOS_CMD_ENUM|SAMOS_CMD_BIT_RX_START,0;SAMOS_CMD_BIT_EXT_LB_STOP,11;SAMOS_CMD_BIT_TX_TO_RX,4;SAMOS_STATUS_STATUS_BIT__AUX_ADC_DONE,31;SAMOS_CMD_BIT_TEMP_MEASURE,13;SAMOS_CMD_BIT_PLL_TX_LOCK,19;SAMOS_CMD_BIT_PLL_RX_OFF,20;SAMOS_CMD_NUM_CMDS,24;SAMOS_CMD_BIT_EXT_LB_START,10;SAMOS_CMD_BIT_PLL_CH_CHANGE_STOP,17;SAMOS_CMD_BIT_PLL_DCAL,23;SAMOS_CMD_BIT_TEMP_MEASURE_ABORT,14;SAMOS_STATUS_ERR_BIT_RPLL_VTUNE_OOR,26;SAMOS_CMD_BIT_PLL_CHANNEL_CHANGE,16;SAMOS_CMD_BIT_PLL_RX_LOCK,18;SAMOS_STATUS_ERR_BIT_TPLL_PARTIAL_FCAL_OOR,25;SAMOS_CMD_BIT_EXT_LB_ENABLE,7;SAMOS_CMD_BIT_TX_START,2;SAMOS_CMD_BIT_INT_LB_STOP,9;SAMOS_CMD_BIT_INT_LB_START,8;SAMOS_CMD_BIT_SPARE2,12;SAMOS_CMD_BIT_SPARE3,15;SAMOS_CMD_BIT_PLL_FFCAL,22;SAMOS_STATUS_ERR_BIT_UNDEFINED,29;SAMOS_CMD_BIT_TX_STOP,3;SAMOS_CMD_BIT_PLL_TX_OFF,21;SAMOS_CMD_BIT_FICTIVE_TX_POWER,6;SAMOS_CMD_NO_CMD,255;SAMOS_CMD_BIT_RX_TO_TX,5;SAMOS_STATUS_ERR_BIT_DP_SEQ_CMD_CONFLICT,28;SAMOS_STATUS_ERR_BIT_RPLL_PARTIAL_FCAL_OOR,27;SAMOS_STATUS_ERR_BIT_TPLL_VTUNE_OOR,24;SAMOS_STATUS_ERR_BIT_AUX_ADC_CONFLICT,30;SAMOS_STATUS_NUM_RESPONSES,32;SAMOS_CMD_BIT_RX_STOP,1;
+COEX_INIT_SEMAPHORE_STATUS_ENUM|SEMAPHORE_IS_FREE_E,0;SEMAPHORE_IS_TAKEN_E,1;
+ScratchpadId_e|SCRATCHPAD_ID_DC,161;SCRATCHPAD_ID_DPD,166;SCRATCHPAD_ID_SIGGEN,167;SCRATCHPAD_ID_FREE,160;SCRATCHPAD_ID_TAC,165;SCRATCHPAD_ID_RXIQ,163;SCRATCHPAD_ID_LOL,164;SCRATCHPAD_ID_TXIQ,162;
+TX_MUTE_SRC_e|TX_MUTE_SRC_LTE,0;TX_MUTE_NUM_SRCS,3;TX_MUTE_SRC_MWS,2;TX_MUTE_SRC_THROTTLE,1;
+FEM_PA_EN_ENUM|PA_EN_ON,1;PA_EN_OFF,0;
+UtilsCalibSaveRestoreList_e|UTILS_CALIB_REG_SAVE_RESTORE_LO_LEAK_E,2;UTILS_CALIB_REG_SAVE_RESTORE_DPD_E,4;UTILS_CALIB_REG_SAVE_RESTORE_SIGGEN_MIXED_DYNAMIC_E,8;UTILS_CALIB_REG_SAVE_RESTORE_LOOPBACK_E,9;UTILS_CALIB_REG_SAVE_RESTORE_SIGGEN_DYNAMIC_E,6;UTILS_CALIB_REG_SAVE_RESTORE_COUNT_E,10;UTILS_CALIB_REG_SAVE_RESTORE_SIGGEN_STATIC_E,5;UTILS_CALIB_REG_SAVE_RESTORE_SIGGEN_MIXED_STATIC_E,7;UTILS_CALIB_REG_SAVE_RESTORE_RX_IQ_MM_E,1;UTILS_CALIB_REG_SAVE_RESTORE_TX_IQ_MM_E,3;UTILS_CALIB_REG_SAVE_RESTORE_RX_DC_E,0;
+CoexSamosInitSemaphore_e|COEX_COMMON_SAMOS_INIT_SEMAPHORE_WPHY_INIT_AFTER_SAMOS_RESET,10;COEX_COMMON_SAMOS_INIT_SEMAPHORE_BT_INIT_SAMOS_AWAKE,1;COEX_COMMON_SAMOS_INIT_SEMAPHORE_BT_INIT_AFTER_SAMOS_RESET,5;COEX_COMMON_SAMOS_INIT_SEMAPHORE_WPHY_INIT_SAMOS_AWAKE,2;COEX_COMMON_SAMOS_INIT_SEMAPHORE_UNINITIALIZED,0;
+CalibrationsList_e|CALIB_DPD_TX_STEP_0_E,6;CALIB_DPD_TX_STEP_3_E,9;CALIB_FIRST,0;CALIB_TX_IQ_MM_E,3;CALIB_RX_DC_E,0;CALIB_LO_LEAK_E,2;NUM_RUN_TIME_CALIBRATIONS_E,10;CALIB_RX_IQ_MM_E,1;CALIB_DPD_TX_STEP_4_E,5;CALIB_TX_ETIC_E,4;CALIB_DPD_TX_STEP_1_E,8;CALIB_ALL_CALIBRATIONS,10;CALIB_DPD_TX_STEP_2_E,7;
+SAMOS_CMD_GROUP_E|SAMOS_CMD_GROUP_AUX_ADC_GROUP,24640;SAMOS_CMD_GROUP_ILLEGAL,255;SAMOS_CMD_GROUP_PLL_RX_GROUP,14090240;SAMOS_CMD_GROUP_PLL_CHANNEL_CHANGE_GROUP,16711680;SAMOS_CMD_GROUP_RX_TX_GROUP,3903;SAMOS_CMD_GROUP_PLL_TX_GROUP,15400960;SAMOS_CMD_GROUP_NONE,0;
+DpdStages_e|DPD_STAGE_NONE,0;DPD_STAGE_AUX_RX_IQMM,3;DPD_STAGE_CLEAN_UP,9;DPD_STAGE_COEFF_CAL,8;DPD_STAGE_AGC,2;DPD_STAGE_DELAY_CAL,4;DPD_STAGE_LBT,10;DPD_STAGE_EQLZR_CAL_DC,5;DPD_STAGE_HW_STORE,1;DPD_STAGE_PA_MEAS,7;DPD_STAGE_EQLZR_CAL_TAPS,6;
+MacPhyCmd_ValidAuxAdcEnable_e|AUX_ADC_DISABLE,0;AUX_ADC_ENABLE,1;
+EticRevIdx_e|NUM_ETIC_REVS,3;ETIC_REV_IDX_INVALID,255;ETIC_REV_IDX_2p1_V7,1;ETIC_REV_IDX_1p0,0;ETIC_REV_IDX_2p1_V6,2;
+PhyFwTaskId_e|PHY_FW_TASK_TOF_TASK_E,7;PHY_FW_TASK_CALIBRATION_ASSESSMENT_E,4;PHY_FW_TASK_CLPC_E,6;NUM_OF_TASK_IDS,9;PHY_FW_TASK_PHY_FW_INIT_E,0;PHY_FW_TASK_CMD_LOW_P_E,2;NO_TASK,9;PHY_FW_TASK_BACKGROUND_TASK_E,8;PHY_FW_TASK_PERIODIC_RETRIGGER_E,1;PHY_FW_TASK_MAX_GAIN_TEMP_COMP_E,5;PHY_FW_TASK_TEMPERATURE_MEASUREMENT_E,3;
+PhyStatus_e|SAMOS_ACCESS_TIMEOUT,21;ERR_PA_ENABLE_IN_TX_MUTE,22;CALIBRATION_FAIL_HIGH_RES,15;SAMOS_NON_ZERO_STATUS_AFTER_CMD,20;ERR_DPD_DELAY_CAL_ERROR,7;ERR_RESOURCE_BUSY,25;PHY_FAIL,1;ERR_DPD_AIR_IS_BUSY,10;ERR_RX_DC_SD_RESIDUAL_ANALOG_DC_ABOVE_TRESHOLD,11;SAMOS_STATUS_COEX,17;LOL_CONVERSION_FAILURE_SECOND_BIMODAL,5;IQMM_CONVERSION_FAILURE,3;ERR_DPD_DIV_BY_ZERO,8;ERR_CALIB_NOT_ENABLED,12;ERR_DPD_PA_SHUTOFF,9;SAMOS_CMD_IGNORE_MASK_CONFLICT,19;MAXWELL_LOW_JITTER_PLL_LOCK,23;ERR_RX_WATCHDOG,24;LOL_NO_BIMODAL_SWITCH,6;CAL_MGR_CALIBRATION_DIDNT_RUN,2;PHY_SUCCESS,0;CALIBRATION_FAIL_LOW_IMRR,14;API_STATUS_OK,0;CALIBRATION_EXCEED_TIME_ALLOCATION,16;LOL_CONVERSION_FAILURE,4;CALIBRATION_PASS_INIT_CONFIG,13;SAMOS_CMD_MISSING_MASK,18;
+PhyModemSmState_e|MODEM_SM_STATE_RX,1;MODEM_SM_STATE_NUM_STATES,5;MODEM_SM_STATE_OFFLINE,4;MODEM_SM_STATE_INIT,0;MODEM_SM_STATE_TX,2;MODEM_SM_STATE_TX_OFFLINE,3;MODEM_SM_STATE_MAX_VALID_STATE,4;
+PwrVsGainTableType_e|PWR_VS_GAIN_TABLE_CONVEX_OFDM,1;NUM_PWR_VS_GAIN_TABLES,3;PWR_VS_GAIN_TABLE_LIN_OFDM,0;PWR_VS_GAIN_TABLE_CONVEX_11B,2;
+MacPhyApi_TofRole_e|TOF_ROLE_INITIATOR,1;TOF_ROLE_RESPONDER,0;
+MacPhyApi_RfSets_e|RF_SET_2_E,2;NON_SERVING_NOT_ALLOCATED,254;NUM_RF_SETS_E,4;RF_SET_NOT_ALLOCATED,252;RF_SET_3_E,3;RF_SET_0_E,0;RF_SET_1_E,1;NO_RF_SET_NEEDS_CAL,255;UNINITIALIZED_RF_SET,253;
+SigGenDataSymbsTable_e|NUM_SIGGEN_DATA_TX_GAINS,3;SIGGEN_DATA_LOW_TX_GAIN,0;SIGGEN_DATA_HIGH_TX_GAIN,2;SIGGEN_DATA_MED_TX_GAIN,1;
+MacPhyCmd_ValidGlobalVarGet_t::(anonymous enum)|VALIDATION_VAR_COUNT,0;VALIDATION_VAR_GET_PHY_RX_GAIN_COEFICIENT_2,0;VALIDATION_VAR_GET_PHY_RX_GAIN_COEFICIENT_1,0;
+DpdSigGenRate_e|SIGGEN_RATE_5MHZ,0;NUM_SIGGEN_RATES,2;SIGGEN_RATE_20MHZ,1;
+OclaInfo_e|OCLA_SW_TRIGGER,3;OCLA_SW_INFO_COEX,1;OCLA_SW_INFO_HOOKS,2;OCLA_SW_INFO_ALL_SM,0;
+MacPhyApi_PhyBootType_e|PHY_BOOT_COLD_BOOT_E,1;PHY_BOOT_WARM_BOOT_E,2;PHY_BOOT_UNEXPECTED_E,0;
+dpdTablesInHw_e|DPD_HW_AM2AM_LIN_TABLE,0;NUM_HW_DPD_TABLES_E,3;DPD_HW_AM2PM_TABLE,1;FIRST_HW_DPD_TABLE,0;DPD_HW_AM2AM_CONVEX_TABLE,2;
+PhyRxSmState_e|RX_SM_STATE_MAX_VALID_STATE,3;RX_SM_STATE_RX_Post_Rx_Start,2;RX_SM_STATE_RX_Data,3;RX_SM_STATE_RX_Init,0;RX_SM_STATE_NUM_STATES,4;RX_SM_STATE_RX_Search,1;
+ElnaType_e|ELNA_NOT_EXIST,2;ELNA_EXIST,1;ELNA_UNKNOWN,0;ELNA_RESERVED,3;
+PhyRfSmState_e|RF_SM_STATE_IDLE,0;RF_SM_STATE_RX,1;RF_SM_STATE_TX,2;RF_SM_STATE_NUM_STATES,3;
+RF_CHAN_ENUM|SIZE_OF_ARRAY_OF_CHAN,14;RF_CHAN_RESERVED,0;RF_CHAN_13,13;RF_CHAN_12,12;RF_CHAN_11,11;RF_CHAN_10,10;NUM_RF_CHAN,13;RF_CHAN_3,3;RF_CHAN_2,2;RF_CHAN_1,1;NUM_LOW_BAND_CHANNELS,13;RF_CHAN_7,7;FIRST_RF_CHAN,1;RF_CHAN_5,5;RF_CHAN_4,4;RF_CHAN_9,9;RF_CHAN_8,8;LAST_RF_CHAN,13;RF_CHAN_6,6;
+PhyTxSmState_e|TX_SM_STATE_TX_Data,2;TX_SM_STATE_TX_Header,1;TX_SM_STATE_NUM_STATES,3;TX_SM_STATE_MAX_VALID_STATE,2;TX_SM_STATE_TX_Init,0;
+MacPhyApi_DynamicCCAConfigurationProfile_e|CCA_Config_num_of_Profiles,2;CCA_Config_Low_Profile,1;CCA_Config_Default_Profile,0;
+PhyMuteSmState_e|MUTE_SM_STATE_NUM_STATES,4;MUTE_SM_STATE_COEX_BT_MUTE_TX,3;MUTE_SM_STATE_ILLEGAL,4;MUTE_SM_STATE_NORMAL,0;MUTE_SM_STATE_MUTE_TX,2;MUTE_SM_STATE_COEX_BT,1;
+(anonymous enum)|SAMOS_A0_ID_E,0;SAMOS_B0_ID_E,0;
+ETIC_STATE_ENUM|ETIC_STATE_IDLE,0;ETIC_STATE_ACTIVE,3;ETIC_STATE_STBY,1;
+PhyBootStatus_e|PHY_BOOT_FAIL_TAC_EMPTY_DATABASE,5;PHY_BOOT_FAIL_SAMOS_CHIP_ID_MISMATCH,3;PHY_BOOT_FAIL_PLATFORM_UNSUPPORTED,11;PHY_BOOT_FAIL_COMMON_VERSION_MISMATCH,4;PHY_BOOT_SUCCESS,0;PHY_BOOT_FAIL_SAMOS_UNTRIMED,2;PHY_BOOT_FAIL_TAC_DATA_SIZE_MISMATCH,8;PHY_BOOT_FAIL_TAC_MISSING_MANDATORY_FIELD,6;PHY_BOOT_FAIL_TAC_MAJOR_VERSION_MISMATCH,9;PHY_BOOT_FAIL_TAC_UNSUPPORTED_TLV,7;PHY_BOOT_IN_PROGRESS,1;PHY_BOOT_FAIL_SPI_WRITE_FAIL,10;
+PhyModemSmEvent_e|MODEM_SM_EVENTS_NUM_EVENTS,16;MODEM_SM_EVENTS_MAX_LEGAL_EVENT,13;MODEM_SM_EVENT_RESERVED_E,14;MODEM_SM_EVENT_INIT_DONE,12;MODEM_SM_EVENT_TX_END,8;MODEM_SM_EVENT_MOVE_OFFLINE,9;MODEM_SM_EVENT_TX_START_PART_1,6;MODEM_SM_EVENT_TX_START_PART_2,7;MODEM_SM_EVENT_MOVE_TO_RX,10;MODEM_SM_EVENT_SLEEP,13;MODEM_SM_EVENT_RESERVED_F,15;MODEM_SM_EVENT_RX_RESET,4;MODEM_SM_EVENT_COEX_BT,11;MODEM_SM_EVENT_RX_TD_EOP,1;MODEM_SM_EVENT_RX_HEADER_VALID,2;MODEM_SM_EVENT_RX_FW_RESET,5;MODEM_SM_EVENT_RX_LAST,3;MODEM_SM_EVENT_RX_START,0;
+PhySystemEventId_e|PHY_SYS_EVENT_TUNE,5;PHY_SYS_EVENT_CALIB,4;PHY_SYS_EVENT_TX,2;PHY_SYS_EVENT_RX,3;PHY_SYS_EVENT_BOOT,0;PHY_SYS_EVENT_SLEEP,1;
+ChannelGroup_e|NUM_CHANNEL_GROUPS,3;CHANNEL_GROUP_RESERVED,255;CHANNEL_GROUP_2,2;CHANNEL_GROUP_1,1;CHANNEL_GROUP_0,0;
+LOG_PUSH_MODE_E|LOG_PUSH_FORCE,0;LOG_PUSH_NO_FORCE,1;
+DpdTargetCurve_e|NUM_TARGET_CURVES_E,2;TARGET_CURVE_CONVEX_E,1;TARGET_CURVE_LIN_E,0;FIRST_TARGET_CURVE_E,0;
+MacPhyAPIs_t|API_NTFY_RF_CHANNEL_READY,130;API_CMD_DEBUG_GET_TX_STATS,102;API_CMD_DEBUG_SIGGEN_PLT,112;API_CMD_DEBUG_WRITE_REGISTER,93;API_CMD_DEBUG_AUX_DC_CAL,90;API_CMD_DEBUG_CALIBRATION_SET_MODE,97;API_CMD_DEBUG_RD_WR_AGC_TABLE_ENTRY,118;API_CMD_DEBUG_ETIC_MODE_CONTROL,104;API_CMD_DEBUG_BYPASS_RATE_GRP_PWR_LIM,103;API_CMD_TOF_INIT,73;API_CMD_DEBUG_GLOBAL_VARIABLE_GET,120;API_CMD_DEBUG_GET_TX_POWER_MEAS,108;API_CMD_DEBUG_RX_FORCE_DC_DAC,116;API_CMD_DEBUG_BURST_TX,95;API_CMD_FREE_RF_CHANNEL,69;API_CMD_UPDATE_CCA_CONFIG,76;HIGH_PRIORITY_CMDS_MAX,4;API_CMD_DEBUG_EN_PHY_VALIDATION,89;API_CMD_PREPARE_TO_SLEEP,65;NUM_HIGH_PRIORITY_CMDS,4;API_CMD_DEBUG_CALIBRATION_EXECUTE,88;API_CMD_DEBUG_GET_TEMPERATURE,107;API_CMD_TX_MUTE,2;API_CMD_RX_ABORT,1;API_CMD_DEBUG_PING,80;API_CMD_DEBUG_CHANNEL_TUNE,87;API_CMD_ALLOC_RF_CHANNEL,68;API_CMD_DEBUG_MODEM_RX_SM_CTRL,114;API_CMD_DEBUG_ET_PA_CONTROL,105;API_CMD_LOW_SPARE_4E,78;API_CMD_LOW_SPARE_4F,79;API_NTFY_RFIC_INIT_REQUEST,133;NOTIFICATIONS_MAX,137;API_CMD_DEBUG_RD_WR_RX_GAIN_CORR_TABLES,119;API_CMD_DEBUG_START_PACKETIZED_TX,82;API_CMD_DEBUG_RF_SWITCH_CONTROL,106;API_CMD_DEBUG_READ_INST_RSSI,117;API_CMD_DEBUG_PERIODIC_CALS_SET_ENABLE,111;API_CMD_DEBUG_UPDATE_DPD_PARAMS,100;API_CMD_REG_DOMAIN_UPDATE,70;API_CMD_DEBUG_GET_RX_STATS,101;API_CMD_SAR_PWR_LIM_UPDATE,77;API_NTFY_INIT_DONE,129;NUM_NOTIFICATIONS,9;API_CMD_DEBUG_RESET_STATS,83;API_NTFY_CALIBRATION_REQUEST,128;LOW_PRIORITY_CMDS_MAX,121;API_NTFY_TOF_COMPLETE,136;API_NTFY_ALL_SUB_BANDS_READY,131;API_CMD_DEBUG_FORCE_TX_GAIN,92;API_CMD_TOF_START,74;API_CMD_CALIBRATION_EXECUTE,64;API_CMD_DEBUG_CALIBRATION_CMD,98;API_CMD_DEBUG_RX_FORCE_AGC,115;API_CMD_DEBUG_AUX_ADC_CONTROL,96;API_CMD_DEBUG_SET_TX_PWR,91;API_CMD_DEBUG_STOP_PACKETIZED_TX,84;API_CMD_DEBUG_START_RX_STATS,81;API_CMD_CHANNEL_TUNE,66;NUM_LOW_PRIORITY_CMDS,57;API_CMD_TX_UNMUTE,3;API_CMD_DEBUG_INVALIDATE_ALL_CALIBS,99;API_CMD_MOVE_TO_OFFLINE,0;API_CMD_SET_DEFAULT_TX_POWER,67;API_CMD_RFIC_INIT_EXECUTE,71;API_CMD_DEBUG_START_CW_TX,85;API_CMD_UPDATE_CHAN_PWR,72;API_NTFY_DEBUG_PING,134;API_CMD_TOF_STOP,75;API_NTFY_TOF_COMPUTING,135;API_CMD_DEBUG_STOP_CW_TX,86;API_CMD_DEBUG_SIGGEN_DPD,113;API_CMD_DEBUG_READ_REGISTER,94;API_CMD_DEBUG_GET_PHY_VERSION,110;API_CMD_DEBUG_CLPC_CONTROL,109;API_NTFY_MODEM_READY,132;
+PllChangeConfigSteps_e|SET_CH_IDX_1,1;ACL_RESTORE,0;LNA_CGS_CTRL,2;PLL_CHANGE_CONFIG_DONE,3;
+CalibrationCommand_e|CAL_OP_TX_IQMM_APPLY,11;CAL_OP_RX_DC_ACCUM_READ,5;CAL_OP_RX_IQMM_RESTORE,9;CAL_OP_RX_DC_CLEANUP,6;CAL_OP_TX_LOL_APPLY,14;CAL_OP_RX_IQMM_INIT,7;CAL_OP_LOOPBACK_RESTORE,3;CAL_OP_TX_LOL_INIT,13;CAL_OP_RX_DC_PREPARE,4;LAST_CAL_OP_CMD,15;CAL_OP_RX_IQMM_APPLY,8;CAL_OP_LOOPBACK_INIT_WITH_SIGGEN,1;CAL_OP_LOOPBACK_INIT_NO_SIGGEN,0;CAL_OP_TX_IQMM_RESTORE,12;CAL_OP_TX_LOL_RESTORE,15;CAL_OP_LOOPBACK_MEASURE,2;CAL_OP_TX_IQMM_INIT,10;
+CalibrationMode_e|NUM_CAL_OP_MODES,3;CAL_OP_MODE_BYPASS,0;CAL_OP_MODE_REAL,1;CAL_OP_MODE_PLT,2;
+ScrMask_e|SCR_MASK_TX_CONFIG,61439;SCR_MASK_IMMEDIATE,254;

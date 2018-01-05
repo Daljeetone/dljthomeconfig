@@ -1,0 +1,376 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf340
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 Courier-Oblique;
+}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww34580\viewh23260\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\b\fs36 \cf0 Updated IMU Sensor Commands (Compass, Gyro, Accelerometer) \
+Version 0.5
+\fs24 \
+\
+Revision History:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b0 \cf0 	v0.5\
+		- Quite a few additions to the sensor and sensorreg commands.\
+
+\b \
+
+\b0 	v0.4\
+		- Updated command options for the "sensor" command\
+
+\b \
+
+\b0 	v0.3\
+		- Added expected command output for select oscar, sensor and sensorreg commands\
+
+\b \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b0 \cf0 \ul \ulc0 Motivation\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \ulnone a. Oscar requires a different approach to testing sensors - this provides a good opportunity to re-design and come up with a new strategy\
+b. Current sensor commands contain too much over-lap, and try to do too much. Goal is to simplify, while ensuring flexibility and functionality\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \ul Goals:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \ulnone a. Commands have be to flexible to support both Oscar based systems, as well as existing platforms that interface sensors directly to the AP\
+b. Test-layer should be flexible (i.e change very little) to accommodate a variety of sensors
+\b \
+
+\b0 c. As per IMU folks (<rdar://problem/11616762> IMU Test EFI Diags API Request), the ability to read time-correlated synchronous data from all three sensors is needed.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \ul Synopsis:\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 \ulnone The legacy set of sensor commands ("gyro", "accel" and "compass") will be replaced by commands: sensor and sensorreg. I did this, since my initial draft (which had three separate commands) had pretty much the same options. To do away with the duplication of options/code, I decided to consolidate them under one command. "sensor" is responsible for all configurational/data aspects of the sensors, while the latter is responsible for register operations. A third command "oscar" will be added to manage Oscar from a chip-level perspective. \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b\fs28 \cf0 Sensor Configuration\
+\
+
+\f1\b0\fs24 sensor [--sel|-s sensor1,sensor2,...] [--listsensors|-l] [--listtests|-a] [--getinfo|-i] [--set|-w param-name param-value]\
+               [--get|-g [param-name]] [--sample|-r len-in-milliseconds | num_samples] [--stream|-c] [--bin|-b [baud-rate]]\
+                   [--init|-n] [--turnoff|-t] [--exectest|-e test-name] [--testopts|-o "--opt-name opt-value ..."] [--stats] [--ui]\
+
+\f2\i \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i0\b \cf0 Options\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f2\i\b0 \cf0   --sel sensor1,sensor2,...\
+       Selects sensor(s) for use with other options, e.g sample, getinfo, etc\
+  --listsensors\
+       Lists all the sensors in the system, as well as some generation information on them.\
+  --listtests\
+       List all the chipset tests associated with selected sensor\
+  --getinfo\
+       Lists information about the various parameters exported by each sensor and their usage\
+  --set param-name param-value\
+       Sets a specific sensor's parameter to a user-provided value\
+  --get [param-name]\
+       Gets parameter value(s) from sensor(s). param-name is optional.\
+  --sample len-in-milliseconds | num_samples\
+       Samples data from selected sensors for a certain duration OR captures a certain number of samples\
+       For duration, you have to specify in either "ms" (for milliseconds), or in "s" (for seconds)\
+       e.g 50ms, or 10s. If no units are passed in, its assumed to represent the # of samples\
+  --stream\
+       If used, data is printed out as it is captured. If not provided, data is captured\
+       completely (for provided duration) before printed out the console. stream mode should\
+       not be used with really high sample rates\
+  --init\
+       Initializes the selected sensor\
+  --turnoff\
+       Electrically turns off the selected sensor\
+  --exectest test-name\
+       Runs provided test on selected sensor\
+  --testopts "--opt-name opt-value"\
+       User-providable options that can be passed into test\
+  --bin [baud-rate]\
+       Implements the host binary mode protocol, which sends sensor data in packet form to an attached host\
+  --stats\
+       Print statistical data\
+  --ui\
+       Prints out samples on the screen indefinitely till the user presses the Menu button\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b \cf0 Sample Output:\
+\
+
+\i Capture 500ms of samples from all 3 sensors while printing out data to the console simultaneously:
+\i0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\b0 \cf0 [00000377:0F1F4933] :-) sensor --sel gyro,compass,accel --sample 500ms --stream\
+Capturing samples for 50 milliseconds from:\
+gyro @ 200 Hz\
+compass @ 100 Hz\
+accel @ 100 Hz\
+\
+Output format = abstime : relativetime : sample\
+gyro:		 65504.250208us: (+00.000000): -359.339264, 0.419952, 13.508469\
+accel:		 65504.252361us: (+00.002153): -21.120483, -7.680176, 936.501434\
+compass:	      65504.253817us: (+00.001456): -23.399094, 22.624420, 2.039185\
+gyro:		 65504.255656us: (+00.001839): -6.929214, 0.769913, 15.328262\
+gyro:		 65504.261064us: (+00.005408): -8.399048, 2.309738, 16.728104\
+accel:		 65504.262316us: (+00.001252): -19.440445, -8.880203, 939.381500\
+compass:	 	 65504.263922us: (+00.001606): -22.700607, 22.972488, 0.339859\
+gyro:		 65504.266473us: (+00.002551): -15.118286, 2.449722, 13.508469\
+gyro:		 65504.271882us: (+00.005409): -13.438477, 0.1959778, 10.988754\
+OK\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\i\b \cf0 Capture 50ms of samples from the gyro\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\i0\b0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1 \cf0 [00000377:0F1F4933] :-) sensor --sel gyro --sample 50ms                       \
+Capturing samples for 50 milliseconds from:\
+gyro @ 200 Hz\
+\
+Output format = abstime : relativetime : sample\
+Waiting for capture to finish...\
+gyro:		 65567.794586us: (+63.522704): 2.239746, -797.279617, 2292.380127\
+gyro:		 65567.800040us: (+00.005454): -322.663422, 0.279968, 13.508469\
+gyro:		 65567.805494us: (+00.005454): -6.789230, 0.839905, 15.258270\
+gyro:		 65567.810902us: (+00.005408): -8.399048, 3.149643, 16.378143\
+gyro:		 65567.816309us: (+00.005407): -14.558350, 2.799683, 13.508469\
+gyro:		 65567.821717us: (+00.005408): -13.368484, 2.029770, 11.198730\
+gyro:		 65567.827125us: (+00.005408): -12.038635, 0.1959778, 9.028976\
+gyro:		 65567.832533us: (+00.005408): -10.778778, 2.029770, 6.719238\
+gyro:		 65567.837940us: (+00.005407): -9.448929, 2.029770, 4.479492\
+OK\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i\b \cf0 Set a parameter value in the gyro\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\i0\b0 \cf0 \
+[00000377:0F1F4933] :-) sensor -s gyro -w datatype norm\
+Setting parameter 'datatype' to norm for 'gyro'\
+OK\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i\b \cf0 Get parameter values\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\i0\b0 \cf0 \
+[000001B7:F50C2933] :-) sensor -g\
+accel:\
+	rate = 100\
+	datatype = norm\
+\
+gyro:\
+	rate = 200\
+	datatype = norm\
+\
+compass:\
+	rate = 100\
+	datatype = norm\
+OK\
+\
+[000001B7:F50C2933] :-) sensor -s accel -g rate\
+accel:\
+	rate = 100\
+OK\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i\b \cf0 Capture exactly 10 samples each from the selected sensors\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\i0\b0 \cf0 \
+[000001F5:0E85EAE3] :-) sensor --sel gyro,compass --sample 10 \
+Capturing 10 samples from:\
+gyro @ 200.00 Hz\
+compass @ 100.00 Hz\
+\
+Output format = abstime : relativetime : sample\
+Waiting for capture to finish...\
+gyro:		 131094s:842943us (+00s:000000us) = 0.000000, 2.379730, 3.149643, 17.000000\
+gyro:		 131094s:848225us (+00s:005282us) = 0.000000, 2.309738, 3.289627, 17.000000\
+compass:	 131094s:851119us (+00s:002894us) = -13.622131, 23.376221, -18.540207, 27.500000\
+gyro:		 131094s:853504us (+00s:002385us) = 0.000000, 2.309738, 3.219635, 17.000000\
+gyro:		 131094s:858779us (+00s:005275us) = -0.349960, 2.379730, 2.939667, 17.000000\
+compass:	 131094s:860950us (+00s:002171us) = -13.622131, 23.376221, -19.524643, 27.500000\
+gyro:		 131094s:864062us (+00s:003112us) = -0.419952, 2.239746, 2.799683, 17.000000\
+gyro:		 131094s:869372us (+00s:005310us) = -0.139984, 2.379730, 2.869675, 17.000000\
+compass:	 131094s:870778us (+00s:001406us) = -14.631180, 24.385269, -19.196487, 27.500000\
+gyro:		 131094s:874654us (+00s:003876us) = 0.000000, 2.519714, 3.149643, 17.000000\
+gyro:		 131094s:879929us (+00s:005275us) = 0.000000, 2.519714, 3.429611, 17.000000\
+compass:	 131094s:880610us (+00s:000681us) = -13.622131, 23.712570, -20.180923, 27.500000\
+gyro:		 131094s:885213us (+00s:004603us) = -0.069992, 2.379730, 3.219635, 17.000000\
+compass:	 131094s:890457us (+00s:005244us) = -14.799347, 23.208054, -20.345001, 27.500000\
+gyro:		 131094s:890494us (+00s:000037us) = -0.209976, 2.239746, 3.009659, 17.000000\
+compass:	 131094s:900314us (+00s:009820us) = -13.958481, 23.712570, -18.868347, 27.500000\
+compass:	 131094s:910144us (+00s:009830us) = -14.462997, 24.217102, -17.391693, 27.500000\
+compass:	 131094s:919971us (+00s:009827us) = -13.285782, 23.376221, -18.540207, 27.500000\
+compass:	 131094s:929825us (+00s:009854us) = -14.462997, 23.544403, -19.360565, 27.500000\
+compass:	 131094s:939652us (+00s:009827us) = -14.294830, 24.048920, -19.196487, 27.500000\
+OK\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i\b \cf0 Show diags calculated stats\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\i0\b0 \cf0 [000001F5:0E85EAE3] :-) sensor --sel gyro,compass --sample 20ms --stats\
+Capturing samples for 20 milliseconds from:\
+gyro @ 200.00 Hz\
+compass @ 100.00 Hz\
+\
+Output format = abstime : relativetime : sample\
+Waiting for capture to finish...\
+gyro:		 131226s:804399us (+00s:000000us) = -0.209976, 2.309738, 3.359619, 18.000000\
+gyro:		 131226s:809711us (+00s:005312us) = -0.419952, 2.309738, 3.639587, 18.000000\
+compass:	 131226s:812607us (+00s:002896us) = -13.790298, 24.217102, -18.704269, 28.125000\
+gyro:		 131226s:814988us (+00s:002381us) = -0.349960, 2.239746, 3.709579, 18.000000\
+gyro:		 131226s:820268us (+00s:005280us) = 0.000000, 2.519714, 3.499603, 18.000000\
+compass:	 131226s:822438us (+00s:002170us) = -13.790298, 22.871704, -19.360565, 28.125000\
+gyro:		 131226s:825546us (+00s:003108us) = 0.000000, 2.519714, 3.499603, 18.000000\
+\
+\
+Stats:\
+\
+gyro:\
+	# of samples captured: 5\
+	# of bad samples (corrupted/lost): 0\
+	calculated odr: 189.152126Hz\
+	average: X = -0.195978, Y = 2.379730, Z = 3.541599\
+	std-dev: X = 0.173716, Y = 0.117119, Z = 0.122035\
+\
+compass:\
+	# of samples captured: 2\
+	# of bad samples (corrupted/lost): 0\
+	calculated odr: 101.719052Hz\
+	average: X = -13.790298, Y = 23.544403, Z = -19.032417\
+	std-dev: X = 0.000000, Y = 0.951340, Z = 0.464071\
+OK\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i\b \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\i0\b0 \cf0 \
+
+\f0\b\fs28 Sensor Register Access\
+\
+
+\f1\b0\fs24 sensorreg [--sel|-s source] [--read|-r addr [len]] [--write|-w addr value1 value2 ...]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\b \cf0 \
+Options\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f2\i\b0 \cf0   --sel source\
+       Selects a sensor\
+  --read addr [len]\
+       Reads register values from provided address - if len is not provided, it defaults to 1 register's worth\
+  --write addr value1 value2 ...\
+       Writes register values to a particular sensor
+\f0\i0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b \cf0 Sample Output:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1\b0 \cf0 :-) sensorreg --sel compass --read 0x10 4\
+Reading in 4 bytes from 0x10:\
+0x10 = 0x20\
+0x11 = 0x20\
+0x12 = 0x20\
+0x13 = 0x20\
+OK\
+:-) sensorreg --sel compass --read 0x10 1\
+Reading in 1 byte from 0x10:\
+0x10 = 0x20\
+OK\
+:-) sensorreg --sel compass --dump\
+Dumping registers:\
+0x00 = 0x01\
+0x02 = 0x03\
+0x10 = 0x04\
+0x20 = 0x06\
+OK\
+:-) sensorreg --sel compass --write 0xaa 0x02 0x03 0x04\
+Writing 3 bytes to address 0xaa:\
+0xaa = 0x02\
+0xab = 0x03\
+0xac = 0x04\
+OK
+\f0\b \
+
+\f1\b0 :-)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b\fs28 \cf0 Oscar\
+\
+
+\f1\b0\fs24 oscar [--init [fw-file-name]] [--ping] [--bgread en|dis] [--verbose|-v level] [--getver|-g] [--conntest|-c] [--off|-o]
+\f2\i \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\i0\b \cf0 Options\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f2\i\b0 \cf0   --init [fw-file-name]\
+       Powers on and initializes the Oscar chipset with the provided firmware. If not FW file name is provided,\
+       it defaults to looking in the OSCAR firmware directory (Diags\\Oscar).\
+  --off\
+       Turns off power to oscar\
+  --ping\
+       Pings the Oscar chipset\
+  --getver\
+       Prints out the firmware build string from Oscar\
+  --bgread en|dis\
+       If enabled, diags will print out received UART packets from Oscar as they arrive\
+  --conntest\
+       Executes the connectivity for GPIOs between the AP and Oscar\
+  --verbose level\
+       Sets the verbosity level mask in the Oscar driver (0x0 - 0xf)
+\f0\i0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\b \cf0 Sample Output:
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f1 \cf0 [000001F5:0E85EAE3] :-) oscar -i\
+Cycling power...\
+Loading firmware...\
+Loading firmware file nandfs:\\usr\\standalone\\firmware\\oscar\\CoreOSOscarFirmware.image...\
+Firmware build string: "AppleOscar-157~2 "\
+OK\
+[000001F5:0E85EAE3] :-) oscar -g\
+Firmware build string: "AppleOscar-157~2 "\
+OK\
+[000001F5:0E85EAE3] :-) oscar --ping\
+Pinging Oscar...\
+OK}

@@ -1,0 +1,1058 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vim: set noexpandtab tw=0 indentexpr=:                                   %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% syntax region SmokeyCodeListing start="\\begin{LuaCCode}" end="\\end{LuaCCode}" fold
+%% syntax region SmokeyCodeListing start="\\begin{CCode}" end="\\end{CCode}" fold
+%% syntax region SmokeyCodeListing start="\\begin{LuaCode}" end="\\end{LuaCode}" fold
+%% syntax region SmokeyCodeListing start="\\begin{NestedLuaCode}" end="\\end{NestedLuaCode}" fold
+%% hi link SmokeyCodeListing Special
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% TODO: Remove/fix the \vspace after the \parbox in the BytecodeHeader table
+% TODO: Possibly change \keyword to \func for type names
+
+\newcommand{\RightLink}[1]{%
+	\null\hfill%
+	\href{#1}{HTTP}%
+}
+
+\lstnewenvironment{LuaCCode}[1][]%
+	{%
+		\lstset{%
+			style=CCodeStyle,%
+			linewidth=5.5in,%
+			emph={[1]zgetc,luaZ_read,luaZ_fill},%
+			emph={[2]%
+				LoadBlock,LoadMem,LoadByte,LoadVar,LoadVector,%
+				LoadChar,LoadInt,LoadNumber,LoadString,%
+			},%
+			emph={[3]%
+				lua_load,luaD_protectedparser,f_parser,luaU_undump,%
+				LoadHeader,LoadFunction,%
+				LoadCode,LoadConstants,LoadUpvalues,LoadDebug,%
+			},%
+			emph={[4]%
+				luaU_header%
+			},%
+			emphstyle={[1]\color{orange}},%
+			emphstyle={[2]\color{red}},%
+			emphstyle={[3]\color{blue}},%
+			emphstyle={[4]\color{cyan}},%
+			minipage,%
+			#1%
+		}%
+	}%
+	{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Problem Statement}
+
+	\def\FnText{\textit{Precompiled chunks are \emph{not} portable across
+	different architectures.  Moreover, the internal format of precompiled
+	chunks is likely to change when a new version of Lua is released. Make
+	sure you save the source files of all Lua programs that you
+	precompile.} \RightLink{http://www.lua.org/manual/5.2/luac.html}}
+
+	The Lua interpreter can read and execute code in either plain text or
+	bytecode format.  There are several scenarios where it is desirable to
+	distribute Lua code as bytecode---especially for security reasons.
+	However, PUC-Rio, the primary developers of Lua, maintain no guarantee
+	of portability across platforms, as declared by the official
+	\cmdline{luac} documentation.\footnote{\FnText}
+
+	For the reasons of code maintenance and training external developers,
+	it is highly desirable to use the official Lua implementation.  The
+	bytecode issue is therefore problematic for the EFI Diags team because
+	its software runs on a variety of hardware:  Compiling bytecode for
+	individual platforms negates the portability of Lua scripts.
+
+	This document will investigate the extent to which bytecode can
+	interoperate across the platforms supported by the EFI Diags team: x86,
+	x86-64, ARMv7, and ARMv8.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Data Type Interchange}
+
+	The Lua code base is written in ANSI C with minimal system requirements
+	beyond a standard libc implementation.  The EFI Diags team builds
+	software for x86, x86-64, ARMv7, and ARMv8 using Clang/LLVM, so we need
+	to consider the endianness, integer sizes, and floating point format of
+	these architectures because these characteristics can affect data
+	interchange.
+
+\subsection{Endianness}
+
+	\def\FnText{\textit{The 64-bit ARM environment uses a little-endian
+	environment; this matches the 32-bit iOS runtime used by devices with
+	ARM processors that support the ARMv7 architecture.}
+	\RightLink{https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaTouch64BitGuide/Major64-BitChanges/Major64-BitChanges.html}}
+
+	All platforms are \jargon{little endian}, as shown in Table
+	\ref{tab:Endianness}.  ARM is bi-endian, meaning that its endianness is
+	selectable, but Apple uses little endian order on those
+	platforms.\footnote{\FnText}
+
+	\NewGriddedSmokeyTable%
+		{EndiannessTable}%
+		{lcc}%
+		{Architecture & Native & Apple}
+
+	\begin{table}[h]
+
+		\begin{EndiannessTable}
+			x86    & \mc{2}{Little} \\
+			x86-64 & \mc{2}{Little} \\
+			ARMv7  & \mc{1}{Bi} & \mc{1}{Little} \\
+			ARMv8  & \mc{1}{Bi} & \mc{1}{Little} \\
+		\end{EndiannessTable}
+
+		\caption{Endianness}
+		\label{tab:Endianness}
+
+	\end{table}
+
+\subsection{Integer Sizes}
+
+	Table \ref{tab:TypeSizes} shows the variety of integer sizing
+	strategies on common 32- and 64-bit platforms.
+
+	\NewCenteredSmokeyTable%
+		{IntegerStrategyTable}%
+		{l >{\bfseries}r r r >{\bfseries}r r}%
+		{%
+			& \multicolumn{5}{c}{Size in Bits} \\%
+			\cline{2-6} %
+			Type & ILP32 & LP32 & ILP64 & LP64 & LLP64%
+		}
+
+	\begin{table}[h]
+
+		\begin{IntegerStrategyTable}
+			char      & 8  & 8  & 8  & 8  & 8  \\
+			short     & 16 & 16 & 16 & 16 & 16 \\
+			int       & 32 & 16 & 64 & 32 & 32 \\
+			long      & 32 & 32 & 64 & 64 & 32 \\
+			long long & 64 & 64 & 64 & 64 & 64 \\
+			pointer   & 32 & 32 & 64 & 64 & 64 \\
+			size\_t   & 32 & 32 & 64 & 64 & 64 \\
+		\end{IntegerStrategyTable}
+
+		\caption{Fundamental Data Type Size}
+		\label{tab:TypeSizes}
+
+	\end{table}
+
+	\def\FnText{\textit{The 32-bit runtime uses a convention called ILP32,
+	in which integers, long integers, and pointers are 32-bit quantities.
+	The 64-bit runtime uses the LP64 convention; integers are 32-bit
+	quantities, and long integers and pointers are 64-bit quantities. These
+	conventions match the ABI for apps running on OS X [...], making it
+	easy to write interoperable code between the two operating systems.}
+	\RightLink{https://developer.apple.com/library/ios/documentation/General/Conceptual/CocoaTouch64BitGuide/Major64-BitChanges/Major64-BitChanges.html}}
+
+	Mac OS X on x86 and iOS on ARMv7 both use \jargon{ILP32}, whereas the
+	respective software for x86-64 and ARMv8 use
+	\jargon{LP64}.\footnote{\FnText} This means that all C-defined integral
+	types are the same size between 32- and 64-bit platforms except for
+	\keyword{long}, which follows the architecture word size.  Naturally,
+	pointer sizes vary, as well.
+
+	The \keyword{size\_t} type is not defined by the C language, but is
+	part of the C standard and is widely used.  Its size closely follows
+	that of pointers since it represents the amount of memory addressable
+	by the architecture.  As a result, the \keyword{size\_t} type size
+	varies between 32- and 64-bit platforms.
+
+\subsection{Floating Point Format}
+
+	The \keyword{double} type is implemented in \jargon{IEEE 754 binary64}
+	format on all platforms.  PUC-Rio's implementation of Lua does not use
+	\keyword{float}.
+
+\subsection{Data Type Conclusion}
+
+	Software that uses native data types for interchange are largely
+	compatible across platforms.  Specifically, the native byte order and
+	size for types other than \keyword{long long}, pointers, and
+	\keyword{size\_t} are the same across x86, x86-64, ARMv7, and ARMv8.
+	The non-portable types are a concern, but can be handled by due
+	diligence in casting, checking for truncation, and byte ordering.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bytecode File Interchange}
+
+	The contents and format of Lua bytecode files are important aspects of
+	data portability across platforms.
+
+\subsection{Bytecode Sections}
+
+	A bytecode file encompasses a Lua chunk and is divided into several
+	areas.  The header describes the geometry of the bytecode as well as
+	the geometry of the remainder of the file.  Chunk properties follow the
+	header.  Immediately after are individual sections for code and data.
+
+	Table \ref{tab:Sections} shows the gross file arrangement.  For the
+	purposes of illustration, it is assumed that \keyword{int} is 32 bits.
+	The latter sections are variable size, so explicit byte offsets are
+	avoided.
+
+	\NewCenteredSmokeyTable%
+		{BytecodeSections}%
+		{lll}%
+		{Offset & Length & Description}
+
+	\begin{table}[h]
+
+		\begin{BytecodeSections}
+			0           & 18                          & Header section                        \\
+			18          & \keyword{sizeof(int)}       & First line number of chunk (optional) \\
+			22          & \keyword{sizeof(int)}       & Last line number of chunk (optional)  \\
+			23          & 1                           & Number of chunk parameters            \\
+			24          & 1                           & Variadic flag                         \\
+			25          & 1                           & Number of required VM registers       \\
+			26          & $\ge$ \keyword{sizeof(int}) & Code section                          \\
+			+ Code      & $\ge$ \keyword{sizeof(int}) & Constants section                     \\
+			+ Constants & $\ge$ \keyword{sizeof(int}) & Upvalues section                      \\
+			+ Upvalues  & $\ge$ \keyword{sizeof(int}) & Debug section                         \\
+		\end{BytecodeSections}
+
+		\caption{Bytecode File Sections}
+		\label{tab:Sections}
+
+	\end{table}
+
+\subsection{Header}
+
+	The first 18 bytes of a bytecode file is the header, as shown in Table
+	\ref{tab:Header}.
+
+	\NewCenteredSmokeyTable%
+		{BytecodeHeader}%
+		{llllll}%
+		{Offset & Length & Hex & Decoding & Description & Format}
+
+	\begin{table}[h]
+
+		\begin{BytecodeHeader}
+			 0  & 4 & 1B 4C 75 61                                    & ESC "Lua"                          & Bytecode signature            &       \\
+			 4  & 1 & 52                                             & = 5.2                              & Language version              & BCD   \\
+			 5  & 1 & 00                                             & = PUC-Rio                          & Format                        &       \\
+			 6  & 1 & 01                                             & = Little                           & Endianness                    &       \\
+			 7  & 1 & 04                                             &                                    & Size of \keyword{int}         & Bytes \\
+			 8  & 1 & 08                                             &                                    & Size of \keyword{size\_t}     & Bytes \\
+			 9  & 1 & 04                                             &                                    & Size of \keyword{Instruction} & Bytes \\
+			 10 & 1 & 08                                             &                                    & Size of \keyword{lua\_Number} & Bytes \\
+			 11 & 1 & 00                                             & = Floating point                   & \keyword{lua\_Number} format  &       \\
+			 12 & 6 & \parbox[t]{4em}{19 93 0D 0A 1A 0A}\vspace{1ex} & \parbox[t]{4em}{1993 CR LF EOF LF} & Type conversion signature     &       \\
+		\end{BytecodeHeader}
+
+		\caption{Bytecode File Header}
+		\label{tab:Header}
+
+	\end{table}
+
+	In addition to the standard C types, the header includes the custom
+	types:
+
+	\def\FnText{\textit{The instructions in Lua's virtual machine take 32
+	bits divided into three or four fields [...] The OP field identifies the
+	instruction and takes 6 bits. The other fields represent operands. Field
+	A is always present and takes 8 bits. Fields B and C take 9 bits each.
+	They can be combined into an 18-bit field: Bx (unsigned) and sBx
+	(signed).} \RightLink{http://www.lua.org/doc/jucs05.pdf}}
+
+	\begin{itemize}
+
+		\item The \keyword{lua\_Number} type represents Lua numbers.
+		EFI Diags defines this as \keyword{double}.
+
+		\item VM instructions are stored in a \keyword{Instruction}
+		type.  The Lua VM requires this to be at least 32 bits
+		wide.\footnote{\FnText} The Lua code base chooses \keyword{int}
+		for this duty in the EFI Diags environment.
+
+	\end{itemize}
+
+	The most important feature of the file header is its explicit
+	architecture description.  This allows the Lua interpreter to determine
+	whether the bytecode file is compatible with the run-time environment.
+	Explicit encoding of byte order, type sizes, and number format covers
+	all the bases for data interchange.
+
+	The remaining sections will investigate whether or not the header
+	information provides enough coverage for cross-platform portability.
+
+\subsection{Chunk Properties}
+
+	Chunk properties cover high-level information about the bytecode in
+	general.
+
+	The first and last line numbers are serialized as native \keyword{int}
+	values.  The format of these fields is protected by the integer
+	descriptions in the header.
+
+	The number of parameters, the variadic flag, and the number of
+	registers are serialized as single bytes.  There is, consequently, no
+	concern about portability for these fields.
+
+\subsection{Code Section}
+
+	The code section is a vector of \keyword{Instruction} words.
+
+	The first value is a native \keyword{int} value counting the number of
+	words that follow.  Its format is protected by the header.
+
+	The following words are of type \keyword{Instruction}, which are
+	\keyword{int} values for EFI Diags platforms.  Consequently, the
+	bytecode instruction format is protected by the header as well.
+
+\subsection{Constants Section}
+
+	The constants section is comprised of two vectors.
+
+\subsubsection{Scalar Constants}
+
+	The first vector of the constants section stores scalar constants.  The
+	first value is a native \keyword{int} value counting the scalars that
+	follow.  Like the code section counter, the scalar constants counter
+	format is protected by the header.
+
+	\NewCenteredSmokeyTable%
+		{ScalarTable}%
+		{lcc}%
+		{%
+			& \multicolumn{2}{c}{Number of Bytes} \\%
+			\cline{2-3} %
+			Type & ID & Value%
+		}
+
+	\begin{table}[h]
+
+		\begin{ScalarTable}
+			Nil     & 1 & 0                             \\
+			Boolean & 1 & 1                             \\
+			Number  & 1 & \keyword{sizeof(lua\_Number)} \\
+			String  & 1 & \keyword{sizeof(size\_t)} + n \\
+		\end{ScalarTable}
+
+		\caption{Scalar Constants}
+		\label{tab:ScalarConstants}
+
+	\end{table}
+
+	Each scalar is a tuple of type ID and value.  The type ID is a single
+	byte, as are boolean values; neither have portability concerns.
+	Numbers are stored in \keyword{lua\_Number} format, which is protected
+	by the file header.
+
+	Strings are stored as a vector whose length is stored as
+	\keyword{size\_t} followed by a sequence of individual bytes.  The
+	string length is protected by the file header.  However, since
+	\keyword{size\_t} varies across platforms, the length field is not
+	portable.
+
+\subsubsection{Embedded Chunks}
+
+	The second vector of the constants sections stores embedded chunks.
+	Like the scalar constants, the first value of this area is a native
+	\keyword{int} counting the chunks that follow.  The file header
+	protects the counter format.
+
+	The chunks themselves each have the same format as a bytecode file, but
+	without a header.  Since this is a recursive definition, it should be
+	noted that the embedded chunk may have embedded chunks of their own.
+	As long as the rest of the bytecode file definition is portable, each
+	of these embedded chunks is portable, too.
+
+\subsection{Upvalues Section}
+
+	The upvalues section is a vector of references to the VM stack and
+	registers.
+
+	The first value in the section is a native \keyword{int} value counting
+	the tuples that follow.  Like the code section counter, the upvalues
+	counter format is protected by the header.
+
+	The remainder of this section is a series of tuples comprised of one
+	byte indicating the location of the reference (i.e. register or stack)
+	and another byte for index.  Both halves of each tuple are portable.
+
+\subsection{Debug Section}
+
+	The debug section is comprised of several vectors.
+
+	The \keyword{int} fields in this section are protected by the file
+	header.
+
+	All strings are comprised of a \keyword{size\_t} counting their length,
+	followed by a sequence of individual bytes.  The string length is
+	protected by the file header.  However, as with scalar constant
+	strings, the \keyword{size\_t} type used for the string length is not
+	portable.
+
+\subsubsection{Source File Name}
+
+	The first value in the section is a string storing the name of the
+	source file.
+
+\subsubsection{Line Numbers}
+
+	Next is a native \keyword{int} counting the amount of line numbers for
+	the code at this level in the file.  Each line number is stored as a
+	native \keyword{int}.
+
+\subsubsection{Local Variable Names}
+
+	After the line numbers is a native \keyword{int} counting the local
+	variable names.  Each local in the vector has a string storing the
+	variable's name.  Additionally, the start and end PC is stored, per
+	variable, as a native \keyword{int}.
+
+\subsubsection{Upvalue Names}
+
+	Lastly, there is a native \keyword{int} counting the upvalue names.
+	Each element of the vector is a string.
+
+\subsection{Bytecode File Conclusion}
+
+	Thanks to the file header, in which all the types in the body of the
+	file are explicitly mentioned, it is straightforward to determine
+	whether a bytecode file is compatible with a given Lua interpreter.
+	The bytecode is portable as long as the headers match across platforms.
+
+	Between ILP32 and LP64 platforms, the values in the bytecode header are
+	the same with the exception of \keyword{size\_t}, which varies between
+	32- and 64-bit platforms.  As a result, bytecode files are not readily
+	portable for EFI Diags purposes without run-time type casting.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bytecode Loader}
+
+	\def\FnText{See \emph{Lua 5.2 Bytecode and Virtual Machine} in section
+	\NumNameRef{sec:References} for an informal attempt.}
+
+	There is no formal documentation\footnote{\FnText} of the bytecode
+	file, so it is imperative to peruse the Lua source code.  The objective
+	is to ensure that the correct number of bytes are written/read between
+	the platform that generates the bytecode and the platform that runs the
+	bytecode.  Also important is making sure that the relative position
+	between data elements is portable.
+	
+	These code excerpts are from the PUC-Rio distribution of Lua 5.2.0.  For
+	the purposes if illustration, important functions names are colorized
+	as per Table \ref{tab:FuncColors}.
+
+	\NewCenteredSmokeyTable%
+		{FunctionColors}%
+		{ll}%
+		{Color & Usage}
+
+	\begin{table}[h]
+
+		\begin{FunctionColors}
+			{\color{orange}Orange} & Deals directly with file I/O             \\
+			{\color{red}Red}       & Wrapper for reading read typed data      \\
+			{\color{blue}Blue}     & Primary code path of the bytecode loader \\
+			{\color{cyan}Cyan}     & Helper functions                         \\
+		\end{FunctionColors}
+
+		\caption{Function Name Color Coding}
+		\label{tab:FuncColors}
+
+	\end{table}
+
+\subsection{Use of the \keyword{long} Type}
+
+	The \keyword{long} type is the only C-defined integral type that
+	changes size between ILP32 and LP64.  The Lua code base does not use it
+	for processing bytecode, so it is not a concern for portability.
+
+\subsection{Use of the \keyword{size\_t} Type}
+
+	The \keyword{size\_t} type is a compiler-defined type that varies
+	between ILP32 and LP64.  Its use is problematic for portability.
+	Fortunately, it is used in the bytecode file format only for string
+	lengths, so its repercussions are limited.
+
+\subsection{Type Definitions}
+
+	These are the custom types used the bytecode loader.  The types used
+	directly with the load functions are described in the file header.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{lua\_Number} from \filename{lua.h}]
+/* type of numbers in Lua */
+typedef LUA_NUMBER lua_Number;
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{LUA\_NUMBER} from \filename{luaconf.h}]
+#define LUA_NUMBER	double
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{lu\_byte} from \filename{llimits.h}]
+/* chars used as small naturals (so that `char' is reserved for characters) */
+typedef unsigned char lu_byte;
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{Instruction} from \filename{llimits.h}]
+/*
+** type for virtual-machine instructions
+** must be an unsigned with (at least) 4 bytes (see details in lopcodes.h)
+*/
+typedef lu_int32 Instruction;
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{lu\_int32} from \filename{llimits.h}]
+typedef unsigned LUA_INT32 lu_int32;
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{LUA\_INT32} from \filename{luaconf.h}]
+/*
+@@ LUA_INT32 is an signed integer with exactly 32 bits.
+@@ LUAI_UMEM is an unsigned integer big enough to count the total
+@* memory used by Lua.
+@@ LUAI_MEM is a signed integer big enough to count the total memory
+@* used by Lua.
+** CHANGE here if for some weird reason the default definitions are not
+** good enough for your machine. Probably you do not need to change
+** this.
+*/
+#if LUAI_BITSINT >= 32		/* { */
+#define LUA_INT32	int
+#define LUAI_UMEM	size_t
+#define LUAI_MEM	ptrdiff_t
+#else				/* }{ */
+/* 16-bit ints */
+#define LUA_INT32	long
+#define LUAI_UMEM	unsigned long
+#define LUAI_MEM	long
+#endif				/* } */
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{LUA\_BITSINT} from \filename{luaconf.h}]
+/*
+@@ LUAI_BITSINT defines the number of bits in an int.
+** CHANGE here if Lua cannot automatically detect the number of bits of
+** your machine. Probably you do not need to change this.
+*/
+/* avoid overflows in comparison */
+#if INT_MAX-20 < 32760		/* { */
+#define LUAI_BITSINT	16
+#elif INT_MAX > 2147483640L	/* }{ */
+/* int has at least 32 bits */
+#define LUAI_BITSINT	32
+#else				/* }{ */
+#error "you must define LUA_BITSINT with number of bits in an integer"
+#endif				/* } */
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Constant Definitions}
+
+	These are the constants used in parsing bytecode.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{LUA\_SIGNATURE} from \filename{lua.h}]
+/* mark for precompiled code ('<esc>Lua') */
+#define LUA_SIGNATURE	"\033Lua"
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \keyword{LUAC\_TAIL} from \filename{lundump.h}]
+/* data to catch conversion errors */
+#define LUAC_TAIL		"\x19\x93\r\n\x1a\n"
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[breaklines=true,caption=Definition of \keyword{LUAC\_HEADERSIZE} from \filename{lundump.h}]
+/* size in bytes of header of binary files */
+#define LUAC_HEADERSIZE		(sizeof(LUA_SIGNATURE)-sizeof(char)+2+6+ \
+	sizeof(LUAC_TAIL)-sizeof(char))
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Utility Loader Functions}
+
+	The work of loading data from the bytecode file is done by several
+	utility functions.  Each is a wrapper around the \func{ZIO} layer that
+	Lua implements atop the standard C file I/O functions.
+
+	Most important amongst the loaders is the \func{LoadVar} macro, which
+	is actually polymorphic.  The number of bytes it reads from file is
+	dependent on the type passed into the macro.  Also important is the
+	\func{LoadBlock} function, which does the heavy lifting for all the
+	other functions.
+
+	It should be noted that these functions use, and are used with, the
+	types mentioned in the file header.  The loader functions operate on
+	either a single variable type at a time, or an array of those types,
+	and there are no gaps between data elements.  Additionally, no C
+	structs are stored in the file, so there is no concern about
+	compiler-generated padding.  The header is a good account of the types
+	used by the bytecode format.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[tabsize=8,caption=Definition of shorthand macros from \filename{lundump.c}]
+#define LoadMem(S,b,n,size)	LoadBlock(S,b,(n)*(size))
+#define LoadByte(S)		(lu_byte)LoadChar(S)
+#define LoadVar(S,x)		LoadMem(S,&x,1,sizeof(x))
+#define LoadVector(S,b,n,size)	LoadMem(S,b,n,size)
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadBlock} from \filename{lundump.c}]
+static void LoadBlock(LoadState* S, void* b, size_t size)
+{
+ if (luaZ_read(S->Z,b,size)!=0) error(S,"truncated");
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{luaZ\_read} from \filename{lzio.c}]
+size_t luaZ_read (ZIO *z, void *b, size_t n) {
+  while (n) {
+    size_t m;
+    if (z->n == 0) {  /* no bytes in buffer? */
+      if (luaZ_fill(z) == EOZ)  /* try to read more */
+        return n;  /* no more input; return number of missing bytes */
+      else {
+        z->n++;  /* luaZ_fill consumed first byte; put it back */
+        z->p--;
+      }
+    }
+    m = (n <= z->n) ? n : z->n;  /* min. between n and z->n */
+    memcpy(b, z->p, m);
+    z->n -= m;
+    z->p += m;
+    b = (char *)b + m;
+    n -= m;
+  }
+  return 0;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadChar} from \filename{lundump.c}]
+static int LoadChar(LoadState* S)
+{
+ char x;
+ LoadVar(S,x);
+ return x;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadInt} from \filename{lundump.c}]
+static int LoadInt(LoadState* S)
+{
+ int x;
+ LoadVar(S,x);
+ if (x<0) error(S,"corrupted");
+ return x;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadNumber} from \filename{lundump.c}]
+static lua_Number LoadNumber(LoadState* S)
+{
+ lua_Number x;
+ LoadVar(S,x);
+ return x;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadString} from \filename{lundump.c}]
+static TString* LoadString(LoadState* S)
+{
+ size_t size;
+ LoadVar(S,size);
+ if (size==0)
+  return NULL;
+ else
+ {
+  char* s=luaZ_openspace(S->L,S->b,size);
+  LoadBlock(S,s,size*sizeof(char));
+  return luaS_newlstr(S->L,s,size-1);		/* remove trailing '\0' */
+ }
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Code Path to Bytecode Parser}
+
+	Assuming that the code for writing and reading bytecode are mirror
+	images, we will concentrate on the loader's code path because it will
+	be used the most and is vital to protecting against bad input.
+
+	The start of the path is \func{lua\_load}, which implements the Lua
+	\func{load} API for reading external code.  This eventually takes us to
+	\func{luaU\_undump}, which does the actual bytecode parsing.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{lua\_load} from \filename{lapi.c}]
+LUA_API int lua_load (lua_State *L, lua_Reader reader, void *data,
+                      const char *chunkname, const char *mode) {
+  ZIO z;
+  int status;
+  lua_lock(L);
+  if (!chunkname) chunkname = "?";
+  luaZ_init(L, &z, reader, data);
+  status = luaD_protectedparser(L, &z, chunkname, mode);
+  if (status == LUA_OK) {  /* no errors? */
+    LClosure *f = clLvalue(L->top - 1);  /* get newly created function */
+    if (f->nupvalues == 1) {  /* does it have one upvalue? */
+      /* get global table from registry */
+      Table *reg = hvalue(&G(L)->l_registry);
+      const TValue *gt = luaH_getint(reg, LUA_RIDX_GLOBALS);
+      /* set global table as 1st upvalue of 'f' (may be LUA_ENV) */
+      setobj(L, f->upvals[0]->v, gt);
+      luaC_barrier(L, f->upvals[0], gt);
+    }
+  }
+  lua_unlock(L);
+  return status;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{luaD\_protectedparser} from \filename{ldo.c}]
+int luaD_protectedparser (lua_State *L, ZIO *z, const char *name,
+                                        const char *mode) {
+  struct SParser p;
+  int status;
+  L->nny++;  /* cannot yield during parsing */
+  p.z = z; p.name = name; p.mode = mode;
+  p.dyd.actvar.arr = NULL; p.dyd.actvar.size = 0;
+  p.dyd.gt.arr = NULL; p.dyd.gt.size = 0;
+  p.dyd.label.arr = NULL; p.dyd.label.size = 0;
+  luaZ_initbuffer(L, &p.buff);
+  status = luaD_pcall(L, f_parser, &p, savestack(L, L->top), L->errfunc);
+  luaZ_freebuffer(L, &p.buff);
+  luaM_freearray(L, p.dyd.actvar.arr, p.dyd.actvar.size);
+  luaM_freearray(L, p.dyd.gt.arr, p.dyd.gt.size);
+  luaM_freearray(L, p.dyd.label.arr, p.dyd.label.size);
+  L->nny--;
+  return status;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{f\_parser} from \filename{ldo.c}]
+static void f_parser (lua_State *L, void *ud) {
+  int i;
+  Proto *tf;
+  Closure *cl;
+  struct SParser *p = cast(struct SParser *, ud);
+  int c = zgetc(p->z);  /* read first character */
+  if (c == LUA_SIGNATURE[0]) {
+    checkmode(L, p->mode, "binary");
+    tf = luaU_undump(L, p->z, &p->buff, p->name);
+  }
+  else {
+    checkmode(L, p->mode, "text");
+    tf = luaY_parser(L, p->z, &p->buff, &p->dyd, p->name, c);
+  }
+  setptvalue2s(L, L->top, tf);
+  incr_top(L);
+  cl = luaF_newLclosure(L, tf);
+  setclLvalue(L, L->top - 1, cl);
+  for (i = 0; i < tf->sizeupvalues; i++)  /* initialize upvalues */
+    cl->l.upvals[i] = luaF_newupval(L);
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{luaU\_undump} from \filename{lundump.c}]
+#if !defined(luai_verifycode)
+#define luai_verifycode(L,b,f)	(f)
+#endif
+
+/*
+** load precompiled chunk
+*/
+Proto* luaU_undump (lua_State* L, ZIO* Z, Mbuffer* buff, const char* name)
+{
+ LoadState S;
+ if (*name=='@' || *name=='=')
+  S.name=name+1;
+ else if (*name==LUA_SIGNATURE[0])
+  S.name="binary string";
+ else
+  S.name=name;
+ S.L=L;
+ S.Z=Z;
+ S.b=buff;
+ LoadHeader(&S);
+ return luai_verifycode(L,buff,LoadFunction(&S));
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Bytecode Header Loader/Checker}
+
+	The header loader is responsible for checking that the architecture
+	description in the bytecode file matches the runtime architecture.
+	This is done by generating a temporary header in memory and comparing
+	it against the file.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadHeader} from \filename{lundump.c}]
+static void LoadHeader(LoadState* S)
+{
+ lu_byte h[LUAC_HEADERSIZE];
+ lu_byte s[LUAC_HEADERSIZE];
+ luaU_header(h);
+ memcpy(s,h,sizeof(char));			/* first char already read */
+ LoadBlock(S,s+sizeof(char),LUAC_HEADERSIZE-sizeof(char));
+ if (memcmp(h,s,N0)==0) return;
+ if (memcmp(h,s,N1)!=0) error(S,"not a");
+ if (memcmp(h,s,N2)!=0) error(S,"version mismatch in");
+ if (memcmp(h,s,N3)!=0) error(S,"incompatible"); else error(S,"corrupted");
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{luaU\_header} from \filename{lundump.c}]
+#define MYINT(s)	(s[0]-'0')
+#define VERSION		MYINT(LUA_VERSION_MAJOR)*16+MYINT(LUA_VERSION_MINOR)
+#define FORMAT		0		/* this is the official format */
+
+/*
+* make header for precompiled chunks
+* if you change the code below be sure to update LoadHeader and FORMAT above
+* and LUAC_HEADERSIZE in lundump.h
+*/
+void luaU_header (lu_byte* h)
+{
+ int x=1;
+ memcpy(h,LUA_SIGNATURE,sizeof(LUA_SIGNATURE)-sizeof(char));
+ h+=sizeof(LUA_SIGNATURE)-sizeof(char);
+ *h++=cast_byte(VERSION);
+ *h++=cast_byte(FORMAT);
+ *h++=cast_byte(*(char*)&x);			/* endianness */
+ *h++=cast_byte(sizeof(int));
+ *h++=cast_byte(sizeof(size_t));
+ *h++=cast_byte(sizeof(Instruction));
+ *h++=cast_byte(sizeof(lua_Number));
+ *h++=cast_byte(((lua_Number)0.5)==0);		/* is lua_Number integral? */
+ memcpy(h,LUAC_TAIL,sizeof(LUAC_TAIL)-sizeof(char));
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Chunk Loader}
+
+	Bytecode files define a single chunk for the Lua VM.  Chunks may
+	contain subchunks, so the work of putting a chunk into the VM is done
+	by \func{LoadFunction}, which may be called recursively.
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadFunction} from \filename{lundump.c}]
+static Proto* LoadFunction(LoadState* S)
+{
+ Proto* f=luaF_newproto(S->L);
+ setptvalue2s(S->L,S->L->top,f); incr_top(S->L);
+ f->linedefined=LoadInt(S);
+ f->lastlinedefined=LoadInt(S);
+ f->numparams=LoadByte(S);
+ f->is_vararg=LoadByte(S);
+ f->maxstacksize=LoadByte(S);
+ LoadCode(S,f);
+ LoadConstants(S,f);
+ LoadUpvalues(S,f);
+ LoadDebug(S,f);
+ S->L->top--;
+ return f;
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadCode} from \filename{lundump.c}]
+static void LoadCode(LoadState* S, Proto* f)
+{
+ int n=LoadInt(S);
+ f->code=luaM_newvector(S->L,n,Instruction);
+ f->sizecode=n;
+ LoadVector(S,f->code,n,sizeof(Instruction));
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadConstants} from \filename{lundump.c}]
+static void LoadConstants(LoadState* S, Proto* f)
+{
+ int i,n;
+ n=LoadInt(S);
+ f->k=luaM_newvector(S->L,n,TValue);
+ f->sizek=n;
+ for (i=0; i<n; i++) setnilvalue(&f->k[i]);
+ for (i=0; i<n; i++)
+ {
+  TValue* o=&f->k[i];
+  int t=LoadChar(S);
+  switch (t)
+  {
+   case LUA_TNIL:
+	setnilvalue(o);
+	break;
+   case LUA_TBOOLEAN:
+	setbvalue(o,LoadChar(S));
+	break;
+   case LUA_TNUMBER:
+	setnvalue(o,LoadNumber(S));
+	break;
+   case LUA_TSTRING:
+	setsvalue2n(S->L,o,LoadString(S));
+	break;
+  }
+ }
+ n=LoadInt(S);
+ f->p=luaM_newvector(S->L,n,Proto*);
+ f->sizep=n;
+ for (i=0; i<n; i++) f->p[i]=NULL;
+ for (i=0; i<n; i++) f->p[i]=LoadFunction(S);
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadUpvalues} from \filename{lundump.c}]
+static void LoadUpvalues(LoadState* S, Proto* f)
+{
+ int i,n;
+ n=LoadInt(S);
+ f->upvalues=luaM_newvector(S->L,n,Upvaldesc);
+ f->sizeupvalues=n;
+ for (i=0; i<n; i++) f->upvalues[i].name=NULL;
+ for (i=0; i<n; i++)
+ {
+  f->upvalues[i].instack=LoadByte(S);
+  f->upvalues[i].idx=LoadByte(S);
+ }
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\begin{LuaCCode}[caption=Definition of \func{LoadDebug} from \filename{lundump.c}]
+static void LoadDebug(LoadState* S, Proto* f)
+{
+ int i,n;
+ f->source=LoadString(S);
+ n=LoadInt(S);
+ f->lineinfo=luaM_newvector(S->L,n,int);
+ f->sizelineinfo=n;
+ LoadVector(S,f->lineinfo,n,sizeof(int));
+ n=LoadInt(S);
+ f->locvars=luaM_newvector(S->L,n,LocVar);
+ f->sizelocvars=n;
+ for (i=0; i<n; i++) f->locvars[i].varname=NULL;
+ for (i=0; i<n; i++)
+ {
+  f->locvars[i].varname=LoadString(S);
+  f->locvars[i].startpc=LoadInt(S);
+  f->locvars[i].endpc=LoadInt(S);
+ }
+ n=LoadInt(S);
+ for (i=0; i<n; i++) f->upvalues[i].name=LoadString(S);
+}
+\end{LuaCCode}
+
+%-----------------------------------------------------------------------------
+
+\subsection{Bytecode Loader Conclusion}
+
+	The loader code uses only the types declared in the header when reading
+	typed data.  Untyped data is read either as a single byte, or taken as
+	a sequence of bytes; neither case presents a portability concern.
+	Secondly, the loader code generates a header on the fly to ensure that
+	the file came from an architecture that behaves in a compatible way.
+
+	The \keyword{size\_t} fields are not portable because their widths vary
+	by platform.  However, use of \keyword{size\_t} is limited only to
+	strings.  The interpretation of all strings in the bytecode file is
+	handled by a single function, so it would be relatively easy to account
+	for the variance, in code, at run time.  Although not covered here, the
+	code for writing strings in bytecode is likewise handled in a single
+	function, so accounting for the difference when generating bytecode
+	should require limited effort.  It is recommended that a fixed size be
+	chosen for the string length field, and that the bytecode loader
+	dynamically cast the value in the file to the run-time platform's
+	\keyword{size\_t}.
+
+	In addition to hardware checks, there is also a software check.  The
+	version and format fields in the header should guard against
+	incompatible changes to the bytecode specification because the values
+	are used elsewhere in the code base and stand a good chance of being
+	maintained by PUC-Rio.  The down side is that the check is strict,
+	which will make it tricky to support old bytecode files if EFI Diags
+	migrates to an incompatible Lua version, but this issue is beyond the
+	scope of this document.
+
+	The last technical concern is that the endianness check may confuse big
+	endian and middle endian architectures.  However, none of the EFI
+	Diags-supported platforms are middle endian, so this is a moot point.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{References}
+\label{sec:References}
+
+	\emph{The Implementation of Lua 5.0} \\
+	R. Ierusalimschy, L. Figueiredo, and W. Celes \\
+	\url{http://www.lua.org/doc/jucs05.pdf}
+
+	\emph{A No-Frills Introduction to Lua 5.1 VM Instructions} \\
+	K. Man \\
+	\url{http://luaforge.net/docman/83/98/ANoFrillsIntroToLua51VMInstructions.pdf}
+
+	\emph{Lua 5.2 Bytecode and Virtual Machine} \\
+	D. Laurie \\
+	\url{http://files.catwell.info/misc/mirror/lua-5.2-bytecode-vm-dirk-laurie/lua52vm.html}
+
+	\emph{Lua Assembly Tools} \\
+	E. Frederickson \\
+	\url{https://github.com/mlnlover11/LuaAssemblyTools}

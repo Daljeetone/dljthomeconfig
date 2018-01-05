@@ -1,0 +1,54 @@
+\documentclass[11pt]{article}
+
+\usepackage{Smokey}
+
+% Comment out these lines for release
+%\usepackage{draftwatermark}
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkScale{1}
+%\SetWatermarkLightness{0.95}
+
+% Create a formatted table command for the sample text
+\NewCenteredSmokeyTable%
+	{SampleTable}%
+	{lll}%
+	{One & Two & Three}
+
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{bytefield}
+\usepackage{tikz}
+\usepackage{float}
+\floatstyle{boxed}
+\restylefloat{figure}
+\usepackage{longtable}
+\usetikzlibrary{calc,backgrounds,automata,arrows}
+    
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\SmokeyTitlePageFormat
+
+\include{SpamTitle}
+
+\SmokeyTocPageFormat
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+
+% Delete this line if your document has no figures
+\listoffigures
+
+% Delete these lines if your documment has no tables
+\begingroup
+% Delete this next line if your document has no figures, or you want the list
+% of tables on its own page
+\let\clearpage\relax
+\listoftables
+\endgroup
+
+\SmokeyBodyPageFormat
+
+\include{SpamBody}
+
+\end{document}

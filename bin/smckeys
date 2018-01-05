@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+import webbrowser
+import shutil
+import sys
+import os
+
+def keysFile(product):
+	return product + '_keys.html'
+
+def copyFromBI(product, train):
+	path = os.path.join('/SWE/release/Software', train, 'Updates', 'Current' + train, 'Symbols', 'AppleSMCFirmware', product.lower(), 'DEBUG')
+	keys_file = keysFile(product)
+	
+	print 'Copying key file to /tmp'
+	shutil.copyfile(os.path.join(path, keys_file), os.path.join('/tmp', keys_file))
+
+def copyFromSWE(product):
+	current_smc_path = r'/SWE/Teams/CoreOS/Mac-Firmware-Tools/Firmware/SMC/ Current SMC/'
+	
+	print 'Getting current SMC versions'
+	smc_versions = os.listdir(current_smc_path)
+
+	print 'Getting ' + product + ' key file'
+	for smc in smc_versions:
+		if smc.lower().endswith('_' + product.lower()):
+			keys_file = keysFile(product)
+
+			print 'Copying key file to /tmp'
+			shutil.copyfile(os.path.join(current_smc_path, smc, keys_file), os.path.join('/tmp', keys_file))
+				
+			return
+
+	print 'Did not find product in current SMCs'
+
+def main():
+	product = sys.argv[1]
+	product.lower()
+
+	# lol
+	if product.lower() == 'j80a':
+		product = 'j80ga'
+		copyFromSWE(product)
+	elif product.lower() == 'j137':
+		copyFromBI(product.lower(), 'Pyramid')
+	else:
+		copyFromSWE(product)
+
+	print 'Opening key file in web browser'
+	webbrowser.open('file://' + os.path.join('/tmp', keysFile(product)))
+		
+if __name__ == '__main__':
+	main()

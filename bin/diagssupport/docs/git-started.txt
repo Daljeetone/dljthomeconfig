@@ -1,0 +1,72 @@
+Quick start guide for git:
+
+(1) tell git who you are:
+
+	git config --global user.name "Ryan Du Bois"
+	git config --global user.email rdub@apple.com
+	
+(2) setup your editor (pick one):
+	git config --global core.editor emacs
+	git config --global core.editor vim
+	git config --global core.editor mate
+	
+(3) Setup your diff tool:
+	git config --global merge.tool vimdiff
+	git config --global merge.tool diff
+	git config --global merge.tool chdiff (changes.app)
+	
+(4) Put git in safe-mode (don't shoot yourself in foot):
+	git config --global push.default simple
+	
+	(advanced mode)
+	git config --global push.default matching
+	
+(5) Setup 'git pull' to use 'rebase' strategy, instead of creating merge commits that break 'git bisect':
+	git config --global branch.autosetuprebase always
+	
+(6) Check your setup:
+	git config --list
+	
+	user.name=Ryan Du Bois
+	user.email=rdub@apple.com
+	color.diff=auto
+	color.status=auto
+	color.branch=auto
+	color.interactive=auto
+	alias.st=status
+	alias.ci=commit
+	alias.co=checkout
+	alias.br=branch
+	merge.tool=opendiff
+	merge.summary=true
+	core.excludesfile=/Volumes/Home/Users/rdub/.shell/gitignore
+	push.default=simple
+	branch.autosetuprebase=always
+	core.repositoryformatversion=0
+	core.filemode=true
+	core.bare=false
+	core.logallrefupdates=true
+	core.ignorecase=true
+	core.precomposeunicode=false
+	remote.origin.url=git@gitlab.sd.apple.com:blackops/diagssupport.git
+	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+	branch.master.remote=origin
+	branch.master.merge=refs/heads/master
+	
+Feel better with a UI?
+Try GitX <http://gitx.laullon.com>
+	
+More Help:
+<http://git-scm.com/book/ch1-5.html>
+
+GitLab Specifics:
+	In order to use gitlab and be granted access to repositories, you must first login with your OD credentials.
+	Once you have logged in, you will show up when project admins try to add you to the membership list
+	for their respective projects (can search by name or email, I believe). 
+	
+	In order to be able to clone the "git@..." style repos (which are the only ones you can "push" changes to), you
+	need to setup an SSH key with gitlab.  This is easy, and you likely already have one setup on your dev machine.
+	All you need to do is browse to this URL <https://gitlab.sd.apple.com/profile/keys>, and cut-paste the contents
+	of ~/.ssh/id_rsa.pub.  Make sure to watchout for spurious whitespace, as that could potentially mess things up.
+	Once you have that, in at most 15 minutes, you should be able to successfully 'git clone' any repo you have
+	at least 'reporter' access to.

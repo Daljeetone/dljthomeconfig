@@ -1,0 +1,1034 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vim: set noexpandtab tw=0 indentexpr=:                                   %%
+%% vim: set spelllang=en:                                                   %%
+%%      set spellfile=SmokeyManual.en.utf-8.add                             %%
+%%      set spell                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TODO:
+%%   - Consider putting things in {figure} and and {table} environments so
+%%     that TeX can reflow them better
+%%   - Reconsider the bullets when nesting {Property} {Definition} {itemize}
+%%   - Create a better \NameRef that uses numbers for sections/subsections
+%%     but titles for subsubsections
+%%   - Replace \ComputerMouse with a bear symbol (CA state flag style)
+%%   - Create \puncfootnote (http://tex.stackexchange.com/questions/56063/how-to-properly-typeset-footnotes-superscripts-after-punctuation-marks)
+%%   - Make escapechar work for \lstinline
+%%   - Outdent footnotes to match header (it's currently indented to match body text)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+\newcommand{\newlengthval}[2]{%
+	\newlength{#1}%
+	\setlength{#1}{#2}%
+}
+
+\usepackage{setspace}
+\usepackage{framed}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{calc}
+\usepackage{fancybox}
+\usepackage{booktabs}
+\usepackage{tcolorbox}
+
+% Body text (only) is indented by a small amount
+\newlengthval{\BodyIndentLeft}{0.35in}
+\newlengthval{\TransverseMargin}{1in}
+\newlengthval{\TopMargin}{1.125in}
+\newlengthval{\BottomMargin}{1in}
+
+\usepackage[letterpaper]{geometry}
+\newlengthval{\LeftMargin}{\TransverseMargin}
+\addtolength{\LeftMargin}{\BodyIndentLeft}
+\geometry{top=\TopMargin, bottom=\BottomMargin, left=\LeftMargin, right=\TransverseMargin}
+
+\usepackage{fontspec}
+\setmainfont%
+	[%
+		% Fix en- and em-dashes
+		Ligatures=TeX,%
+		% Myriad Set is Apple's official font
+		% http://istweb.apple.com/software/apps/myriad_set/
+		BoldFont=MyriadSetBold.ttf,%
+		ItalicFont=MyriadSetTextItalic.ttf,%
+		BoldItalicFont=MyriadSetBoldItalic.ttf%
+	]%
+	{MyriadSetText.ttf}
+% Menlo has bold and italic variants
+\setmonofont[Scale=MatchLowercase]{Menlo}
+% Unicode symbols
+\newcommand{\LeftArrowHook}{\char"21A9}
+\newcommand{\RightArrowHook}{\char"21AA}
+\newcommand{\AppleLogo}{\char"F8FF}
+% Other symbols
+\usepackage{marvosym}
+\usepackage{ifsym}
+\newcommand{\Campfire}{\textifsymbol{12}}
+\newfontfamily{\WingdingsFamily}{Wingdings.ttf}
+\newcommand{\FloppySym}{{\WingdingsFamily\symbol{60}}}
+\newcommand{\ClosedFolderSym}{{\WingdingsFamily\symbol{48}}}
+\newcommand{\OpenFolderSym}{{\WingdingsFamily\symbol{49}}}
+\newfontfamily{\KeyCapsFamily}{Mac Key Caps.ttf}
+\newcommand{\KeyCapsCtrlD}{{\KeyCapsFamily Dd}}
+\newcommand{\KeyCapsCtrlC}{{\KeyCapsFamily Dc}}
+\newcommand{\KeyCapsEnter}{{\KeyCapsFamily R}}
+
+% \usepackage[table]{xcolor}
+% http://web.apple.com/areas/marketing/corpid/docs/Apple_Type_Guidelines_112213.pdf
+% Pantone 429, CMYK 0/0/0/40, RGB 171/175/180
+\definecolor{AppleGray}{RGB}{171,175,180}
+\definecolor{SmokeyDarkBlue}{RGB}{0,100,185}
+\definecolor{SmokeyBlue}{RGB}{28,122,193}
+\definecolor{SmokeyLightBlue}{RGB}{212,223,238}
+\definecolor{OutputBgColor}{RGB}{212, 215, 252}
+\definecolor{NoteBgColor}{RGB}{238,177,250}
+\definecolor{OutputBorderColor}{RGB}{124, 128, 204}
+\definecolor{CodeBgColor}{RGB}{237,239,255}
+\definecolor{CodeApiBgColor}{RGB}{212,215,252}
+\definecolor{StructApiBgColor}{RGB}{211,255,189}
+\definecolor{StructBgColor}{RGB}{233,255,224}
+
+\usepackage{titlesec}
+% Sections create new pages
+\newcommand{\sectionbreak}{\clearpage}
+% Enlarge \subsection and \subsubsection text
+% Put \section and \subsection at the same indentation
+% Indent \subsubsection from \subsection inwards by \BodyIndentLeft
+% Outdent everything by \BodyIndentLeft
+\newlength{\TitleWidth}
+\newcommand{\Outdented}[1]{\settowidth{\TitleWidth}{#1}\hspace{-\TitleWidth}#1}
+\newlengthval{\SectionNumberSep}{1em}
+% Use \textcolor instead of \color because the latter allows LaTeX to
+% introduce a page break immediately after the title
+\titleformat{\section}%
+	{\bfseries\Huge}%
+	{\Outdented{\textcolor{SmokeyDarkBlue}{\thesection}\hspace{\SectionNumberSep}}}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titleformat{\subsection}%
+	{\bfseries\Large}%
+	{\Outdented{\textcolor{SmokeyDarkBlue}{\thesubsection}\hspace{\SectionNumberSep}}}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titleformat{\subsubsection}%
+	{\bfseries\large}%
+	{\textcolor{SmokeyDarkBlue}{\thesubsubsection.}~}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titlespacing{\subsubsection}%
+	{0in}%
+	{\parskip}%
+	{0.1in}
+\titleformat{\paragraph}%
+	{\large}%
+	{}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titlespacing{\paragraph}%
+	{0in}%
+	{\parskip}%
+	{0in}
+% 1.2x line spacing
+\linespread{1.0}
+
+\usepackage{fancyhdr}
+% Notice on left; Page number on right
+% Need \mbox to fix vertical alignment between logo and page number
+\lhead{\mbox{\color{AppleGray}\AppleLogo} Apple Confidential --- DO NOT DISTRIBUTE}
+\chead{}
+\rhead{\thepage}
+%\renewcommand{\headrulewidth}{0in}
+% No footer
+\lfoot{}
+\cfoot{}
+\rfoot{}
+%\renewcommand{\footrulewidth}{1pt}
+% Suppress warning about \headheight being too small
+\setlength{\headheight}{1.5\baselineskip}
+\pagestyle{fancy}
+
+\usepackage[hang,flushmargin,bottom]{footmisc}
+%\renewcommand{\footnoterule}{}
+
+% Block paragraph format
+\usepackage{parskip}
+
+\usepackage{hyperref}
+\urlstyle{same}
+\newcommand{\NumNameRef}[1]{\ref{#1}\,\textit{\nameref{#1}}}
+\newcommand{\NameRef}[1]{\textit{\nameref{#1}}}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations}
+\usetikzlibrary{trees}
+
+\pgfdeclaredecoration{complete sines}{initial}{
+	\state{initial}
+		[
+			width=+0pt,
+			next state=sine,
+			persistent precomputation={
+				\pgfmathsetmacro\matchinglength{
+					\pgfdecoratedinputsegmentlength / int(\pgfdecoratedinputsegmentlength/\pgfdecorationsegmentlength)
+				}
+				\setlength{\pgfdecorationsegmentlength}{\matchinglength pt}
+			}
+		]
+		{}
+	\state{sine}[width=\pgfdecorationsegmentlength]{
+		\pgfpathsine{\pgfpoint{0.25\pgfdecorationsegmentlength}{0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathcosine{\pgfpoint{0.25\pgfdecorationsegmentlength}{-0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathsine{\pgfpoint{0.25\pgfdecorationsegmentlength}{-0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathcosine{\pgfpoint{0.25\pgfdecorationsegmentlength}{0.5\pgfdecorationsegmentamplitude}}
+	}
+	\state{final}{}
+}
+
+% http://tex.stackexchange.com/questions/89129/changing-the-indentation-of-a-tikz-tree
+\newcommand{\SmokeyTreeIndent}{\leftmargini}
+\newcommand{\SmokeyTreeSkip}{\baselineskip}
+\makeatletter
+\newcount\dirtree@lvl
+\newcount\dirtree@plvl
+\newcount\dirtree@clvl
+\def\dirtree@growth{%
+	\ifnum\tikznumberofcurrentchild=1\relax%
+		\global\advance\dirtree@plvl by 1\relax%
+		\expandafter\xdef\csname dirtree@p@\the\dirtree@plvl\endcsname{\the\dirtree@lvl}%
+	\fi%
+	\global\advance\dirtree@lvl by 1\relax%
+	\dirtree@clvl=\dirtree@lvl%
+	\advance\dirtree@clvl by -\csname dirtree@p@\the\dirtree@plvl\endcsname%
+	\pgf@xa=\SmokeyTreeIndent\relax%
+	\pgf@ya=-\SmokeyTreeSkip\relax%
+	\pgf@ya=\dirtree@clvl\pgf@ya%
+	\pgftransformshift{\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}}%
+	\ifnum\tikznumberofcurrentchild=\tikznumberofchildren%
+		\global\advance\dirtree@plvl by -1\relax%
+	\fi%
+}
+\tikzset{%
+	dirtree/.style={%
+		growth function=\dirtree@growth,%
+		growth parent anchor=south west,%
+		parent anchor=south west,%
+		every node/.style={%
+			%anchor=north,%
+			% Need to set minimum height, inner/outer sep, and
+			% text depth in order to make each node drawn the
+			% same height regardless of ascenders and descenders
+			% in the font
+			minimum height=\baselineskip,%
+			inner sep=0in,%
+			outer ysep=0in,%
+			outer xsep=1ex,%
+			text depth=0.2ex%
+		},%
+		every child node/.style={%
+			anchor=south west%
+		},%
+		edge from parent/.style={%
+			draw=SmokeyBlue,%
+			thin%
+		},%
+		edge from parent path={%
+			([xshift=2ex] \tikzparentnode\tikzparentanchor)%
+			|- (\tikzchildnode\tikzchildanchor)%
+		}%
+	}%
+}
+\makeatother
+
+\newcommand{\SquareTextBullet}{\rule[0.3ex]{0.75ex}{0.75ex}}
+
+% Documentation: http://mirrors.ibiblio.org/CTAN/macros/latex/contrib/enumitem/enumitem.pdf
+\usepackage{enumitem}
+
+% Diagram of the various dimensions for lists: http://www.ntg.nl/maps/11/33.pdf
+%\setlist{parsep=0.1\baselineskip, itemsep=0.2\baselineskip}
+\newlengthval{\StandardLabelSep}{0.5em}
+\setlist{labelsep=\StandardLabelSep}
+
+\newcommand{\hl}{\bfseries}
+\newcommand{\ProcessLabelFormat}[1]{#1.}
+\newlist{Process}{enumerate}{3}
+\setlist[Process,1]{%
+	label=\ProcessLabelFormat{\arabic*},%
+	}
+\setlist[Process,2]{label=\ProcessLabelFormat{\alph*}}
+\setlist[Process,3]{label=\ProcessLabelFormat{\roman*}}
+
+\newcommand{\ItemizeBulletFormat}[1]{#1}
+\setlist[itemize,1]{label=\ItemizeBulletFormat{\textbullet}}
+\setlist[itemize,2]{label=\ItemizeBulletFormat{--}}
+
+\newlist{Definition}{description}{3}
+\newcommand{\DefinitionBulletFormat}[1]{#1}
+\newcommand{\DefinitionFormat}[1]{%
+	\makebox[0in][r]{\normalfont\DefinitionBulletFormat{\textbullet}\hspace{\StandardLabelSep}}%
+	#1\textnormal{ --- }%
+}
+\setlist[Definition]{%
+	leftmargin=\leftmargini,%
+	labelsep=0in,%
+	labelindent=\leftmargin,%
+	style=standard,%
+	format=\DefinitionFormat%
+}
+
+\newlist{Property}{description}{1}
+\newcommand{\PropertyBulletFormat}[1]{{\color{SmokeyBlue}#1}}
+\newcommand{\PropertyFormat}[1]{%
+	\makebox[0in][r]{\PropertyBulletFormat{\SquareTextBullet}\hspace{\StandardLabelSep}}%
+	#1\textnormal{ --- }%
+}
+\setlist[Property]{%
+	leftmargin=0in,%
+	labelsep=0in,%
+	labelindent=\leftmargin,%
+	style=standard,%
+	format=\PropertyFormat%
+}
+
+\newcounter{LogSectioni}
+\newcommand{\LogSectionBulletFormat}[1]{\textnormal{#1}}
+\newcommand{\LogSectionFormat}[1]{%
+	\stepcounter{LogSectioni}%
+	\hspace{\leftmargini}%
+	\makebox[0in][r]{\LogSectionBulletFormat{\theLogSectioni.}\hspace{\StandardLabelSep}}%
+	#1\textnormal{ --- }%
+}
+\newlist{LogSection}{description}{3}
+\setlist[LogSection,1]{%
+	labelsep=0in,%
+	style=standard,%
+	format=\LogSectionFormat,%
+	before=\setcounter{LogSectioni}{0}%
+}
+
+\newlengthval{\SmokeyListingAboveSkip}{1.5\parskip}
+\newlengthval{\SmokeyListingBelowSkip}{-\medskipamount}
+\addtolength{\SmokeyListingBelowSkip}{1.5\parskip}
+
+\newlengthval{\SmokeyTableParskipTop}{0.75\parskip}
+\newlengthval{\SmokeyTableParskipBottom}{\parskip}
+
+\usepackage{mylistings/listings}
+\newcommand{\lststyle}{\footnotesize\ttfamily}
+\lstset{%
+	frame=none,%
+	keepspaces=true,%
+	basicstyle=\lststyle,%
+	tabsize=4,%
+	linewidth=4in,%
+	minipagewidth=\textwidth,%
+	aboveskip=\SmokeyListingAboveSkip,%
+	belowskip=\SmokeyListingBelowSkip,%
+}
+
+\surroundwithmdframed[
+  hidealllines=true,
+  backgroundcolor=OutputBgColor,
+  leftmargin=0pt,
+  rightmargin=0pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innerleftmargin=5.27pt,
+  innerrightmargin=0pt,
+  innertopmargin=3pt,
+  innerbottommargin=0.0pt,
+]{LuaCode}
+
+\surroundwithmdframed[
+  hidealllines=false,
+  backgroundcolor=OutputBgColor,
+  linecolor=SmokeyDarkBlue,
+  outerlinewidth=2pt, 
+  rightline=false,
+  bottomline=false,
+  topline=false, 
+  leftmargin=0pt,
+  rightmargin=240pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innerleftmargin=5.27pt,
+  innerrightmargin=-2in,
+  innertopmargin=3pt,
+  innerbottommargin=0.0pt,
+]{Struct}
+
+\surroundwithmdframed[
+  hidealllines=false,
+  backgroundcolor=OutputBgColor,
+  linecolor=SmokeyDarkBlue,
+  outerlinewidth=2pt, 
+  rightline=false,
+  bottomline=false,
+  topline=false, 
+  leftmargin=0pt,
+  rightmargin=40pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innerleftmargin=6.17pt,
+  innerrightmargin=0in,
+  innertopmargin=4.5pt,
+  innerbottommargin=0.0pt,
+]{SampleCode}
+
+\lstdefinestyle{LuaCodeStyle}{%
+	% Why does \color{SmokeyBlue} not work?
+	%backgroundcolor=\color{SmokeyBlue},%
+	frame=single,%
+    basicstyle={\fontsize{8.5pt}{8.5pt}\ttfamily},%
+	rulecolor=\color{OutputBgColor},%
+	backgroundcolor=\color{OutputBgColor},%
+	linewidth=5.59in,%
+}
+
+\lstdefinestyle{StructStyle}{%
+	% Why does \color{SmokeyBlue} not work?
+	%backgroundcolor=\color{SmokeyBlue},%
+	frame=single,%
+	keywordstyle=\color{magenta},%
+    basicstyle={\fontsize{8.5pt}{8.5pt}\ttfamily},%
+	rulecolor=\color{OutputBgColor},%
+	backgroundcolor=\color{OutputBgColor},%
+	linewidth=2.59in,%
+}
+
+\lstdefinestyle{SampleCodeStyle}{%
+	% Why does \color{SmokeyBlue} not work?
+	%backgroundcolor=\color{SmokeyBlue},%
+	frame=single,%
+	keywordstyle=\color{magenta},%
+	stringstyle=\ttfamily\color{SmokeyDarkBlue},%
+    basicstyle={\fontsize{8.0pt}{8.0pt}\ttfamily},%
+	rulecolor=\color{OutputBgColor},%
+	backgroundcolor=\color{OutputBgColor},%
+	linewidth=5in%
+}
+
+\lstdefinestyle{SmokeyApiStyle}{%
+	linewidth=4in,%
+	xleftmargin=\leftmargini%
+}
+\lstdefinestyle{SettingStyle}{%
+	linewidth=4in,%
+	xleftmargin=\leftmargini%
+}
+\lstdefinestyle{TerminalOutputStyle}{%
+	linewidth=4in,%
+	xleftmargin=\leftmargini%
+}
+\lstdefinestyle{LogExcerptStyle}{%
+    basicstyle={\fontsize{8.5pt}{8.5pt}\ttfamily},%
+	frame=single,%
+	rulecolor=\color{OutputBgColor},%
+	backgroundcolor=\color{OutputBgColor},%
+	linewidth=\textwidth,%
+	xleftmargin=\leftmargini%
+}
+
+\lstdefinestyle{AnnotatedExcerptStyle}{%
+    basicstyle={\fontsize{8.5pt}{8.5pt}\ttfamily},%
+	frame=single,%
+	rulecolor=\color{OutputBgColor},%
+	backgroundcolor=\color{OutputBgColor},%
+	linewidth=\textwidth,%
+	xleftmargin=1in%
+}
+
+\surroundwithmdframed[
+  hidealllines=true,
+  backgroundcolor=OutputBgColor,
+  leftmargin=0pt,
+  rightmargin=70pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innerleftmargin=-69pt,
+  innerrightmargin=3pt,
+  innertopmargin=3pt,
+  innerbottommargin=0.0pt,
+]{AnnotedLogFile}
+
+\lstdefinestyle{AnnotedLogFileStyle}{%
+	frame=single,%
+	rulecolor=\color{SmokeyDarkBlue},%
+	linewidth=1in,%
+	basicstyle=\scriptsize\ttfamily,%
+	xleftmargin=1in,%
+	tabsize=8,%
+	breaklines=true,%
+	breakatwhitespace=true,%
+	breakindent=0in,%
+	breakautoindent=false,%
+	prebreak=\raisebox{-1ex}[0in][0in]{$\hookleftarrow$},%
+	%postbreak=\raisebox{1ex}[0in][0in]{$\hookrightarrow\;$},%
+}
+\lstdefinestyle{CommandLineStyle}{%
+	linewidth=4in%
+}
+
+\lstnewenvironment{LuaCode}[1][]%
+	{%
+		\lstset{style=LuaCodeStyle,escapechar=~,#1,minipage}%
+	}%
+	{}
+\lstnewenvironment{Struct}[1][]%
+	{%
+		\lstset{style=StructStyle,language=C,escapechar=~,#1,minipage}%
+	}%
+	{}
+
+\lstnewenvironment{SampleCode}[1][]%
+	{%
+		\lstset{style=SampleCodeStyle,language=C,escapechar=~,#1,minipage}%
+	}%
+	{}
+
+\lstnewenvironment{SmokeyApi}[1][]%
+	{%
+		\lstset{%
+			style=SmokeyApiStyle,%
+			escapechar=~,%
+			#1,%
+			inject=\raisebox{-0.125ex}[0in][0in]{\makebox[0in][r]{\makebox[\leftmargini][c]{\Large\ComputerMouse}}},%
+			xleftmargin=\leftmargini,%
+		}%
+	}%
+	{}
+\lstnewenvironment{Setting}%
+	{%
+		\lstset{style=SettingStyle,escapechar=~}%
+	}%
+	{}
+\lstnewenvironment{TerminalOutput}%
+	{%
+		\lstset{%
+			style=TerminalOutputStyle,%
+			escapechar=~,%
+			inject=\raisebox{-0.125ex}[0in][0in]{\makebox[0in][r]{\makebox[\leftmargini][c]{\Large\Printer}}},%
+			xleftmargin=\leftmargini,%
+		}%
+	}%
+	{}
+\newlength{\ElideShift}
+\lstnewenvironment{LogExcerpt}%
+	{%
+		\lstset{style=LogExcerptStyle,escapechar=~,minipage}%
+		\newcommand{\elide}{%
+			\makebox[0in][l]{%
+				% Align past the listing frame (based on framesep length)
+				\setlength{\ElideShift}{-5.2pt}%
+				\addtolength{\ElideShift}{-2em}%
+				\hspace{\ElideShift}%
+				\begin{tikzpicture}[%
+					every path/.style={%
+						decoration={%
+							complete sines,%
+							segment length=4em,%
+							amplitude=0.8ex%
+						},%
+						decorate%
+					}%
+				]%
+					% Knock-out color
+					\draw[color=white, yshift=0.475ex, line width=0.575ex] (-2em-0.5pt,0) -- (\linewidth+6.7pt+2em,0);%
+					\draw[color=white, yshift=0.475ex, line width=0.575ex] (-2em-0.5pt,2pt) -- (\linewidth+6.7pt+2em,2pt);%
+					%\draw[color=white, yshift=0.475ex, line width=0.575ex] (-2em-0.5pt,-1pt) -- (\linewidth+6.7pt+2em,-1pt);%
+					% Match frame color
+					%\draw[color=OutputBgColor, yshift=0.85ex] (0,0) -- (\linewidth+6.7pt,0);%
+					%\draw[color=OutputBgColor, yshift=0.15ex] (0,0) -- (\linewidth+6.7pt,0);%
+				\end{tikzpicture}%
+			}%
+		}%
+	}%
+	{}
+\lstnewenvironment{AnnotedLogFile}%
+	{%
+		\lstset{style=AnnotatedExcerptStyle,escapechar=~}%
+		% Custom \marginpar-like command
+		\renewcommand{\mp}[1]{%
+			\makebox[0in][r]{%
+				\color{SmokeyDarkBlue}%
+				\raisebox{0in}[0in][0in]{%
+					\fbox{%
+						\normalfont\bfseries\scriptsize##1%
+					}%
+				}%
+				\rule[0.5ex]{1em}{\fboxrule}%
+				\hspace{3pt}%
+			}%
+		}%
+	}%
+	{}
+\lstnewenvironment{CommandLine}%
+	{%
+		\lstset{%
+			frame=single,%
+			style=CommandLineStyle,%
+			%backgroundcolor=\color{SmokeyLightBlue},%
+			escapechar=~,%
+			rulecolor=\color{SmokeyDarkBlue},%
+			%inject=>>,%
+			inject=\raisebox{0.0ex}[0in][0in]{\makebox[0pt][r]{\makebox[\leftmargini][c]{\Large\Keyboard}}},%
+			% Why does the linewidth seem to change when xleftmargin is set?
+			linewidth=6.10in,%
+			framexleftmargin=25pt,%
+			xleftmargin=28pt%
+		}%
+	}%
+	{}
+
+\newenvironment{Note}%
+	{%
+		\fcolorbox{NoteBgColor}{NoteBgColor}{NOTE:} %
+	}%
+	{%
+	}
+
+\newenvironment{CommandLine1}%
+	{%
+		\begin{CommandLine}%
+	}%
+	{%
+		\end{CommandLine}%
+	}
+
+
+\newmdenv [
+    font=\ttfamily,%
+	leftmargin=0,%
+] {TestCode}
+
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{multirow}
+
+\usepackage{array}
+\renewcommand{\arraystretch}{1.0}
+
+\def\mystrut(#1,#2){\vrule height #1pt depth #2pt width 0pt}
+\newcommand{\FuncRef}[1]{\setlength{\fboxsep}{2pt}\raisebox{0pt}[0pt][0pt]{\ttfamily\footnotesize\fcolorbox{gray}{CodeBgColor}{\mystrut(6,1) #1}}}
+\newcommand{\StructRef}[1]{\setlength{\fboxsep}{2pt}\raisebox{0pt}[0pt][0pt]{\ttfamily\footnotesize\fcolorbox{gray}{StructBgColor}{\mystrut(6,1) #1}}}
+
+\newenvironment{CFunctionApi}[2]%
+	{%
+		\begin{tabu}[c]{| >{\ttfamily\scriptsize}p{2.0in}  >{\footnotesize}p{3.85in} |}%
+		\taburulecolor{gray}%
+		\hline%
+		\multicolumn{2}{|l|}{\ttfamily\small\cellcolor{CodeApiBgColor}#1} \\ \hline%
+		\multicolumn{2}{|l|}{\small#2} \\ \hline%
+	}%
+	{%
+		\hline%
+		\end{tabu}%
+	}%
+
+\newenvironment{CStructApi}[1]%
+	{%
+		\begin{tabu}[c]{| >{\ttfamily\scriptsize}p{2.0in}  >{\footnotesize}p{2.5in} |}%
+		\taburulecolor{gray}%
+		\hline%
+		\multicolumn{2}{|l|}{\ttfamily\small\cellcolor{StructApiBgColor}#1} \\ \hline%
+	}%
+	{%
+		\hline%
+		\end{tabu}%
+	}%
+
+\newenvironment{PropertyTable}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} m{1in} m{1in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{PropertyTableRelated}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} m{1in} m{1in} m{1in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{PropertyTableContains}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.4in} m{0.8in} m{1.75in} m{0.3in} m{0.6in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{ValueTable}%
+	{%
+		\small\def\arraystretch{1.5}%
+		\begin{tabu}{ >{\columncolor{white}} m{1.0in}  m{4.0in} }%
+			\rowfont{\color{black}\cellcolor{white}}%
+			\taburulecolor{SmokeyDarkBlue}%
+			\toprule%
+	}%
+	{%
+		\bottomrule%
+		\end{tabu}%
+	}
+
+\newenvironment{ColorOptionsTable}%
+	{%
+		\small%
+		\def\arraystretch{1.3}%
+		\begin{tabu}{>{\columncolor{white}} p{1.0in} >{\footnotesize\ttfamily} p{3.45in} }%
+			\taburulecolor{SmokeyBlue}%
+			\toprule%
+	}%
+	{%
+		\bottomrule%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{SrcSpecifierTable}%
+	{%
+		\small%
+		\begin{tabu}{>{\footnotesize\ttfamily} p{2.3in} p{3.5in} }%
+			\taburulecolor{SmokeyBlue}%
+			\toprule%
+	}%
+	{%
+		\bottomrule%
+		\end{tabu}%
+	}
+
+\newenvironment{FormatOptionSpecifierTable}%
+	{%
+		\small%
+		\begin{tabu}{>{\footnotesize\ttfamily} p{0.7in} p{2.5in} }%
+			\taburulecolor{SmokeyBlue}%
+			\toprule%
+	}%
+	{%
+		\bottomrule%
+		\end{tabu}%
+	}
+
+\newenvironment{PdcaTable}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\newcommand{\mc}[2]{\multicolumn{##1}{c|}{##2}}%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} | >{\centering}m{1in} | >{\centering}m{1in} | >{\centering}m{1in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\everyrow{\hline}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{StatusScreenTable}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{ApiTable}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1in} m{0.5in} m{0.5in} m{2.75in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{LuaStruct}%
+	{%
+		\vspace{\SmokeyTableParskipTop}%
+		\small%
+		\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1in} m{0.5in} m{3.5in} |}%
+			\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+			\taburulecolor{SmokeyBlue}%
+			\hline%
+	}%
+	{%
+			\hline%
+		\end{tabu}%
+		\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{DirectoryTree}%
+	{%
+		\newcommand{\Floppy}{{\color{SmokeyBlue}\FloppySym}}%
+		\newcommand{\ClosedFolder}{{\color{SmokeyBlue}\ClosedFolderSym}}%
+		\newcommand{\OpenFolder}{{\color{SmokeyBlue}\OpenFolderSym}}%
+		% These commands are a wrapper around the TikZ notation in order
+		% to automatically add decorations around certain node labels.
+		%
+		%     \node {foo} 
+		%         child { node {bar}
+		%             child { node {baz} }
+		%             }
+		%         child { node {boo}
+		%             child { node {bah} }
+		%             }
+		%         ;
+		%
+		% There's a lot of \expandafter because we need to expand
+		% *EVERYTHING* at the top level before handing parsing control
+		% over to TikZ, which does not do LaTeX expansion.
+		%
+		% Also, it appears that nesting \def or \edef inside another
+		% \def or \edef just doesn't work, so \Root has a different
+		% implementation style than \File or \Directory.
+		\newcommand{\DiskRoot}[2]{%
+			\edef\RootLabel{##1}%
+			\edef\RootChild{##2}%
+			\expandafter\expandafter%
+			\expandafter\node%
+			\expandafter\expandafter%
+			\expandafter{%
+				\expandafter\expandafter%
+				\expandafter\Floppy%
+				\expandafter\expandafter%
+				\expandafter{%
+				\expandafter\expandafter%
+				\expandafter}%
+				\expandafter\expandafter%
+				\expandafter\ %
+				\expandafter\RootLabel%
+			\expandafter}%
+			\RootChild%
+			;%
+		}%
+		\newcommand{\Root}[2]{%
+			\edef\RootLabel{##1}%
+			\edef\RootChild{##2}%
+			\expandafter\expandafter%
+			\expandafter\node%
+			\expandafter\expandafter%
+			\expandafter{%
+				\expandafter\expandafter%
+				\expandafter\OpenFolder%
+				\expandafter\expandafter%
+				\expandafter{%
+				\expandafter\expandafter%
+				\expandafter}%
+				\expandafter\expandafter%
+				\expandafter\ %
+				\expandafter\RootLabel%
+			\expandafter}%
+			\RootChild%
+			;%
+		}%
+		\newcommand{\File}[1]{child{node{\noexpand##1}}}%
+		\newcommand{\ClosedDirectory}[1]{%
+			\expandafter child%
+			\expandafter{%
+				\expandafter node%
+				\expandafter{%
+					\expandafter\noexpand%
+					\expandafter\ClosedFolder%
+					\expandafter{%
+					\expandafter}%
+					\expandafter\ %
+					\noexpand##1%
+				}%
+			}%
+		}%
+		\newcommand{\Directory}[2]{%
+			\expandafter child%
+			\expandafter{%
+				\expandafter node%
+					\expandafter{%
+						\expandafter\noexpand%
+						\expandafter\OpenFolder%
+						\expandafter{%
+						\expandafter}%
+						\expandafter\ %
+						\expandafter\noexpand%
+						\expandafter##1%
+					\expandafter}%
+				##2%
+			}%
+		}%
+		%\hspace{\leftmargini}
+		\small%
+		\begin{center}%
+		\begin{tikzpicture}[dirtree]%
+	}%
+	{%
+		\end{tikzpicture}%
+		\end{center}%
+	}
+
+\newlength{\SideBySideTopSep}
+\newcommand{\SideBySideDirectories}[2]{%
+	% Emulate the {center} environment's list-style formatting
+	\setlength{\SideBySideTopSep}{\topsep}%
+	\addtolength{\SideBySideTopSep}{\parskip}%
+	% The following \raisebox calls place all content below the baseline,
+	% so compensate by pulling them up one line
+	\addtolength{\SideBySideTopSep}{-\baselineskip}%
+	\vspace{\SideBySideTopSep}%
+	%\hfill%
+	\makebox[0.49\linewidth][r]{%
+		\raisebox{-\height}{%
+		\begin{minipage}{0.49\linewidth}%
+		#1%
+		\end{minipage}%
+		}%
+	}%
+	\hfill%
+	\makebox[0.49\linewidth][l]{%
+		\raisebox{-\height}{%
+		\begin{minipage}{0.49\linewidth}%
+		#2%
+		\end{minipage}%
+		}%
+	}%
+	%\hfill\null%
+	\newline%
+	% More {center} emulation
+	\vspace{\topsep}%
+}
+\newcommand{\SideBySideBySideDirectories}[3]{%
+	% Emulate the {center} environment's list-style formatting
+	\setlength{\SideBySideTopSep}{\topsep}%
+	\addtolength{\SideBySideTopSep}{\parskip}%
+	% The following \raisebox calls place all content below the baseline,
+	% so compensate by pulling them up one line
+	\addtolength{\SideBySideTopSep}{-\baselineskip}%
+	\vspace{\SideBySideTopSep}%
+	%\hfill%
+	\makebox[0.33\linewidth][r]{%
+		\raisebox{-\height}{%
+		\begin{minipage}{0.33\linewidth}%
+		#1%
+		\end{minipage}%
+		}%
+	}%
+	\hfill%
+	\makebox[0.33\linewidth][c]{%
+		\raisebox{-\height}{%
+		\begin{minipage}{0.33\linewidth}%
+		#2%
+		\end{minipage}%
+		}%
+	}%
+	\hfill%
+	\makebox[0.33\linewidth][l]{%
+		\raisebox{-\height}{%
+		\begin{minipage}{0.33\linewidth}%
+		#3%
+		\end{minipage}%
+		}%
+	}%
+	%\hfill\null%
+	\newline%
+	% More {center} emulation
+	\vspace{\topsep}%
+}
+
+\usepackage{graphicx}
+\usepackage{twoopt}
+
+\newlengthval{\CenterImageVerticalMargin}{1ex plus 2ex minus 1ex}
+\newcommandtwoopt{\CenterImage}[3][\linewidth][\CenterImageVerticalMargin]{%
+	\begin{center}%
+		\vspace{#2}%
+		\includegraphics[width=#1]{#3}%
+		\vspace{#2}%
+	\end{center}%
+}
+
+\newenvironment{Equation}%
+	{\begin{center}}%
+	{\end{center}}
+
+\usepackage{ifthen}
+\makeatletter
+\newcommand{\iftt}[1]{\ifthenelse{\equal{\f@family}{\ttdefault}}{#1}{}}
+\makeatother
+
+\usepackage{xstring}
+\usepackage{verbatim}
+
+% Sequence properties
+\newcommand{\prop}[1]{{\itshape#1}}
+\newcommand{\propval}[1]{{\itshape#1}}
+% Library functions
+\newcommand{\func}[1]{\mbox{\itshape#1}}
+% NVRAM variables, Control bits
+\newcommand{\nvram}[1]{\mbox{\itshape#1}}
+\newcommand{\nvarg}[1]{\mbox{``#1''}}
+% Jargon (Smokey terminology)
+\newcommand{\jargon}[1]{{\bfseries#1}}
+% User-specified values (including command line arguments)
+\newcommand{\param}[1]{{\iftt{\bfseries}\itshape#1}}
+% Language keywords or in-line code
+\newcommand{\keyword}[1]{\mbox{\itshape#1}}
+% Command line programs and their prameters (excluding Mac OS X GUI apps)
+\newcommand{\cmdline}[1]{%
+	\mbox{%
+		\itshape%
+		\StrSubstitute%
+			{#1}%
+			{--}%
+			{{-}{-}}%
+	}%
+}
+% File names
+\newcommand{\filename}[1]{``#1''}
+\newcommand{\dirname}[1]{{\itshape#1}}
+
+\hyphenation{Number-Of-Times-To-Run}
+\hyphenation{Factory-Logs-Waiting-To-Be-Collected}
+\hyphenation{Log-Collector}
+\hyphenation{whe-ther}

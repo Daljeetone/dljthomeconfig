@@ -1,0 +1,111 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf470
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww15920\viewh8740\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\b\fs24 \cf0 \ul \ulc0 WiFi:
+\b0 \ulnone \
+\
+device -k WiFi -e power_on	->	wifi --on\
+device -k WiFi -e load_firmware	->	wifi --load_firmware\
+device -k WiFi -e passthrough	->	wifi --passthrough\
+device -k WiFi -e sleep		->	wifi --sleep\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+\cf0 device -k WiFi -e wake		->	wifi --wake\
+device -k WiFi -e dump_otp	->	wifi --dump_otp\
+device -k WiFi -e test_host_wake	->	wifi --test_host_wake\
+device -k WiFi -e test_host_rdy	->	wifi --test_host_rdy\
+device -k WiFi -e test_dev_rdy	->	wifi --test_dev_rdy\
+device -k WiFi -e test_uart		->	wifi --test_uart\
+device -k WiFi -e send_cmd 	->	wifi --send_cmd\
+device -k WiFi -p			->	wifi --properties\
+\
+To get an individual property:\
+\
+device -k Wifi -g module-revision	->	wifi --properties module-revision\
+\
+\
+
+\b \ul Bluetooth
+\b0 \ulnone \
+\
+device -k Bluetooth -e power_on		->	bluetooth --on\
+device -k Bluetooth -e load_firmware	->	bluetooth --load_firmware\
+device -k Bluetooth -e load_firmware <filename>	->	bluetooth --load_firmware <filename>\
+device -k Bluetooth -e passthrough	->	bluetooth --passthrough\
+device -k Bluetooth -e sleep		->	bluetooth --sleep\
+device -k Bluetooth -e wake		->	bluetooth --wake\
+device -k Bluetooth -e soft_reset		->	bluetooth --soft_reset\
+device -k Bluetooth -e loopback		->	bluetooth --loopback\
+device -k Bluetooth -e test_host_wake	->	bluetooth --test_host_wake\
+device -k Bluetooth -e test_sleep_wake	->	bluetooth --test_sleep_wake\
+device -k Bluetooth -e test_self_test	->	bluetooth --test_self_test\
+device -k Bluetooth -p			->	bluetooth --properties\
+\
+To get an individual property:\
+\
+device -k Bluetooth -g model		->	bluetooth --properties model\
+\
+\
+
+\b \ul Touch
+\b0 \ulnone \
+\
+device -k Touch -e power_on					->	touch --on\
+device -k Touch -e set_firmware_filename <filename>	->	touch --set_firmware_filename <filename>\
+device -k Touch -e load_firmware				->	touch --load_firmware\
+device -k Touch -e get_report <report id>			-> 	touch --get_report <report id>\
+device -k Touch -e set_report <report id> <byte1> <byte2>	->	touch --set_report "<byte1> <byte2>\'85"\
+device -k Touch -e get_image					->	touch --get_image\
+device -k Touch -e test_critical					->	touch --test critical --run\
+device -k Touch -e test_shorts					->	touch --test drive_shorts --run\
+device -k Touch -e test_pattern					->	touch --test pattern --run\
+device -k Touch -e test_sense					->	touch --test sense_shorts --run\
+device -k Touch -e test_memory					->	touch --test memory --run\
+device -k Touch -e test_slave_memory				->	touch --test slave_memory --run\
+device -k Touch -e test_offset					->	touch --test offset --run\
+device -k Touch -e test_gpio					->	touch --test gpio --run\
+device -k Touch -p							->	touch --properties\
+\
+To get an individual property:\
+\
+device -k Touch -g chip-id						->	touch --properties chip-id\
+\
+\ul New functionality:\ulnone \
+\
+Printing limits:\
+\
+:-) touch --print_limits\
+\
+Active limits (Min, Max):\
+\
+  critical: \
+	None\
+  memory: \
+	None\
+  slave_memory: \
+	None\
+  sense_shorts: \
+	OnePt: -11000.00, -6000.00\
+	ZeroPt: -10.00, -10.00\
+  drive_shorts: \
+	CurrentDelta: 0.30, 0.30\
+  offset: \
+	FcodeMaster: 36.00, 42.00\
+	FcodeSlave: 36.00, 42.00\
+	DCSIG: -10500.00, -7500.00\
+	DCSIG_COL_SLOPE: -3.00, 8.00\
+	DCSIG_COL_SLOPE_DELTA: 8.00, 8.00\
+	DCSIG_ROW_SLOPE: -4.00, 5.50\
+	DCSIG_ROW_SLOPE_DELTA: 5.00, 5.00\
+	DCSIG_UNIF: -160.00, 150.00\
+  pattern: \
+	OnePt: -25000.00, -13000.00\
+	ZeroPt: -200.00, -200.00\
+  gpio: \
+	None\
+:-)\
+\
+\
+}

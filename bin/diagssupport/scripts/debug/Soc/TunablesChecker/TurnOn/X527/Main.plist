@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SequenceName</key>
+	<string>TurnOn Sequence</string>
+	<key>SequenceVersion</key>
+	<string>20160208</string>
+	<key>SchemaFormat</key>
+	<integer>1</integer>
+	<key>BrickRequired</key>
+	<string>None</string>
+	<key>BehaviorOnFail</key>
+	<string>KeepGoing</string>
+	<key>NumberOfTimesToRun</key>
+	<integer>1</integer>
+	<key>Tests</key>
+	<array>
+		<dict>
+			<key>TestName</key>
+			<string>TurnOn</string>
+			<key>Tests</key>
+			<array>
+				<dict>
+					<key>TestName</key>
+					<string>TurnOnAll</string>
+					<key>NumberOfTimesToRun</key>
+					<integer>1</integer>
+					<key>ActionToExecute</key>
+					<string>TurnOnAll</string>
+				</dict>											
+			</array>
+			<key>NumberOfTimesToRun</key>
+			<integer>1</integer>
+		</dict>	
+	</array>
+</dict>
+</plist>

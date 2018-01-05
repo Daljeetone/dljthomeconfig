@@ -1,0 +1,133 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf390
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww34220\viewh25440\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\b\fs32 \cf0 EFI Display Programming Guide\
+
+\b0\fs24 \
+This document explains the major changes that have taken place as part of this re-architecture effort, and how to go about using and supporting future platforms.\
+\
+
+\b\fs28 1. Display Configuration\
+\
+
+\b0\fs24 Previously the display configuration i.e. mode information, Display PHY specific information ( like Mipi lanes, Displayport link rate etc ) was included as defines in the PlatformSpecific.h file. Now this is part of \
+the PlatformDisplay.h file. Also now they are not just separate defines, but are part of the 
+\i APPLE_DISPLAY_CONFIG
+\i0  structure defined in AppleDisplayMode.h\
+\
+The PlatformDisplay.h file has a define PLATFORM_DISPLAYS which is an array of 
+\i APPLE_DISPLAY_CONFIG. 
+\i0 For all current platforms this contains only one element but in case we have a product that supports\
+one of many possible displays,  (for example think of N56 & N61 as being a single product. ) we will have one element corresponding to each display configuration. \
+\
+A couple of things to note here; the 
+\i APPLE_DISPLAY_CONFIG 
+\i0 has a DisplayPipeIndex field that identifies the DisplayPipe with which this Display is supposed to work. It also has a DisplayId field; this is not \
+the Id read from the Display Panel but something that can be used to distinguish displays at boot time ( for example a set of gpios similar to BOARD_ID )\
+\
+
+\b\fs28 2. Display Platform Driver\
+\
+
+\b0\fs24 Continuing from the previous section, this driver implements the GetDisplayId() API. As of now all platforms use the Common DisplayPlatform which returns a DisplayId of 0. This is because the existing products\
+don't need to differentiate displays based on Display ID because there is only 1 display that they have to support. \
+\
+I have created a separate driver for N27 since this will need to support two separate display configurations. \
+\
+
+\b\fs28 3. Display Device Path Driver\
+\
+
+\b0\fs24 This is a common driver that is used by all the platforms. Based on the PLATFORM_DISPLAYS define & the DisplayPlatform driver it figures out which display configuration is to be supported; subsequently it installs a \
+display device path. This device path has a copy of the 
+\i APPLE_DISPLAY_CONFIG  
+\i0 structure that defines the display. In the new architecture pretty much everything hinges on the presence of the display device path. \
+\
+
+\b\fs28 4. The DisplayPipe\
+\
+
+\b0\fs24 Previously we used to install an instance of the display pipe protocol for every display pipe, even though we were not using it. Now the DisplayPipe driver only installs a protocol instance based on the Display Device Path.\
+On current platforms we only ever use one display  pipe and hence we only have one instance of these. The other thing has changed is that we no longer use the DeviceInfo protocol to distinguish display pipe instances. Since \
+the DisplayPipe instance is installed on the same EFI_HANDLE as the DisplayDevicePath instance we can use that in order to figure out which display pipe instance it is.\
+\
+You will notice that other drivers, such as the Camra ISP driver/test and the Barcode driver/test that were using DeviceInfo to pick the correct instance of DisplayPipe no longer need to do this. They simply locate the DispayPipe\
+protocol and since we only have one instance they are guaranteed to pick up the correct one.\
+\
+
+\b\fs28 5. Display Backend\
+\
+
+\b0\fs24 We used to install two separate protocols; the CLCD protocol and the AppleDisplayBackEnd protocol that were pretty much doing the  same thing. Going ahead the CLCD protocol has been deprecated; we only use the AppleDisplayBackEnd\
+protocol. Also there is only one instance of the backend protocol in our system. The SoC that we have been working on don't have multiple backends; so in case that changes we will need to revisit this in the future so that we can have multiple \
+instances of the backend protocol\
+\
+
+\b\fs28 6. Display Phy Protocols\
+\
+
+\b0\fs24 We have two different phy protocols that we currently use; the DSIM protocol that is used for the Mipi displays on all phone products & the DisplayPort protocol that are used for the EDP (Embedded DP) on iPads and AppleTv. There isn't a lot that has changed here. One major change ins that the APIs now have Init() & Shutdown() that simply initialize the phy & a separate Configure() API that sets up the PHY for a particular display configuration. This is true for the DisplayPipe protocol as well. Earlier the configuration was done as part of the Init() API. The motivation behind this change was to de-couple initialization and configuration so that we can re-configure the phy without having to go through the entire re-initialization process ( particularly applicable to AppleTv )\
+\
+The DisplayPort driver no longer installs the DisplayPort and Display devices. This is now all taken care of by the 'display' command.\
+\
+
+\b\fs28 7. Graphics Output Protocol ( GOP )
+\b0\fs24 \
+\
+This has undergone a major change. Earlier the GOP driver would also initialize the entire display subsystem. Now it's only responsible for setting up the frame buffer for a specific display mode and implementing the Blt() routine that is used to paint the screen. Like the DisplayPipe driver even this uses a Binding protocol to instance an instance of the GOP on the same EFI_HANDLE on which the DisplayDevicePath protocol is present. \
+\
+Another change that was made for simplicity was to remove the orientation of the frame buffer, this just made the code more cumbersome and I haven't seen it used anywhere so far.\
+\
+A RegisterModes() API was also added to GOP so as to be able to register display modes post the installation of the protocol. This is needed in case of AppleTv where mode information is not available a-priori. \
+\
+
+\b\fs28 8. The Display Panel
+\b0\fs24 \
+\
+The AppleDisplayPanel is a new protocol that provides APIs to turn the panel on/off. Earlier the initialization and shutdown sequences were part of the PHY drivers. This made it impossible for the PHY driver to service 2 panels that had different initialization/shutdown sequences. As of we have 3 drivers that implement this protocol; the Pinot driver for phones, EdpPanel driver for iPads, and the TvDpPanel driver for Apple TV. Similar to the DisplayPipe protocol this uses a binding protocol to install itself on the same EFI_HANDLE on which the DisplayDevicePath is installed. \
+\
+The AppleDisplayPanel protocol also has the AppleParams API to expose parameters, and a new Methods API ( borrowed from the Touch driver; I did not call it tests because this encompasses a lot more things than just tests ). The EdpPanel driver uses this to expose all the functions that were earlier supported by the Magnolia Device.\
+\
+
+\b\fs28 9. The Apple Display\
+\
+
+\b0\fs24 This is the main driver that orchestrates the turning on/off of the entire display subsystem. This is common to all the platforms in the system. It uses a Binding protocol to wait for the presence of the following protocol instances on a single EFI_HANDLE\
+	- Display Device Path \
+	- Display Pipe \
+	- Display Panel \
+	- GOP\
+\
+Once all of them are available it installs itself on the same EFI_HANDLE and calls the Init() API that turns on the display. In case of external displays like AppleTv, if no display is detected it skips the ON process. \
+\
+In addition to turning the display subsystem on/off it also provides Get/Set/List  Modes APIs. The SetMode() API can only be used by external displays that support multiple modes. \
+\
+
+\b\fs28 10. Test Layer\
+\
+
+\b0\fs24 The test layer now looks a lot different. All platforms now use the 'display' command to do things like turning the display on/off, changing modes, and getting display related information. The 'lcm' command no longer exists because this is achieved by the 'display' driver. As before the 'pattern' command can still be used\
+to display various patterns on the screen. The 'mipi' command has been overhauled as well. It only does things related to mipi and nothing else. \
+\
+As for AppleTvs and iPads the DisplayController, DisplayPort & Display devices go away. \
+\
+\
+
+\b\fs28 11. Display Bringup 
+\b0\fs24 \
+\
+If you are doing bring up for a new display you need to do the following\
+	- Create a PlatformDisplay.h file that has the PLATFORM_DISPLAYS for your display.\
+	- If you are bringing up a brand new display that has init/shutdown sequences different from the 3 drivers described in (8) you will have to create a separate driver for it.\
+	- In case you plan to support multiple displays be aware that you might need to write your own Display Platfrom driver\
+	- Make sure you add the DXEs for (2), (3), (8), and (9)\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\i \cf0 Author  : Alhad Palkar\
+Date     : Dec 20, 2013,\
+Contact: apalkar@apple.com\
+}

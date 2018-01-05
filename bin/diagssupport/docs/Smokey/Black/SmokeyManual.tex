@@ -1,0 +1,2682 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+% Body text (only) is indented by a small amount
+\newlength{\BodyIndentLeft}
+\setlength{\BodyIndentLeft}{0.75in}
+\newlength{\TransverseMargin}
+\setlength{\TransverseMargin}{1in}
+\newlength{\TopMargin}
+\setlength{\TopMargin}{1.125in}
+\newlength{\BottomMargin}
+\setlength{\BottomMargin}{1in}
+
+\usepackage[letterpaper]{geometry}
+\newlength{\LeftMargin}
+\setlength{\LeftMargin}{\TransverseMargin}
+\addtolength{\LeftMargin}{\BodyIndentLeft}
+\geometry{top=\TopMargin, bottom=\BottomMargin, left=\LeftMargin, right=\TransverseMargin}
+
+\usepackage{fontspec}
+% Change to Apple-friendly font
+% Fix en- and em-dashes
+\setmainfont[Ligatures=TeX]{Helvetica Neue}
+\setmonofont[Scale=MatchLowercase]{Menlo}
+\newcommand{\LeftArrowHook}{\char"21A9}
+\newcommand{\RightArrowHook}{\char"21AA}
+\newcommand{\AppleLogo}{\char"F8FF}
+
+\usepackage[table]{xcolor}
+\definecolor{AppleGray}{RGB}{153,153,153}
+\definecolor{SmokeyDarkBlue}{RGB}{0,100,185}
+\definecolor{SmokeyBlue}{RGB}{28,122,193}
+\definecolor{SmokeyLightBlue}{RGB}{212,223,238}
+
+\usepackage{titlesec}
+% Sections create new pages
+\newcommand{\sectionbreak}{\clearpage}
+% Enlarge \subsection and \subsubsection text
+% Put \section and \subsection at the same indentation
+% Indent \subsubsection from \subsection inwards by \BodyIndentLeft
+% Outdent everything by \BodyIndentLeft
+\newlength{\TitleWidth}
+\newcommand{\Outdented}[1]{\settowidth{\TitleWidth}{#1}\hspace{-\TitleWidth}#1}
+% Use \textcolor instead of \color because the latter allows LaTeX to
+% introduce a page break immediately after the title
+\titleformat{\section}%
+	{\bf\Huge}%
+	{\Outdented{\textcolor{SmokeyDarkBlue}{\thesection}\hspace{0.25in}}}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titleformat{\subsection}%
+	{\bf\Large}%
+	{\Outdented{\textcolor{SmokeyDarkBlue}{\thesubsection}\hspace{0.25in}}}%
+	{0in}%
+	{\textcolor{SmokeyDarkBlue}}
+\titleformat{\subsubsection}%
+	{\bf\large}%
+	{}%
+	{0in}%
+	{\textcolor{SmokeyBlue}}
+\titlespacing{\subsubsection}%
+	{0in}%
+	{\parskip}%
+	{0in}
+% 1.2x line spacing
+%\linespread{1.2}
+
+\usepackage{fancyhdr}
+% Notice on left; Page number on right
+% Need \mbox to fix vertical alignment between logo and page number
+\lhead{\mbox{\color{AppleGray}\AppleLogo} Apple Confidential --- DO NOT DISTRIBUTE}
+\chead{}
+\rhead{\thepage}
+%\renewcommand{\headrulewidth}{0in}
+% No footer
+\lfoot{}
+\cfoot{}
+\rfoot{}
+%\renewcommand{\footrulewidth}{1pt}
+% Suppress warning about \headheight being too small
+\setlength{\headheight}{1.5\baselineskip}
+\pagestyle{fancy}
+
+\usepackage[hang,flushmargin,bottom]{footmisc}
+%\renewcommand{\footnoterule}{}
+
+% Block paragraph format
+\usepackage{parskip}
+
+\usepackage{hyperref}
+
+\usepackage{tikz}
+\usetikzlibrary{decorations}
+
+\pgfdeclaredecoration{complete sines}{initial}{
+	\state{initial}[
+		width=+0pt,
+		next state=sine,
+		persistent precomputation={
+			\pgfmathsetmacro\matchinglength{
+				\pgfdecoratedinputsegmentlength / int(\pgfdecoratedinputsegmentlength/\pgfdecorationsegmentlength)
+				}
+			\setlength{\pgfdecorationsegmentlength}{\matchinglength pt}
+			}
+		]
+		{}
+	\state{sine}[width=\pgfdecorationsegmentlength]{
+		\pgfpathsine{\pgfpoint{0.25\pgfdecorationsegmentlength}{0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathcosine{\pgfpoint{0.25\pgfdecorationsegmentlength}{-0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathsine{\pgfpoint{0.25\pgfdecorationsegmentlength}{-0.5\pgfdecorationsegmentamplitude}}
+		\pgfpathcosine{\pgfpoint{0.25\pgfdecorationsegmentlength}{0.5\pgfdecorationsegmentamplitude}}
+		}
+	\state{final}{}
+	}
+
+\newcommand{\SquareBullet}{\rule[0.2ex]{1ex}{1ex}}
+
+% Documentation: http://mirrors.ibiblio.org/CTAN/macros/latex/contrib/enumitem/enumitem.pdf
+\usepackage{enumitem}
+
+% Diagram of the various dimensions for lists: http://www.ntg.nl/maps/11/33.pdf
+%\setlist{parsep=0.1\baselineskip, itemsep=0.2\baselineskip}
+\setlist{labelsep=0.5em}
+
+\newlist{Process}{enumerate}{3}
+\setlist[Process,1]{%
+	label=\textbf{\color{SmokeyBlue}\arabic*.},%
+	leftmargin=0in%
+	}
+\setlist[Process,2]{label=\textbf{\color{SmokeyBlue}\alph*.}}
+\setlist[Process,3]{label=\textbf{\color{SmokeyBlue}\roman*.}}
+
+\setlist[itemize]{label={\color{SmokeyBlue}$\bullet$}}
+
+\newlist{Definition}{description}{3}
+\newcommand{\DefinitionFormat}[1]{%
+	\makebox[0in][r]{\textbf{\color{SmokeyBlue}$\bullet$\hspace{0.5em}}}%
+	#1\textnormal{ --- }%
+	}
+\setlist[Definition]{%
+	leftmargin=\leftmargini,%
+	labelsep=0in,%
+	labelindent=\leftmargin,%
+	style=standard,%
+	format=\DefinitionFormat%
+	}
+
+\newlist{Property}{description}{1}
+\newcommand{\PropertyFormat}[1]{%
+	\makebox[0in][r]{\textbf{\color{SmokeyBlue}$\SquareBullet$\hspace{0.6em}}}%
+	#1\textnormal{ --- }%
+	}
+\setlist[Property]{%
+	leftmargin=0in,%
+	labelsep=0in,%
+	labelindent=\leftmargin,%
+	style=standard,%
+	format=\PropertyFormat%
+	}
+
+\newcounter{LogSectioni}
+\newcommand{\LogSectionFormat}[1]{%
+	\stepcounter{LogSectioni}%
+	\makebox[0in][r]{\textbf{\color{SmokeyBlue}\theLogSectioni.$\;$}}%
+	#1\textnormal{ --- }%
+	}
+\newlist{LogSection}{description}{3}
+\setlist[LogSection,1]{%
+	leftmargin=0in,%
+	labelsep=0in,%
+	style=standard,%
+	format=\LogSectionFormat,%
+	before=\setcounter{LogSectioni}{0}%
+	}
+
+\usepackage{mylistings/listings}
+\lstset{%
+	% Why does \color{SmokeyBlue} not work?
+	%backgroundcolor=\color{SmokeyBlue},%
+	backgroundcolor=\color[RGB]{252,251,220},%
+	frame=single,%
+	rulecolor=\color{SmokeyDarkBlue},%
+	%rulecolor=\color[RGB]{0,0,0},%
+	keepspaces=true,%
+	basicstyle=\footnotesize\ttfamily,%
+	tabsize=4,%
+	linewidth=4in,%
+	minipagewidth=\textwidth%
+	}
+\lstdefinestyle{SettingStyle}{%
+	backgroundcolor=\color[RGB]{220,251,220},%
+	linewidth=4in%
+	}
+\lstdefinestyle{LogExcerptStyle}{%
+	backgroundcolor=\color[RGB]{220,251,220},%
+	linewidth=\textwidth%
+	}
+\lstdefinestyle{AnnotedLogFileStyle}{%
+	backgroundcolor=\color[RGB]{220,251,220},%
+	linewidth=\textwidth,%
+	basicstyle=\scriptsize\ttfamily,%
+	xleftmargin=0.5in,%
+	tabsize=8,%
+	breaklines=true,%
+	breakatwhitespace=false,%
+	breakindent=0in,%
+	breakautoindent=false,%
+	prebreak=\raisebox{0in}[0in][0in]{\large$\hookleftarrow$},%
+	%postbreak=\RightArrowHook%
+	}
+\lstdefinestyle{CommandLineStyle}{%
+	backgroundcolor=\color[RGB]{220,220,251},%
+	linewidth=4in%
+	}
+
+\newcommand{\SmokeyListingParskip}{0.5\parskip}
+\newcommand{\SmokeyTableParskipTop}{0.5\parskip}
+\newcommand{\SmokeyTableParskipBottom}{\parskip}
+
+\lstnewenvironment{LuaCode}[1][]{%
+	\vspace{\SmokeyListingParskip}%
+	\lstset{#1, minipage}%
+	}%
+	{}
+\lstnewenvironment{Setting}{%
+	\vspace{\SmokeyListingParskip}%
+	\lstset{style=SettingStyle,escapechar=~}%
+	}%
+	{}
+\newlength{\ElideShift}
+\lstnewenvironment{LogExcerpt}{%
+	\vspace{\SmokeyListingParskip}%
+	\lstset{style=LogExcerptStyle,escapechar=~}%
+	\newcommand{\elide}{%
+		\makebox[0in][l]{%
+			% Align past the listing frame (based on framesep length)
+			\setlength{\ElideShift}{-5.2pt}%
+			\addtolength{\ElideShift}{-2em}%
+			\hspace{\ElideShift}%
+			\begin{tikzpicture}[%
+				every path/.style={%
+					decoration={%
+						complete sines,%
+						segment length=2em,%
+						amplitude=0.5ex%
+						},%
+					decorate%
+					}%
+				]%
+				% Knock-out color
+				\draw[color=white, yshift=0.475ex, line width=0.575ex] (-2em-0.5pt,0) -- (\linewidth+6.7pt+2em,0);%
+				% Match frame color
+				\draw[color=SmokeyDarkBlue, yshift=0.85ex] (0,0) -- (\linewidth+6.7pt,0);%
+				\draw[color=SmokeyDarkBlue, yshift=0.15ex] (0,0) -- (\linewidth+6.7pt,0);%
+			\end{tikzpicture}%
+			}%
+		}%
+	}%
+	{}
+\lstnewenvironment{AnnotedLogFile}{%
+	\vspace{\SmokeyListingParskip}%
+	\lstset{style=AnnotedLogFileStyle,escapechar=~}%
+	% Custom \marginpar-like command
+	\renewcommand{\mp}[1]{%
+		\makebox[0in][r]{%
+			\color{SmokeyDarkBlue}%
+			\raisebox{0in}[0in][0in]{%
+				\fbox{%
+					\normalfont\bfseries\scriptsize##1%
+					}%
+				}%
+			\rule[0.5ex]{2em}{\fboxrule}%
+			\hspace{3pt}%
+			}%
+		}%
+	}%
+	{}
+\lstnewenvironment{CommandLine}{%
+	\vspace{\SmokeyListingParskip}%
+	\lstset{style=CommandLineStyle,escapechar=~}%
+	}%
+	{}
+
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{multirow}
+
+\usepackage{array}
+\renewcommand{\arraystretch}{1.5}
+
+\newenvironment{PropertyTable}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} m{1in} m{1in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{PropertyTableContains}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} m{0.8in} m{2in} m{0.6in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{ValueTable}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.25in} m{1in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{PdcaTable}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\newcommand{\mc}[2]{\multicolumn{##1}{c|}{##2}}%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1.5in} | >{\centering}m{1in} | >{\centering}m{1in} | >{\centering}m{1in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\everyrow{\hline}%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{StatusScreenTable}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} >{\centering}m{0.22\textwidth} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{ApiTable}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1in} m{0.5in} m{0.5in} m{2.75in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\newenvironment{LuaStruct}{%
+	\vspace{\SmokeyTableParskipTop}%
+	\small%
+	\begin{tabu}{| >{\columncolor{SmokeyLightBlue}}m{1in} m{0.5in} m{3.5in} |}%
+		\rowfont{\color{white}\cellcolor{SmokeyBlue}}%
+		\taburulecolor{SmokeyBlue}%
+		\hline%
+	}%
+	{%
+		\hline%
+	\end{tabu}%
+	\vspace{\SmokeyTableParskipBottom}%
+	}
+
+\usepackage{menukeys}
+
+\usepackage{graphicx}
+\usepackage{etoolbox}
+\usepackage{twoopt}
+
+\newlength{\CenterImageVerticalMargin}
+\setlength{\CenterImageVerticalMargin}{1ex plus 2ex minus 1ex}
+\newcommandtwoopt{\CenterImage}[3][\linewidth][\CenterImageVerticalMargin]{%
+	\begin{centering}%
+		\vspace{#2}%
+		\includegraphics[width=#1]{#3}%
+		\vspace{#2}%
+	\end{centering}%
+	}
+
+\usepackage{ifthen}
+\makeatletter
+\newcommand{\iftt}[1]{\ifthenelse{\equal{\f@family}{\ttdefault}}{#1}{}}
+\makeatother
+
+% Properties
+\newcommand{\prop}[1]{{\itshape#1}}
+% Library functions
+\newcommand{\func}[1]{\mbox{\itshape#1}}
+% NVRAM variables
+\newcommand{\nvram}[1]{\mbox{\itshape#1}}
+\newcommand{\nvarg}[1]{\mbox{``#1''}}
+% Jargon (Smokey terminology)
+\newcommand{\jargon}[1]{{\bfseries#1}}
+% User-specified values
+\newcommand{\param}[1]{{\iftt{\bfseries}{}\itshape#1}}
+% Language keywords or in-line code
+\newcommand{\keyword}[1]{\mbox{\ttfamily#1}}
+
+\hyphenation{Number-Of-Times-To-Run}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newgeometry{top=\TopMargin, bottom=\BottomMargin, hmargin=\TransverseMargin}
+
+\begin{titlepage}
+
+\setlength{\parindent}{0in}
+{
+\fontsize{36}{36}\selectfont
+{\color{AppleGray}\AppleLogo} \\[\baselineskip]
+\fontsize{28}{36}\selectfont
+\textbf{Smokey EFI Command Sequencer} \\[0.1\baselineskip]
+\textbf{\color{SmokeyBlue}User and Technical Manual} \\
+\rule{\linewidth}{1pt} \\[0.25in]
+}
+
+Version ``Black'' \\
+October 17, 2012 \\[0.25in]
+
+\textbf{Authors:}
+% Kill vertical space due to \begin{tabbing}
+\vspace{-\topsep}
+\vspace{-\partopsep}
+\begin{tabbing}
+\hspace{2in} \= \kill
+Chanh-Duy Tran \> \texttt{ctran@apple.com}
+\end{tabbing}
+
+\vfill
+
+\begin{center}
+Apple Confidential --- DO NOT DISTRIBUTE
+\end{center}
+
+\end{titlepage}
+
+\clearpage
+\fancyhfoffset[r]{0in}
+\pagenumbering{gobble}
+
+\setcounter{tocdepth}{2}
+\tableofcontents
+
+\clearpage
+\fancyhfoffset[l]{\BodyIndentLeft}
+\fancyhfoffset[r]{0in}
+% TODO: Why does using \restoregeometry instead of \newgeometry cause the
+% following pages to shift downards?
+%\restoregeometry
+\newgeometry{top=\TopMargin, bottom=\BottomMargin, left=\LeftMargin, right=\TransverseMargin}
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\subsection{What is Smokey?}
+
+Smokey is a scripting environment within EFI diagnostics on mobile platforms,
+including iPhones, iPads, iPods, and AppleTV.  Its goals are to enable
+automated low-level testing and data collection across factory and engineering
+scenarios.
+
+\subsection{Audience}
+
+This document is intended for the engineers involved with the development and
+use of the EFI diagnostic environment.
+
+On the producer side, this manual addresses EFI diagnostic firmware engineers,
+the people who will maintain and enhance Smokey.
+
+On the consumer side, this manual addresses factory and non-factory users.
+Factory users include station DRIs.  Non-factory users include hardware
+engineers needing a platform for validation or stress testing.
+
+\subsection{Document Objective}
+
+This document is generally intended to be an all-around reference, but written
+with the intent of bringing Smokey's core users up to speed about the
+environment.  
+
+On the producer side, this manual intends to educate software engineers about
+the functionality and intent of the system.  The goal is to exposit the design
+and shed light on the considerations required to either maintain or enhance the
+software.
+
+On the consumer side, this manual presents the features available in the Smokey
+environment.  Additionally, time will be spent to document requirements,
+prerequisites, and expected behaviors.  The goal is to arm users with the
+knowledge to bootstrap their own test sequences.
+
+\section{Lua Fundamentals}
+
+\subsection{Lua}
+
+The Lua language is a product of the Tecgraf group at PUC-Rio (Pontifical
+Catholic University of Rio de Janeiro) and intended to be a powerful, fast,
+lightweight, embeddable scripting language.  It has dynamic data types,
+built-in support for associative arrays, and offers automatic memory
+management.  Scripts are internally translated into byte code that is executed
+by an internal virtual machine.
+
+The name ``Lua'' is Portuguese for ``moon''.  Scripts in the Lua language have the
+extension ``.lua'' and are typically encoded in ASCII.
+
+Lua is the adopted language of the Smokey environment.  On top of the benefits
+listed above, Lua was chosen because both the interpreter and its built-in
+libraries are easy to port to the EFI environment without compromising their
+feature sets.  Additionally, the language, code base, and community support are
+both mature and stable.
+
+All interactions between users (i.e. scripts) and the platform (e.g. lower
+software stack, hardware drivers) will be in the form of Lua function calls,
+either direct or via tables, and Lua  data types.  Smokey provides custom
+custom APIs to make these interactions easier to manage.
+
+Since it is not the intent of this document to teach Lua (see References
+section), the following is only meant to help kick-start seasoned programmers.
+
+\subsection{Data}
+
+\subsubsection{Built-in Types}
+
+Lua supports 6 built-in types that are useful here.
+
+\begin{Definition}
+
+\item[nil] Its only value is \keyword{nil}
+
+\item[boolean] Its only values are \keyword{true} and \keyword{false}
+
+\item[string] Doubly and singly quoted text such as \keyword{"foo"} and \keyword{'bar'}
+
+\item[number] Decimal integer (\keyword{123}), Hex (\keyword{0x123}), and floating point (\keyword{10.5})
+
+\item[table] Associative array between a key of any type and a value of any
+	type
+
+\item[function] An optionally named chunk of executable code declared by the
+	\keyword{function} keyword
+
+\end{Definition}
+
+\subsubsection{Dynamism}
+
+Lua variables are dynamically typed.  That is, they do not have a set type and
+will become the type of the value being assigned.  Lua will attempt to ``do the
+right thing'' and cast between strings, booleans, and numbers.
+
+There are no mechanisms to restrict types, there is an operator to inspect
+types.
+
+\subsubsection{Scope}
+
+Variables in Lua are defined the moment they are used and exist until the end
+of the code chunk in which it was used.
+
+Between nested code chunks, it is important to remember that Lua variables are
+lexically scoped.  In the case that the same variable name is amongst different
+nesting levels, the nested chunks can ensure that they are using their own
+variable by applying the \keyword{local} keyword during variable declaration.
+
+\subsubsection{Multiple Values}
+
+Lua supports assigning and returning multiple values at a time through use of
+the comma operator.  Any missing value in a tuple is automatically assigned the
+value \keyword{nil}.
+
+\begin{LuaCode}
+a, b = 1, 2   -- a = 1 and b = 2
+c, d = nil, 3 -- c = nil and d = 3
+e, f = 4      -- e = 4 and f = nil
+\end{LuaCode}
+
+\begin{LuaCode}
+function foo ()
+	-- Return two values
+	return 1, 2
+end
+\end{LuaCode}
+
+\subsection{Comments}
+
+Lua comments are akin to C++ comments.
+
+\subsubsection{Single-line Comments}
+
+Basic comments start with a double dash and run until the end of the line.
+
+\begin{LuaCode}
+-- This line is not code
+\end{LuaCode}
+
+\begin{LuaCode}
+x = 3 -- Assign 3 to the variable 'x'
+\end{LuaCode}
+
+\subsubsection{Delimited Comments}
+
+\begin{LuaCode}
+--[[
+This line is not code
+Nor is this line
+--]]
+\end{LuaCode}
+
+\begin{LuaCode}
+y = --[[ These words are not code --]] 5
+\end{LuaCode}
+
+\subsection{Boolean Expressions}
+
+\subsubsection{Relational Operators}
+
+Lua has all the basic relational operators.
+
+\begin{LuaCode}
+a > b  -- Greater than
+a < b  -- Less than
+a >= b -- Greater/Equal
+a >= b -- Less/Equal
+a == b -- Equal
+a ~= b -- Not equal
+\end{LuaCode}
+
+\subsubsection{Logical Operators}
+
+Logical operators are spelled out.
+
+\begin{LuaCode}
+(a < b) or (c < d)  -- Disjunction
+(a < b) and (b < c) -- Conjunction
+not (a < b)         -- Negation
+\end{LuaCode}
+
+\subsubsection{Conditionals}
+
+Any value that is neither \keyword{nil} nor \keyword{false} is considered to be a boolean false.
+This means that numbers, strings, functions, and tables are considered true.
+Counterintuitively to C/C++ programmers, this also means that the number 0 is
+considered true.
+
+\begin{LuaCode}
+nil             -- False
+false           -- False
+true            -- True
+0               -- True
+1.5             -- True
+"foo"           -- True
+{ a = 5 }       -- True
+function () end -- True
+\end{LuaCode}
+
+\subsubsection{Checking Existence}
+
+As a best practice, any code checking whether a variable is set should
+explicitly compare against \keyword{nil} rather than using the variable itself as the
+expression.
+
+\begin{LuaCode}
+-- Good practice check for existence
+if (x ~= nil) then
+	foo()
+end
+\end{LuaCode}
+
+\begin{LuaCode}
+-- Bad practice check for existence
+if (x) then
+	foo()
+end
+\end{LuaCode}
+
+\subsection{Tables}
+
+Lua tables are associative hashes and are used through the language for both
+storage and also for program organization.
+
+\subsubsection{Storage}
+
+Defining tables with implicit (i.e. numeric) keys.
+
+\begin{LuaCode}
+t = { 10, 20, 30 }
+u = { "a", "b", "c" }
+v = { 10, "z", false }
+\end{LuaCode}
+
+Defining tables with explicit key-value pairs.
+
+\begin{LuaCode}
+w = { [1]=10, [10]=20, [100]=30 }
+z = { a=1, b=2, c=3 }
+\end{LuaCode}
+
+\subsubsection{Access}
+
+Typical table access use familiar bracket notation.
+
+\begin{LuaCode}
+a = t[1]
+b = t[a]
+\end{LuaCode}
+
+Keys that are strings have special syntactic sugar.
+
+\begin{LuaCode}
+-- These two assignments are the same
+b = z["a"]
+c = z.a
+\end{LuaCode}
+
+Walking through a table can be done generally with a \keyword{for} loop and the \func{pairs}
+iterator.  Note that traversal order is not guaranteed.
+
+\subsubsection{Arrays}
+
+Lua does not have a built-in array type.  Rather, it depends on tables whose
+keys are contiguously numbered integers.  All Lua arrays start at index 1.
+
+\begin{LuaCode}
+t = { 10, 20, 30 }
+foo(t[1]) -- The argument value is 10
+foo(t[2]) -- The argument value is 20
+foo(t[3]) -- The argument value is 30
+\end{LuaCode}
+
+Walking through an array can be done with a \keyword{for} loop and the \func{ipairs} iterator.
+Note that traversal starts with index 1 and ends when the next consecutive
+index is undefined.
+
+\subsubsection{Classes}
+
+Lua doesn't have a class system per se, but it is possible to emulate their
+behavior using tables with keys that are strings and values that are functions.
+
+Lua provides some syntactic sugar to make class methods easy to declare.
+
+\begin{LuaCode}
+-- Declare method f() inside table t
+t = {
+	m = 1,
+	f = function (self, a)
+		return self.m + a
+	end
+}
+\end{LuaCode}
+
+\begin{LuaCode}
+-- Declare method f() inside table t
+t = {
+	m = 1
+}
+function t:f (a)
+	return self.m + a
+end
+\end{LuaCode}
+
+Calling a class method and passing in the ``self'' pointer is has syntactic
+sugar, too.
+
+\begin{LuaCode}
+x = t.f(t, 1, 2) -- The hard way
+\end{LuaCode}
+
+\begin{LuaCode}
+x = t:f(1, 2)    -- Lua’s syntactic sugar
+\end{LuaCode}
+
+The syntax \keyword{t:f()} implicitly passes \keyword{t} as the first argument to \keyword{f}.  Note that it
+is possible and easy to mistakenly call \keyword{f} using the normal table access syntax
+of \keyword{t.f()} without any complaint from Lua.   However, your code may misbehave
+because it will not have the correct arguments!
+
+\subsection{Language Constructs}
+
+The Lua syntax will look familiar to any programmers of ALGOL-influenced
+languages like C/C++, Pascal, Python, or Perl.   
+
+\subsubsection{Functions}
+
+\begin{LuaCode}
+function foo (x, y, z)
+	return x + y + z
+end
+a = foo(1, 2, 3)
+\end{LuaCode}
+
+\begin{LuaCode}
+bar = function (x, y, z)
+	return x + y + z
+end
+b = bar(1, 2, 3)
+\end{LuaCode}
+
+\subsubsection{if-then-else}
+
+\begin{LuaCode}
+if (a > 0) then
+	x = 1
+end
+\end{LuaCode}
+
+\begin{LuaCode}
+if (a > 0) then
+	x = 1
+else
+	x = 0
+end
+\end{LuaCode}
+
+\begin{LuaCode}
+if (a > 10) then
+	x = 2
+elseif (a > 0) then
+	x = 1
+else
+	x = 0
+end
+\end{LuaCode}
+
+\subsubsection{Loops: for-do}
+
+\begin{LuaCode}
+-- Iterate from 1 to 10
+for x = 1, 10 do
+	foo(x)
+end
+\end{LuaCode}
+
+\begin{LuaCode}
+-- Iterate on all table entries
+for key, value in pairs(t) do
+	t[key] = value + 1
+end
+\end{LuaCode}
+
+\begin{LuaCode}
+-- Iterate on all array entries
+for i, value in ipairs(t) do
+	t[i] = value + 1
+end
+\end{LuaCode}
+
+\subsubsection{Loops: while-do}
+
+\begin{LuaCode}
+-- Print powers of 2 less than 1000
+-- that aren’t foo()
+x = 1
+while (x < 1000) do
+	x = x * 2
+	if (foo(x)) then
+		break
+	end
+end
+\end{LuaCode}
+
+\subsubsection{Loops: repeat-until}
+
+\begin{LuaCode}
+-- Add bar() while less than 1000 and
+-- not foo()
+x = 0
+repeat
+	x = x + bar()
+	if (foo(x)) then
+		break
+	end
+until (x > 1000)
+\end{LuaCode}
+
+\subsection{Built-in Facilities}
+
+\subsubsection{String Concatenation}
+
+Strings are joined with the double-dot operator.
+
+\begin{LuaCode}
+x = "to" .. "get" .. "her"
+\end{LuaCode}
+
+\subsubsection{\func{string.format} Function}
+
+Lua supports a limited subset of the \func{printf} semantics from C.
+
+\begin{LuaCode}
+x = 100
+s = string.format("%dKhz", x)
+\end{LuaCode}
+
+\subsubsection{Bitwise Operations}
+
+Bit manipulation is available in the form of library calls rather than being
+syntactically  integrated into the language like in C.  Operations are limited
+to 32-bit quantities.
+
+\begin{LuaCode}
+-- Assume: uint32_t x, a, b, n
+--         int32_t k
+x = bit32.band(a, b)    -- x = a & b
+x = bit32.bor(a, b)     -- x = a | b
+x = bit32.bxor(a, b)    -- x = a ^ b
+x = bit32.bnot(a)       -- x = ~a
+x = bit32.lshift(a, n)  -- x = a << n
+x = bit32.rshift(a, n)  -- x = a >> n
+x = bit32.arshift(k, n) -- x = k >> n
+x = bit32.lrotate(a, n) -- x = (a<<n) & (a>>(32-n))
+x = bit32.rrotate(a, n) -- x = (a>>n) & (a<<(32-n))
+if (bit32.btest(a, b))  -- if (a & b)
+\end{LuaCode}
+
+More complicated extractions and injections of fields are available as well.
+
+\begin{LuaCode}
+-- m = ((1 << w) - 1)
+-- x = (a >> n) & m
+x = bit32.extract(a, n, w)
+\end{LuaCode}
+
+\begin{LuaCode}
+-- m = ((1 << w) - 1)
+-- x = (a & ~(m << n)) | ((b & m) << n)
+x = bit32.replace(a, b, n, w)
+\end{LuaCode}
+
+\subsubsection{\func{tonumber} Function}
+
+Lua will try to convert values to numbers implicitly in some scenarios, but it
+is often useful to do this manually.
+
+\begin{LuaCode}
+x = tonumber("100")
+\end{LuaCode}
+
+\subsubsection{\func{tostring} Function}
+
+Lua will try to convert values to strings implicitly, but it is sometimes
+useful to do this manually.
+
+\begin{LuaCode}
+x = 100
+s = tostring(x) .. "KHz"
+\end{LuaCode}
+
+\subsubsection{\func{type} Function}
+
+The type of a variable can be inspected using the \func{type} function.  It returns a
+string describing the type.
+
+\begin{LuaCode}
+if (type(x) == "nil") then
+	foo(1)
+elseif (type(x) == "boolean") then
+	foo(2)
+elseif (type(x) == "string") then
+	foo(3)
+elseif (type(x) == "number") then
+	foo(4)
+elseif (type(x) == "function") then
+	foo(5)
+elseif (type(x) == "table") then
+	foo(6)
+else
+	foo(7)
+end
+\end{LuaCode}
+
+\subsection{Exceptions}
+
+\subsubsection{Raising Exceptions}
+
+The current context of execution can be aborted by raising an exception.
+Arbitrary data can be sent up as part of the exception; descriptive strings are
+helpful if the upper-most code can expect and print them.
+
+\begin{LuaCode}
+function f (x)
+	if (x > 100) then
+		error("Too large")
+	end
+end
+\end{LuaCode}
+
+\subsubsection{Catching Exceptions}
+
+Exceptions can be caught by using Lua's \func{pcall} function to call code that is
+anticipated to raise exceptions.  Note that the parameter needs to be a
+function name, not a function call.
+
+\begin{LuaCode}
+pcall(f, 10) -- Safely execute f(10)
+\end{LuaCode}
+
+Exception handling will not be covered in detail here because Smokey will be
+doing most of this work.  Attempts to intervene with exception processing many
+lead to unexpected behavior in Smokey.
+
+\subsection{Tricks}
+
+\subsubsection{Data Alternation in Boolean Expressions}
+
+Lua's logical \keyword{and} and logical \keyword{or} operators do not return their results as a
+boolean type.  Instead, they return the operand whose value evaluates to true.
+
+\begin{LuaCode}
+x = true and 1   -- The value is 1
+y = nil and true -- the value is nil
+\end{LuaCode}
+
+\begin{LuaCode}
+a = 3 or true    -- The value is 3
+b = nil or "foo" -- the value is "foo"
+\end{LuaCode}
+
+In the case of functions that take optional arguments, this makes it easy to
+provide a default value if none is specified.
+
+\begin{LuaCode}
+function f (x)
+	-- If x is specified, return x + 1
+	-- If not, return 100
+	return (x or 99) + 1
+end
+\end{LuaCode}
+
+\subsubsection{Ternary-Like Operator}
+
+Lua does not support the question mark operator in C and C++.  However, the
+in-line ``if-then-else'' semantics are partially supported by Lua boolean
+expressions.
+
+\begin{LuaCode}
+-- Similar to:
+--	if (a) then
+--		x = b
+--	else
+--		x = c
+--	end
+x = a and b or c
+\end{LuaCode}
+
+The caveat is that the ``then'' part of the expression must not be false because
+that situation will cause Lua to use the ``else'' portion.
+
+\begin{LuaCode}
+-- WARNING!  Both are same as x = c
+x = a and nil or c
+x = a and false or c
+\end{LuaCode}
+
+The workaround is to ensure that the ``then'' portion is always true.  This can
+be done by negating the conditional and swapping the ``then'' and ``else''
+portions.  If neither portion can be guaranteed to be true, the full
+``if-then-else'' construct must be used instead.
+
+\section{Smokey Fundamentals}
+
+\subsection{Sequences: Scripts and Property Lists}
+
+Smokey is an automated means by which to execute structured code in a
+configurable order.  Its main inputs are two specifically named files---a \jargon{script
+file} and a \jargon{property list file}---in a user-defined directory.  Together, the files
+form a \jargon{sequence}.  The sequence takes its name from the directory name.
+
+The script file shall have an extension of ``.lua'' to indicate that it is a Lua
+script file.  Its contents shall be any content that would be accepted by a
+standard, standalone Lua interpreter.  This file will define Lua functions that
+Smokey will execution as \jargon{actions} in the order defined by the property list
+file.
+
+The property list file shall have an extension of ``.plist'' and be encoded as an
+Apple property list in ASCII format.  This file will define the parameters of
+the sequence, including the order of actions defined in the script file,
+prerequisite and co-requisite conditions, as well as run-time Smokey behavior.
+
+\subsection{File Organization}
+
+\subsubsection{Sequence Location}
+
+Smokey sequences are stored as directories on the DUT under the Smokey folder. 
+
+\begin{Setting}
+/AppleInternal/Diags/Logs/Smokey/~\param{Sequence}~
+\end{Setting}
+
+\subsubsection{Sequence Name}
+
+Sequences are named after the folder containing its files.  For example, a
+sequence named ``Wildfire'' would be in a fold named ``Wildfire'' under the Smokey
+folder.
+
+\CenterImage{FolderHierarchy.png}
+
+\subsubsection{Sequence Folder Contents}
+
+Within the sequence directory will be a number of files.  For example, the
+diagram above illustrates the contents of a Wildfire sequence.
+
+Sequence developers are expected to provide these files although not all files
+will be required under all scenarios.
+
+The following two files are always required.  Note that the files are to be
+named according to the platform on which the sequence is to run.
+
+\begin{Definition}
+
+\item[\param{platform}.lua] This is the script file for the sequence.
+
+\item[\param{platform}.plist] This is the property list file for the sequence.
+
+\end{Definition}
+
+The following files are Smokey control files that must be preallocated on the
+file system by the user.
+
+\begin{Definition}
+
+\item[PDCA.plist] Stores sequence results.
+
+\item[Smokey.log] Stores sequence log.
+
+\end{Definition}
+
+Lastly, this file is special and should be acquired from the EFI Diagnostics team.
+
+\begin{Definition}
+
+\item[.FactoryLogsWaitingToBeCollected] Semaphore file for LogCollector.  Its
+	default content must be the word ``SKIP'' followed immediately by null
+	bytes, padded out to 1KB.
+
+\end{Definition}
+
+\subsubsection{Creating Preallocated Sequence files}
+
+Users are given a choice in how much space to preallocate for sequence output.
+Baseline sizes are shown below.  Smaller sizes are allowed as long as the files
+are large enough under all known scenarios.
+
+\begin{Definition}
+
+\item[PDCA.plist] 1MB
+
+\item[Smokey.log] 10MB
+
+\end{Definition}
+
+These files can be created from the Mac OS X command shell.  For example, for a
+given \param{file} path requiring \param{size} megabytes:
+
+\begin{CommandLine}
+dd if=/dev/zero of=~\param{file}~ bs=1M count=~\param{size}~
+\end{CommandLine}
+
+In a pinch, the .FactoryLogsWaitingToBeCollected file can be created similarly:
+
+\begin{CommandLine}
+echo SKIP > .FactoryLogsWaitingToBeCollected
+dd if=/dev/zero of=.FactoryLogsWaitingToBeCollected \
+	count=1020 bs=1 seek=4
+\end{CommandLine}
+
+\subsection{Sequence Schema}
+
+\subsubsection{Schema}
+
+Smokey's sequence property list is built on top of Apple's ASCII plist format.
+A schema comprised of predefined keys and values is defined in order to
+describe both Smokey's behavior as well as the sequence's behavior.
+
+Smokey's schema is rooted at the top of the plist hierarchy.  Properties
+generally fall into one of two categories.  \jargon{Control properties} are stored in
+the root.  \jargon{Test item properties} start at the root, but use a recursive
+definition.  The meaning of these properties and their legal values are
+described in the following sections.
+
+\CenterImage{SequenceSchema.png}
+
+\subsubsection{Structure}
+
+The structure of test ordering in Smokey centers around the concepts of actions
+and test items.  An \jargon{action} is a piece of Lua code that Smokey can invoke.  A
+\jargon{test item} is a node in the plist structure with properties identifying how the
+sequencer treats an action.  In effect, test items are consumers of actions,
+and the Smokey sequencer is a consumer of test items.  Note that a particular
+action is allowed to appear in more than one test item.
+
+The design of the schema is intended to produce nearly flat plist files for the
+common case where a sequence is a linear list of test items.  In more complex
+scenarios, actions can be grouped and nested by layering test items.  This is
+done by defining a test item property rather than an action property inside a
+test item.
+
+\subsubsection{Control Properties}
+
+These properties define the basic parameters that Smokey uses when processing a
+sequence.  These properties must be at the root of the plist.  All values are
+required.
+
+\begin{PropertyTable}
+	Control Properties & Type & Required? \\
+	\prop{SequenceName} & String & Yes \\
+	\prop{SequenceVersion} & String & Yes \\
+	\prop{SchemaFormat} & Number & Must be ``1'' \\
+	\prop{BrickRequired} & String & Yes \\
+	\prop{BehaviorOnFail} & String & Yes \\
+\end{PropertyTable}
+
+\begin{Property}
+
+\item[SequenceName] Text string describing name the sequence.
+
+\item[SequenceVersion] User-defined identifier to track changes and
+	revisions.\footnote{Due to software limitations, SequenceVersion must
+	be a number stored as a text string in the plist.} For example, this
+	could be a sequential number, or a date format like YYYYMMDD, where
+	the letters are replaced with digits for the calendar year, month, and
+	day.
+
+\item[SchemaFormat] Currently must be set to ``1''.
+
+\item[BrickRequired] Apple charger required to start or continue the sequence.
+
+	\begin{Definition}
+
+	\item[None] No charger required and no checks performed.
+
+	\item[Any] Charger will be checked but any known external
+		charger will be accepted.
+
+	\item[500mA] Sufficiently powered USB hub.
+
+	\item[1A] B1 or equivalent.
+
+	\item[2.1A] B9 or equivalent.
+
+	\item[2.4A] B45 or equivalent.
+
+	\end{Definition}
+
+\item[BehaviorOnFail]Controls how Smokey proceeds after encountering a
+	failure.
+
+	\begin{Definition}
+
+	\item[KeepGoing] Continue with the rest of the sequence.
+
+	\item[StopAfterFailedAction] Abort the sequence after an
+		action fails.
+
+	\end{Definition}
+
+\end{Property}
+
+\clearpage
+\subsubsection{Test Root Properties}
+
+These properties define the top of the test order and therefore required to be
+defined at the root of the plist.  These are a subset of the test item
+properties.
+
+\begin{PropertyTableContains}
+	Test Root Properties & Type & Required? & Contains \\
+	\prop{FailScript} & String & Optional & \\
+	\prop{NumberOfTimesToRun} & Number & Yes & \\
+	\prop{Tests} & Array of Dict. & Yes & Test Item \\
+\end{PropertyTableContains}
+
+\begin{Property}
+
+\item[FailScript] User-defined Lua function to invoke when a failure is
+	detected.
+
+\item[NumberOfTimesToRun] The \prop{Tests} property will be executed this many
+	iterations.
+
+\item[Tests] An ordered array of test items.
+
+\end{Property}
+
+\subsubsection{Test Item Properties}
+
+The meat of the Smokey schema are the test items.  They are the basic
+operating unit of the sequencer.  Test items may be nested within each other.
+
+\begin{PropertyTableContains}
+	Test Item Properties & Type & Required? & Contains \\
+	\prop{TestName} & String & Optional & \\
+	\prop{FailScript} & String & Optional & \\
+	\prop{NumberOfTimesToRun} & Number & Yes & \\
+	\prop{BehaviorOnAction} & String & Optional & \\
+	\prop{ActionToExecute} & String & Alternate for \prop{Tests} & \\
+	\prop{Tests} & Array of Dict. & Alternate for \prop{ActionToExecute} & Test Item \\
+\end{PropertyTableContains}
+
+\begin{Property}
+
+\item[TestName] Text string naming the test item.  The effective test name
+	defaults to the value of \prop{ActionToExecute} if omitted.
+
+\item[FailScript] User-defined Lua function to invoke when a failure is
+	detected.
+
+\item[NumberOfTimesToRun] The \prop{Tests} or \prop{ActionToExecute} property will be
+	executed this many iterations.
+
+\item[BehaviorOnAction] Additional steps required before invoking
+	\prop{ActionToExecute}.
+
+	\begin{Definition}
+
+	\item[None] Do nothing.  This is the default if \prop{BehaviorOnAction} is
+		not specified.
+
+	\item[SaveState] Save the state of the sequence to file.  If the DUT
+		is interrupted due to power loss, reboot, or otherwise, the
+		Smokey will automatically continue once the DUT boots up.
+
+	\end{Definition}
+
+\item[ActionToExecute] User-defined Lua function to invoke.
+
+\item[Tests] An ordered array of test items.
+
+\end{Property}
+
+\subsection{Sequence Flow}
+
+When Smokey executes a sequence, it handles a variety of tasks related to
+preparing the DUT, executing actions, logging results, and reporting progress.
+It will be important to know how these activities are arranged in order to
+understand how sequence actions fit in.
+
+\subsubsection{Pre-Flight Phase}
+
+Before running a sequence, Smokey does the following:
+
+\begin{Process}
+
+\item Process command line options.
+
+\item Check for autostart conditions.
+
+	\begin{Process}
+
+	\item If the autostart option is set, check the \nvram{boot-args} NVRAM variable.
+
+		\begin{Process}
+
+		\item If the \nvarg{smokey} argument is set, merge in those options.
+
+		\item If the \nvarg{smokey} argument is not set, quit.
+
+		\end{Process}
+
+	\item If the autostart option is not set, continue normally.
+
+	\end{Process}
+
+\item Load the sequence's Lua script and parse the property list file.
+
+\item Apply remaining command line and NVRAM options.
+
+\item Open log files.
+
+\item Record the start of the sequence.
+
+\item Initialize hardware and EFI software features implied by the sequence
+	properties.
+
+\item If \prop{BrickRequired} is set, wait for an external charger to be connected.
+	The wait time is indefinite.
+
+\end{Process}
+
+\subsubsection{Sequence Execution Phase}
+
+\begin{Process}[resume]
+
+\item Traverse the \prop{Tests} array at the root of the plist in order and process
+	each element.  This is a pre-order, depth-first traversal.
+
+	\begin{itemize}
+
+	\item Failure handling occurs during this phase.  Fatal failures will
+		force Smokey to jump to the next phase.
+
+	\item If the test item defines \prop{ActionToExecute}, perform that action.
+
+		\begin{Process}
+
+		\item Flush pending file output
+
+		\item Invoke the named Lua function
+
+		\item Record the result of calling the function
+
+		\end{Process}
+
+	\item If the test item defines \prop{Tests}, recurse into that array.
+
+	\end{itemize}
+
+\end{Process}
+
+\subsubsection{Post-Flight Phase}
+
+\begin{Process}[resume]
+
+\item Write complete results.
+
+\item Flush pending file output.
+
+\item If autostarted, reboot.
+
+\end{Process}
+
+\subsubsection{Periodic Tasks}
+
+While a sequence is running, Smokey only has control of the system between
+sequence actions.  That time is used to handle various repeating management
+tasks.
+
+\begin{Definition}
+
+\item[Charger Check] If \prop{BrickRequired} is set and a change in the external
+	charger state is detected, wait for the charger to be reconnected.
+	The wait time is indefinite.
+
+\end{Definition}
+
+\subsection{Sequence Processing}
+
+\subsubsection{Test Item Naming}
+
+For reporting purposes, Smokey requires a name for each test item in the
+sequence that defines \prop{ActionToExecute}.  If the \prop{TestName} property is set, it is
+used as the test name.  Otherwise, the value of \prop{ActionToExecute} is the default.
+
+Note that the sequence properties must be configured to avoid duplicate test
+names.  For instance, if several test items have the same \prop{ActionToExecute}, each
+item must have a different \prop{TestName}.  Smokey will preemptively abort a sequence
+if it detects a naming conflict.
+
+Test items without \prop{ActionToExecute} produce no results or data, so they do not
+require a test name.
+
+\subsubsection{Node Numbering}
+
+For tracking and internal purposes, Smokey represents the sequence as a tree
+and automatically gives each node a number.  Like the sequence execution phase,
+assignment is done with a pre-order, depth-first traversal.  This produces node
+numbers that read like line numbers when the sequence is printed in outline
+form.
+
+The root of the plist file is always node one.
+
+Node number assignment will change as the sequence changes.  There is no
+support for specifying a node's number.
+
+\subsubsection{Number of Test Item Iterations}
+
+The number of iterations per test item is the mathematical product of
+\prop{NumberOfTimesToRun} at the test item in question and all test items immediately
+above it.  One result is recorded each time the sequencer traverses into the
+test item.
+
+For example, consider a sequence with \prop{NumberOfTimesToRun} at the plist root set
+to 2 and a test item with \prop{NumberOfTimesToRun} set to 3 and \prop{ActionToExecute}
+defined.  Smokey will process the test item 6 times in total.  The sequencer
+will traverse into the test item twice.  The first traversal will record
+results for iterations 1 through 3.  The second traversal will record results
+for iterations 4 through 6.
+
+\subsection{Pass/Fail Criteria of Actions}
+
+Smokey takes into account various Lua code return paths when assessing the
+result of an action.  Scripts can take advantage of this to silently stop the
+sequence or return verbose failure information for later failure analysis.
+
+\subsubsection{Function Return Value}
+
+\begin{ValueTable}
+	Return Value & Assessment \\
+	nil & Pass \\
+	true & Pass \\
+	false & Fail \\
+	All Others & Unsupported \\
+\end{ValueTable}
+
+Note that, in the Lua language, \keyword{nil} can be returned explicitly with a \keyword{return} statement or implicitly by ending a code block without a \keyword{return}.
+
+\subsubsection{Exceptions}
+
+Any exceptions not caught by actions themselves will be caught by the
+sequencer.  Smokey considers this a failure and acts accordingly.
+
+Note that the value of the data associated with an exception will be logged.
+If an action chooses to throw an exception, it is recommended that a helpful
+text string be sent.
+
+\subsection{Failure Handling}
+
+\subsubsection{Sequence Excursions}
+
+Once an action's result has been assessed, Smokey decides whether to continue
+following the test order.
+
+\begin{Definition}
+
+\item[Pass] Continue the sequence in the defined test order.
+
+\item[Fail] Divert the test order based on the test item configuration.
+
+\end{Definition}
+
+The test item property \prop{BehaviorOnFail} defines Smokey's exact failure handling.
+
+\begin{Definition}
+
+\item[KeepGoing] Ignore the failure.
+
+\item[StopAfterFailedAction] Stop the sequence immediately.  Invoke the
+	\prop{FailScript} defined but the current test item and others as
+	appropriate.
+
+\end{Definition}
+
+Note that \prop{BehaviorOnFail} will affect sequence traversal, but does not play a
+part in assessing the result of an action.
+
+\subsubsection{Failures During a Sequence}
+
+Sequences can choose to handle failures---whether for clean-up purposes or to
+manage internal state---by defining the \prop{FailScript} property.  Smokey will invoke
+the named Lua function when the sequencer assesses an action failure.
+
+Because test items can be nested, more than one \prop{FailScript} may be invoked.  The
+first one to be executed would be at the test item that failed.  The next would
+be the one in the test item immediately outside of that nested test item.  And
+so on from the epicenter to the outermost \prop{FailScript} at the plist root.  Any
+test items  along this path without a \prop{FailScript} definition will be ignored.
+
+The exact timing of \prop{FailScript} invocations depends on \prop{BehaviorOnFail}.
+
+\begin{Definition}
+
+\item[StopAfterFailedAction] The first \prop{FailScript} will be invoked immediately
+	after failure assessment.  Invocations at outer nesting levels follow
+	immediately, ignoring the remaining iterations due to
+	\prop{NumberOfTimesToRun} at those test items.
+
+\end{Definition}
+
+\subsubsection{Failures During Periodic Tasks}
+
+Any failure during a periodic task is considered fatal.  If \prop{FailScript} is
+defined at the plist root, that Lua function shall be invoked.  Thereafter, the
+execution phase is aborted.
+
+\subsection{Test Results}
+
+\subsubsection{Results Tracking}
+
+During the course of a sequence, Smokey tracks results individually.  There is
+a result recorded for each iteration of each test item.  Additionally, there is
+an overall result based on the the individual results. 
+
+All results are initialized during the pre-flight phase to ``incomplete''.  Pass
+and fail are recorded as the sequence progresses.  The overall result is
+recorded once the last test item is finished or the sequence is aborted due to
+failure.
+
+\subsubsection{Test Results Naming}
+
+Names for results are automatically generated by combining the test item name
+with the iteration number.\footnote{See the ``Individual Test Results'' table
+in ``Test Results and Data''.}
+
+\subsubsection{Test Data Naming}
+
+Smokey can collect numeric data and limits from each test item.  The data's
+name is specified by the sequence script, but Smokey will make the name unique
+by including the name of the test item and the iteration number.\footnote{See
+the ``Test Data'' table in ``Test Results and Data''.}
+
+\subsubsection{Propagation of Results}
+
+To maintain consistency, the overall sequence result is computed from the
+individual test item results.  Therefore, any failure at the item level forces
+a the overall sequence result to fail.  Incomplete tests are treated as
+failures.
+
+\subsection{Sequence State Saving}
+
+\subsubsection{Sequence Continuation}
+
+A unique feature of Smokey compared to canonical Lua scripting is the built-in
+ability to pause a sequence and continue at a later time.  This means that any
+action can reboot the DUT, power cycle, or otherwise interrupt the system and
+Smokey will know how to pick up from the last test item without losing results.
+
+As mentioned in the test item properties description, this behavior is enabled
+by setting \prop{BehaviorOnAction} to \prop{SaveState}.  It is effective only during the test
+item in which the property is defined.  If the test item's action does not
+interrupt the DUT, Smokey will automatically clear the continuation point.
+
+\subsubsection{Requirements}
+
+The DUT must meet the requirements for autostart.  See the autostart section
+for more details.
+
+\subsubsection{Serialization}
+
+When enabled, Smokey performs the following immediately before invoking
+\prop{ActionToExecute}.
+
+\begin{Definition}
+
+\item[Set Continuation Point] Mark the sequence to continue at the test item
+	immediately following the one defining \prop{BehaviorOnAction}.
+
+\item[Save Smokey State] Write all internal Smokey data to a temporary file.
+
+	\begin{itemize}
+
+	\item Save the state of the sequence traversal.
+
+	\item Save all results the same file.
+
+	\end{itemize}
+
+\item[Configure Autostart] Set Smokey to run automatically at next boot.
+
+	\begin{itemize}
+
+	\item Save the current \nvram{boot-args} and \nvram{boot-command} NVRAM
+		variables.\footnote{See the autostart description for how
+		NVRAM variables are used by Smokey.}
+
+	\item Add a bare \nvarg{smokey} argument to \nvram{boot-args}.
+
+	\item Set \nvram{boot-command} to \nvarg{diags}.
+
+	\end{itemize}
+
+\end{Definition}
+
+\subsubsection{Resurrection}
+
+When Smokey is invoked from the command line, it checks for the existence of a
+saved state before loading the user-specified sequence.  If one is found, the
+state is automatically resurrected and that state's sequence will be continued.
+
+\begin{Definition}
+
+\item[Load State Data] Resurrect the data saved during serialization.
+
+	\begin{itemize}
+
+	\item Reload all internal Smokey variables.
+
+	\item Reload all results.
+
+	\end{itemize}
+
+\item[Reset Autostart] Disable the configuration from serialization.
+
+	\begin{itemize}
+
+	\item Restore \nvram{boot-args} and \nvram{boot-command}.
+
+	\end{itemize}
+
+\item[Delete Continuation Point] Clear the state file so that it can be
+	reused.
+
+\end{Definition}
+
+\section{Design for Factory Use}
+
+\subsection{Objectives for Factory Use}
+
+Smokey's objective is to automate testing for manufacturing scenarios.
+Primarily, this means enabling a DUT to run commands on its own and emit data
+to factory processes.  Several design decisions were made and features
+implemented to support these goals:
+
+\begin{itemize}
+
+\item Support for multiple, user-defined sequences allows use both on and off
+	the manufacturing line.
+
+\item Sequences are maintained separately from EFI diags and therefore don't
+	require intensive validation (e.g. on all stations) before roll-out.
+
+\item Sequences are stored on the filesystem to enable identical deployment on
+	a large number of test units.
+
+\item Sequence execution is logged to a file for failure analysis.
+
+\item Results are emitted in DCSD's format for PDCA.
+
+\item Execution can be triggered via NVRAM.
+
+\item Timestamps identify hangs, performance issues, and process excursions.
+
+\end{itemize}
+
+\subsection{Station Behavior}
+
+In traditional station software, a station ID is used for reporting results and
+log collection.  The name of the station is collaboratively chosen by the
+station DRI, program managers, and the factory software team.  A numeric
+identifier serves to codify the station's place within the factory process.
+
+Smokey isn't meant to directly replace station software because it wasn't
+designed to plug into the manufacturing infrastructure.  However, it can be
+used to control those aspects of a station that affect the state of the DUT.
+
+Station behavior is enabled by giving sequences specific, reserved names.
+Presently, the sequence names below are reserved for specific factory station
+activities.  Consult an EPM or TDL for the most up-to-date list for a specific
+project.
+
+\begin{itemize}
+
+\item Wildfire (ID 0xB4)
+
+\end{itemize}
+
+The list of station-related behavior in Smokey follows:
+
+\begin{itemize}
+
+\item Control bits
+
+\end{itemize}
+
+Sequences that do not have any of the reserved names do not receive special
+treatment.  Use of reserved sequence names for non-station-related activities
+is highly discouraged.
+
+\subsection{Control Bits}
+
+Control bits are a process control mechanism used to track test coverage in the
+factory.  Because coverage is directly related to final product quality,
+control bits can only be manipulated with the proper clearance.  Smokey strives
+to ensure the security of control bits by acting as a middleman between
+sequences and the DUT.
+
+For sequences associated with a station ID, the respective control bit is
+updated as the sequence executes in order to record gross progress.  This
+generally happens alongside the writing of results to the filesystem, but may
+occur less frequently because the granularity of control bit states is coarse.
+
+The control bit state can be used as a rough indicator of progress.
+
+\begin{Definition}
+
+\item[Untested] Sequence has not been invoked or Smokey aborted early.
+
+\item[Incomplete] Smokey processed the sequence and has recorded its start.
+
+\item[Pass \textnormal{or} Fail] Sequence is complete.
+
+\end{Definition}
+
+Writing to control bits can not be disabled.
+
+\subsection{Log Collection}
+
+\subsubsection{DUT Identifier}
+
+Smokey identifies the device under test by the system serial number \nvram{SrNm} in
+syscfg.  If that key is not defined, the MLB serial number \nvram{MLB\#} is used
+instead.  It is considered a fatal error when neither key is defined.
+
+\subsubsection{File Output}
+
+Smokey's file output is designed to be compatible with LogCollector, with
+emphasis on being human readable.  Towards that goal, files are written in
+ASCII format and Smokey's output is sent to several files, as documented
+elsewhere.  All files in a sequence's directory will be collected and stored in
+PDCA.
+
+Two files will be interesting to those investigating issues with log
+collection:
+
+\begin{Definition}
+
+\item[.FactoryLogsWaitingToBeCollected] Will be filled with zeroes if
+	PDCA.plist has valid data.  Otherwise should not be empty.
+
+\item[PDCA.plist] The main output file for LogCollector.  Smokey writes
+	results to this file in a PDCA-specific schema.  This file is
+	zero-filled on a fresh unit.  At the start of a sequence, Smokey
+	writes this file with a default result to indicate a crash, hang, or
+	power loss; it is later overwritten with the actual results of the
+	sequence.
+
+\end{Definition}
+
+\subsection{Test Results and Data}
+
+Information reported to the PDCA system includes the results for all tests as
+well as the data gathered by those tests.  These are all stored in plist format
+using DCSD's PDCA schema.
+
+Because of the schema, all output is represented as test results.  The PDCA
+properties \prop{testname}, \prop{subtestname}, and \prop{subsubtestname}\footnote{The PDCA
+database reports \prop{testname}, \prop{subtestname}, and \prop{subsubtestname} as one concatenated
+string.} are used as identifiers for individual tests.  The \prop{result} and
+\prop{failure\_message} properties, as well as others, encode sequence output.
+Specific values are discussed below.
+
+\begin{PdcaTable}
+	Overall Sequence Result & Pass & Fail & Incomplete \\
+	\prop{overallResult} & ``PASS'' & \mc{2}{``FAIL''} \\
+\end{PdcaTable}
+
+\begin{PdcaTable}
+	Individual Test Results & Pass & Fail & Incomplete \\
+	\prop{testname} & \mc{3}{Test item’s \prop{TestName} or \prop{ActionToExecute} property} \\
+	\prop{subtestname} & \mc{3}{``Iteration '' + iteration number} \\
+	\prop{subsubtestname} & \mc{3}{Not used} \\
+	\prop{result} & ``PASS'' & \mc{2}{``FAIL''} \\
+	\prop{failure\_message} & Not used & Actual message & ``Incomplete'' \\
+\end{PdcaTable}
+
+\begin{PdcaTable}
+	Test Data & No Limits & Within Limits & Exceed Limits \\
+	\prop{testname} & \mc{3}{Test item’s \prop{TestName} or \prop{ActionToExecute} property} \\
+	\prop{subtestname} & \mc{3}{``Iteration '' + iteration number} \\
+	\prop{subsubtestname} & \mc{3}{Sequence’s data name} \\
+	\prop{value} & \mc{3}{Sequence’s data value} \\
+	\prop{units} & \mc{3}{Sequence’s data units (if provided)} \\
+	\prop{lowerlimit} & Not used & \mc{2}{Data lower limit} \\
+	\prop{upperlimit} & Not used & \mc{2}{Data upper limit} \\
+	\prop{result} & \mc{2}{``PASS''} & ``FAIL'' \\
+	\prop{failure\_message} & \mc{2}{Not used} & Automatic \\
+\end{PdcaTable}
+
+\section{Using Smokey}
+
+\subsection{Command Line Arguments}
+
+Smokey is command line driven and only supports certain combinations of
+arguments.
+
+In the following descriptions, options are prefixed by double dashes.  Options
+shown in square brackets may be omitted.  Ellipses are used to indicate that
+additional options may be specified.
+
+Values to be supplied by the user are defined below:
+
+\begin{Definition}
+
+\item[Sequence] The name of a sequence.  Smokey searches for this folder name
+	in the standard location.  Must contain files appropriate for the DUT
+	platform.
+
+\end{Definition}
+
+\subsubsection{Print Command Line Help}
+
+\begin{CommandLine}
+smokey --help
+\end{CommandLine}
+
+Print a list of all supported command line options.  Some options may not be
+intended for general use.  Not all option combinations are valid.
+
+\subsubsection{Run a Sequence}
+
+\begin{CommandLine}
+smokey ~\param{Sequence}~ [--clearstate] --run
+\end{CommandLine}
+
+Execute a sequence from a fresh state.
+
+If there is an existing saved state, specifying \keyword{--clearstate} ensures that the
+saved state is not used.
+
+\subsubsection{Continue from a Saved State}
+
+\begin{CommandLine}
+smokey [--retainstate] --run
+\end{CommandLine}
+
+If a saved state is available, continue from where it left off.  Most other
+command line options are ignored.
+
+Typically, the saved state is deleted when continuing a sequence so that
+progress moves forward.  If the state should be retained to later re-run from
+the same point, \keyword{--retainstate} can be specified.  Note that continuing twice
+from the same saved state may not produce the same file output as normal.  Also
+note that this option won't prevent a new state from overwriting the current
+state.
+
+\subsubsection{Sanity Check a Sequence}
+
+\begin{CommandLine}
+smokey ~\param{Sequence}~
+\end{CommandLine}
+
+Smokey will load the sequence script and plist files to check syntax and
+settings.  No actions beyond that are taken.
+
+\subsubsection{Perform a Dry Run on a Sequence}
+
+\begin{CommandLine}
+smokey ~\param{Sequence}~ [--clearstate] --dryrun
+\end{CommandLine}
+
+A dry run is the same as a normal run, but actions are not invoked.  This is
+useful to make sure basic issues in Smokey are not causing sequence failures.
+
+\subsubsection{Get Information about a Sequence}
+
+\begin{CommandLine}
+smokey ~\param{Sequence}~ --sequence
+smokey ~\param{Sequence}~ --summary
+\end{CommandLine}
+
+The first command dumps the entire sequence definition whereas the second
+summarizes the actions that will be taken.  They can be used to verify the
+structure of the sequence plist file.  See the ``Sequence Output'' section for
+more details.
+
+\subsubsection{Clear Existing Saved State}
+
+\begin{CommandLine}
+smokey --clearstate
+\end{CommandLine}
+
+Erase the sequence state saved by \prop{BehaviorOnAction}.  No actions are taken, and
+no errors reported, if there is no state presently defined.
+
+\subsubsection{Autostart (Trigger Smokey Externally)}
+
+\begin{CommandLine}
+smokey ... --autostart
+\end{CommandLine}
+
+Decide whether or not to actually run Smokey based on external factors.  Quit
+without error when those factors are not satisfied.  Follow autostart behavior
+when all factors are present.
+
+\subsection{Autostart}
+
+On Darwin mobile devices, Smokey can be configured to execute a sequence upon
+booting into EFI diags.  This allows automatic test execution on the device, as
+well as integration with other test environments.  Smokey supports this feature
+primarily to enable EFI-based testing from inside iOS.
+
+\subsubsection{Prerequisites for Autostart}
+
+Autostart is effected by a combination of device settings and EFI diags
+configuration.  The following requirements must be met.
+
+\begin{Definition}
+
+\item[NVRAM] The DUT must support iOS-style NVRAM variables in EFI diags.
+	This means that firmware driver must be available and the DUT must
+	support this hardware feature.
+
+\item[EFI Diags Boot Configuration] On the EFI diags side, Smokey needs to be
+	part of the boot process.  This boils down to making the Smokey
+	command part of the built-in start-up script.  
+
+\end{Definition}
+
+\subsubsection{Configuring EFI Diags for Autostart}
+
+It is recommended that the command line be executed as early as possible in the
+boot process.
+
+\begin{CommandLine}
+smokey --run --autostart
+\end{CommandLine}
+
+\subsubsection{Configuring DUT for Autostart}
+
+Once prerequisites are met, the following NVRAM variables can be set to kick
+off a Smokey sequence.
+
+\begin{Definition}
+
+\item[boot-args] The \nvarg{smokey} argument must be set.  Other arguments in this
+	variable are ignored by Smokey.
+
+\item[boot-command] Must be set to \nvarg{diags}.  If this is not possible, a
+	special cable or dongle will be required to force the DUT to boot into
+	EFI diags.
+
+\item[auto-boot] Must be set to \nvarg{true}.
+
+\end{Definition}
+
+\subsubsection{Smokey Argument}
+
+The \nvarg{smokey} argument in \nvram{boot-args} is a mechanism to augment the Smokey command
+line.  Its value is a comma-separated list that is applied after command line
+arguments have been processed.
+
+The decision was made to put \nvarg{smokey} in \nvram{boot-args}---rather than as its own NVRAM
+variable---in order to support deployment:  The \nvram{boot-args} variable can be easily
+set from PurpleRestore, whereas other variables are not well supported.  Units
+can have a sequence rooted and be configured to run one on the next reboot.
+
+Syntax and legal values are defined below.
+
+\begin{Setting}
+boot-args = "... smokey ..."
+\end{Setting}
+
+\begin{Setting}
+boot-args = "... smokey=~\param{Sequence}~ ..."
+\end{Setting}
+
+There is currently only one NVRAM setting supported.
+
+\begin{Definition}
+
+\item[Sequence] The name of the sequence to execute.  If omitted, the sequence
+	named on the command line is used instead.
+
+\end{Definition}
+
+\subsubsection{Autostart Behavior}
+
+As mentioned in the sequence flow description, the conditions for automatically
+starting is the autostart option on the command line and the existence of
+\nvarg{smokey} in \nvram{boot-args}.  If either are missing, Smokey will quit without changing
+the state of the DUT.
+
+When all autostart conditions are met, Smokey will proceed to run as if the
+settings in the \nvarg{smokey} argument had been typed at the command line.
+Additionally, the following tasks are performed:
+
+\begin{itemize}
+
+\item Remove the \nvarg{smokey} argument from \nvram{boot-arg}.  This signals external
+	processes that Smokey has recognized and accepted the autostart
+	conditions.
+
+\item Configure the DUT to run iOS on the next reboot.  This is done by
+	setting the \nvram{boot-command} NVRAM variable to \nvarg{fsboot}.
+
+\end{itemize}
+
+Automatic start implies automatic reboot.  Smokey will reboot the DUT at the
+end of the sequence regardless of what transpires during its execution.
+
+\subsection{Sequence Output}
+
+\subsubsection{Run-time Output}
+
+Smokey emits diagnostic and informative data as it runs.  The order is fixed
+and the data logged to console and file are basically the same.  However, some
+ways of invoking Smokey may omit some sections.
+
+\begin{LogSection}
+
+\item[Software Build Information] Source code version and binary build date.
+
+\item[Device Identification] MLB and SoC identification numbers.
+
+\item[Sequence Files] Files nominally used the current sequence.  Some files
+	may not be used, pursuant to sequent properties.
+
+\item[Sequence Properties] Summary of the sequence properties in effect.
+
+\item[Pre-flight Output] Running status as the DUT is prepared for the
+	sequence.
+
+\item[Test Item Trace] A trace as Smokey traverses the sequence.  Each line is
+	prefixed with a context information.  EFI diags commands and direct
+	script output are interspersed in real time.
+
+	\begin{Definition}
+
+	\item[Timestamp] Shown in square brackets to separate from other text
+		on the line.
+
+	\item[Node Number] Smokey-assigned node number for the test item.
+		Replaced with an ellipsis when it is the same as the line
+		above.
+
+	\end{Definition}
+
+\item[Post-Flight Output] The sequence wind-down.  This includes the overall
+	sequence result as well as Smokey's attempt to write all results to
+	file.
+
+\item[Error Summary] The ``All Errors'' heading is used to reiterate all
+	failures and errors captured during a sequence.  This section is
+	omitted when the sequence passes.
+
+\end{LogSection}
+
+\subsubsection{Log File}
+
+All output that Smokey emits to the console is also captured to the sequence's
+log file.  Additionally, a time stamp is appended to the log each time it is
+opened.  The following example shows the log file of a failed sequence,
+including all of the output elements described previously.
+
+\begin{AnnotedLogFile}
+~\mp{Log Info}~Opened log at 2012-10-09 12:20:57
+
+~\mp{1. SW Build}~Smokey 1A0529 (changelist 294521)
+Built 2012/10/09 02:16:45
+
+~\mp{2. Device ID}~SrNm: CCQHQ06QF4K0
+MLB#: C02219500L9F4MQ1
+CFG#: DA9/EVT2/00L9//2030/FT1-G2
+ECID: 000001D7DC612DC9
+
+~\mp{3. Seq. Files}~Control File: nandfs:\AppleInternal\Diags\Logs\Smokey\Wildfire\N78.plist
+Script File:  nandfs:\AppleInternal\Diags\Logs\Smokey\Wildfire\N78.lua
+Log File:     nandfs:\AppleInternal\Diags\Logs\Smokey\Wildfire\Smokey.log
+Results File: nandfs:\AppleInternal\Diags\Logs\Smokey\Wildfire\PDCA.plist
+Control Bit:  Wildfire (0xB4)
+
+~\mp{Log Info}~Finished dumping pre-log buffer
+
+~\mp{4. Seq. Props}~SequenceName:    N78 QT demo
+SequenceVersion: 1
+BehaviorOnFail:  StopAfterFailedAction
+ResultsBehavior: Bookend
+LogBehavior:     Full
+BrickRequired:   1A
+
+~\mp{5. Pre-flight}~Sequence syntax and sanity check passed
+
+Writing default results
+Writing control bit
+Writing PDCA plist file
+
+Initializing display
+Initializing charger
+Device ready
+
+~\mp{6. Test Trace}~Sequence execution...
+
+Day/Time      Node
+------------- ----
+[09 12:21:04] N001 Repeating 1x
+[09 12:21:04] .... 	[1] Periodic tasks
+[09 12:21:04] .... 		Detected 1A brick
+[09 12:21:04] N002 	[1] Repeating 0x "Battery Protection"
+[09 12:21:04] N003 	[1] Repeating 1x "PMU Test"
+[09 12:21:04] .... 		[1] PmuTest
+[09 12:21:04] .... 			pmureg -r 0 0x00
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) pmureg -r 0 0x00
+Register 0x0000 : 0x56
+------------------------------------------------------------------------------
+[09 12:21:04] .... 			Exit code = 0x00000000
+[09 12:21:04] .... 			pmureg -r 0 0xA4
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) pmureg -r 0 0xA4
+Register 0x00A4 : 0xB5
+------------------------------------------------------------------------------
+[09 12:21:04] .... 			Exit code = 0x00000000
+[09 12:21:04] .... 			pmustat chipid
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) pmustat chipid
+PMU Status test
+ChipID: 0x56
+------------------------------------------------------------------------------
+[09 12:21:05] .... 			Exit code = 0x00000000
+[09 12:21:05] N004 	[1] Repeating 2x "Gyro Test"
+[09 12:21:05] .... 		[1] GyroTest
+[09 12:21:05] .... 			gyro --init
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --init
+Powering on Gyro: OK
+Resetting Gyro: OK
+Gyro ChipID: ST Micro AP3GDL v3.0.0 part:3
+Raw ID: 0xD5
+Serial: 0x000000000
+Warning: lot/batch numbers are not valid data at this time.
+Lot: 0 Batch: 0
+OK
+------------------------------------------------------------------------------
+[09 12:21:05] .... 			Exit code = 0x00000000
+[09 12:21:05] .... 			gyro --selftest
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --selftest
+Starting Gyro self-test:
+Self Test data:
+(3)(-360)DATA: X-diff=363
+(1)(362)DATA: Y-diff=361
+(0)(-358)DATA: Z-diff=358
+OK
+------------------------------------------------------------------------------
+[09 12:21:06] .... 			Exit code = 0x00000000
+[09 12:21:06] .... 			gyro --off
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --off
+Powering down axes: OK
+Powering down Gyro: OK
+------------------------------------------------------------------------------
+[09 12:21:07] .... 			Exit code = 0x00000000
+[09 12:21:07] .... 		[2] GyroTest
+[09 12:21:07] .... 			gyro --init
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --init
+Powering on Gyro: OK
+Resetting Gyro: OK
+Gyro ChipID: ST Micro AP3GDL v3.0.0 part:3
+Raw ID: 0xD5
+Serial: 0x000000000
+Warning: lot/batch numbers are not valid data at this time.
+Lot: 0 Batch: 0
+OK
+------------------------------------------------------------------------------
+[09 12:21:07] .... 			Exit code = 0x00000000
+[09 12:21:07] .... 			gyro --selftest
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --selftest
+Starting Gyro self-test:
+Self Test data:
+(4)(-360)DATA: X-diff=364
+(1)(362)DATA: Y-diff=361
+(0)(-358)DATA: Z-diff=358
+OK
+------------------------------------------------------------------------------
+[09 12:21:09] .... 			Exit code = 0x00000000
+[09 12:21:09] .... 			gyro --off
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) gyro --off
+Powering down axes: OK
+Powering down Gyro: OK
+------------------------------------------------------------------------------
+[09 12:21:09] .... 			Exit code = 0x00000000
+[09 12:21:09] N005 	[1] Repeating 1x "WiFi/BT Test"
+[09 12:21:09] .... 		[1] WifiBtTest
+[09 12:21:09] .... 			device -k WiFi -e power_on
+------------------------------------------------------------------------------
+~\mp{Diags Command}~:-) device -k WiFi -e power_on
+ERROR: Method "power_on" returned status Not Found
+device returned Not Found error
+------------------------------------------------------------------------------
+[09 12:21:09] .... 			Exit code = 0x8000000E
+[09 12:21:09] .... 			ActionToExecute failed
+[09 12:21:09] .... 		[1] WifiBtHandler
+[09 12:21:09] N001 Sequence done
+
+~\mp{7. Post-flight}~Failed
+
+Writing final results
+Writing control bit
+Writing PDCA plist file
+
+~\mp{8. Error Summary}~All errors:
+	SmokeyResults: failed action WifiBtTest at node 5 iteration 1/1: EfiCommand: command had errors: device -k WiFi -e power_on
+	SmokeyCore: stopping after failed action
+\end{AnnotedLogFile}
+
+\subsubsection{Sequence Dump}
+
+\begin{LogExcerpt}
+:-) smokey Wildfire --sequence
+~\elide~
+Test Sequence
+
+Day/Time      Node
+------------- ----
+[09 11:13:17] N001 Repeat 1x
+[09 11:13:17] N002      Repeat 0x "Battery Protection"
+[09 11:13:17] ....              BatteryProtection
+[09 11:13:17] N003      Repeat 1x "PMU Test"
+[09 11:13:17] ....              PmuTest
+[09 11:13:17] N004      Repeat 2x "Gyro Test"
+[09 11:13:17] ....              GyroTest
+[09 11:13:17] N005      Repeat 1x "WiFi/BT Test" --> WifiBtHandler
+[09 11:13:17] ....              WifiBtTest
+\end{LogExcerpt}
+
+As a diagnostic and informative feature, Smokey can print the test order of a
+sequence without doing anything else.  The \keyword{--sequence} command line option will
+print the test order very similar to the way that Smokey executes it with
+\keyword{--run}.
+
+\begin{Property}
+
+\item[Exhaustive Listing] All test items are included, even those with
+	\prop{NumberOfTimesToRun} set to zero.
+
+\item[Explicit Properties] The properties \prop{TestName} and \prop{NumberOfTimesToRun} are
+	shown.  \prop{FailScript} is on same line as \prop{NumberOfTimesToRun}, prefixed
+	with an arrow.
+
+\item[Actions] \prop{ActionToExecute} is shown on its own line.
+
+\end{Property}
+
+\subsubsection{Sequence Summary}
+
+\begin{LogExcerpt}
+:-) smokey Wildfire --summary
+~\elide~
+Test Sequence Summary
+
+Day/Time      Node
+------------- ----
+[09 11:13:17] N001 Repeat 1x
+[09 11:13:17] N003      PmuTest
+[09 11:13:17] N004      Repeat 2x
+[09 11:13:17] ....              GyroTest
+[09 11:13:17] N005      WifiBtTest --> WifiBtHandler
+\end{LogExcerpt}
+
+The \keyword{--summary} command line option is similar to the \keyword{--sequence} option, but
+potentially a lot more concise.
+
+\begin{Property}
+
+\item[Concise Listing] No test items with zero iterations.  Children of those
+	test items are also omitted.
+
+\item[Abbreviated Properties] Test items with only one iteration do not have a
+	separate output line indicating showing \prop{NumberOfTimesToRun}.  \prop{TestName}
+	is omitted on all test items.  \prop{FailScript} is on the same line as
+	\prop{ActionToExecute} if the line with \prop{NumberOfTimesToRun} is omitted.
+
+\end{Property}
+
+\subsection{Screen Output}
+
+If the DUT has a display module available, Smokey provides visual feedback on
+the sequence's execution using modal screens.  Each has a distinct color or
+design to make it easy to identify state at a glance.
+
+\begin{StatusScreenTable}
+	Connect to Brick &  Running Status & Pass & Fail \\
+	\CenterImage{ScreenConnectToBrick.pdf} &
+	\CenterImage{ScreenRunning.pdf} &
+	\CenterImage{ScreenPass.pdf} &
+	\CenterImage{ScreenFail.pdf} \\
+\end{StatusScreenTable}
+
+\begin{Property}
+
+\item[Connect to Brick] Sequence is running, but halted while DUT is waiting
+	for an external charger.  Background is bright yellow and instructions
+	in black text.
+
+\item[Running Status] DUT is running an action.  A logo is shown in the
+	background.  The current action name is shown in white text over a
+	black background.
+
+\item[Pass] Sequence is complete and successful.  Background is bright green.
+
+\item[Fail] Sequence is complete but failed.  Background is bright red.
+
+\end{Property}
+
+\subsection{State Control}
+
+Smokey will generally manage its state without need for outside intervention.
+However, commands are available to clear the state and get the DUT back to
+normal.  These are useful, for example, for triaging a problem or interrupting
+a sequence while the DUT is rebooting.
+
+To understand why these commands work, please be sure to read the section on
+sequence state saving before proceeding.
+
+\subsubsection{Clearing State}
+
+In order to run a new sequence, or restart a previous sequence, the previously
+saved state must be cleared.  See the description of command line options for
+the exact syntax to clear the current Smokey state.
+
+Smokey only supports one state to be shared amongst all sequences.
+Effectively, clearing one saved state will clear them for all sequences.
+
+\subsubsection{Clearing Autostart}
+
+When Smokey is part of the EFI diags boot script, the most important part of
+breaking into a DUT in the middle of saving sequence state and rebooting is to
+disable the autostart configuration.  This will usually allow EFI diags to boot
+into the command line.
+
+The work boils down to interrupting the DUT before it loads EFI diags in order
+to manipulate NVRAM variables.
+
+Breaking into the DUT before it loads EFI diags involves controlling it while
+it is in either iBoot or iOS.  The details of doing this won't be covered here.
+
+Once control is gained over the DUT, the following NVRAM variables can be
+changed:
+
+\begin{Definition}
+
+\item[boot-args] The \nvarg{smokey} argument must be removed.
+
+\item[boot-command] If the goal is not to boot into EFI diags, then this needs to be set accordingly.  Otherwise, the value can be left untouched.
+
+\item[auto-boot] Like \nvram{boot-command}, this can usually be left alone, but can be changed depending on the situation.  Note that Smokey doesn't modify this variable.
+
+\end{Definition}
+
+Additional work---beyond the scope of this document---may be required if other
+software in EFI diags outside of Smokey configured for autostart at the same
+time.
+
+\section{Developing Smokey Sequences}
+
+\subsection{Smokey Lua API}
+
+Smokey provides Lua scripting interfaces to interact with the DUT, EFI diags,
+and with Smokey itself.  On top of the standard Lua facilities, these will be
+the the crux of sequence actions.  The following sections will describe the
+Smokey API.
+
+Some function arguments will be optional and will be noted with an asterisk.
+Following the Lua convention, optional arguments at the end of a function's
+argument list may simply be omitted during a call.  Optional arguments in the
+middle must be passed as \keyword{nil}.
+
+\subsubsection{\func{Shell} Function}
+
+\begin{LuaCode}[escapechar=~]
+Shell(~\param{CommandLine}~)
+\end{LuaCode}
+
+Execute the string \param{CommandLine} as if it was typed at the EFI command shell.
+Output is captured into the global table \func{Last}.
+
+\begin{ApiTable}
+	Argument & Type & Req? & Comment \\
+	\param{CommandLine} & String & Yes & EFI diags command line \\
+\end{ApiTable}
+
+\func{Shell} will inspect the command output for failures.  If any are detected, it
+will raise an exception with a string describing the first fault detected.  If
+the sequence action doesn't catch this exception, Smokey will catch it by
+default.
+
+Failures are defined below.
+
+\begin{Definition}
+
+\item[Non-zero exit code] The convention for EFI commands is to return zero
+	for success.  All other values indicate some kind of failure.
+
+\item[Error Message Detected]  The text ``ERROR:'' is the label for error
+	messages.  If this string is found, the command is considered to have
+	failed regardless of exit code.
+
+\end{Definition}
+
+\subsubsection{\func{Last} Table}
+
+This global table is updated each time \func{Shell} is called.  Scripts can use this
+table to inspect the most recent command's result or parse its output.
+
+\begin{LuaStruct}
+	\func{Last} Field & Type & Value \\
+	\func{CommandLine} & String & The string passed into \func{Shell}. \\
+	\func{ExitCode} & Number & Command return code. Zero means success. \\
+	\func{RawOutput} & String & All console output from the command. \\
+	\func{Output} & String & Same as \func{RawOutput} but stripped of error messages. \\
+\end{LuaStruct}
+
+\subsubsection{\func{ReportData} Function}
+
+\begin{LuaCode}[escapechar=~,linewidth=5in]
+ReportData(~\param{Name}~, ~\param{Value}~, ~\param{Units*}~, ~\param{LowerLimit*}~, ~\param{UpperLimit*}~)
+\end{LuaCode}
+
+Record a named key-value pair for the current iteration of the current test
+item.  Smokey will create a unique identifier for the data when generating PDCA
+results.
+
+\begin{ApiTable}
+	Argument & Type & Req? & Comment \\
+	\param{Name} & String & Yes & Local identifier for this datum. \\
+	\param{Value} & Number & Yes & Value for this datum. \\
+	\param{Units} & String & No & Dimension and magnitude (e.g. ``mV'' or ``s''). \\
+	\param{LowerLimit} & Number & No & Must be in the same units as \param{Value}. \\
+	\param{UpperLimit} & Number & No & Must be in the same units as \param{Value}. \\
+\end{ApiTable}
+
+\param{LowerLimit} and \param{UpperLimit} for \param{Value} will be independently defined in the PDCA
+results if one or the other is provided in the during the function call.
+
+\param{Units} can be defined without defining limits.
+
+\subsubsection{\func{ReportAttribute} Function}
+
+\begin{LuaCode}[escapechar=~]
+ReportAttribute(~\param{Name}~, ~\param{Value}~)
+\end{LuaCode}
+
+Record a key-value pair for the DUT.  PDCA treats this data as specific to the
+unit rather than specific to any specific factory test.
+
+\begin{ApiTable}
+	Argument & Type & Req? & Comment \\
+	\param{Name} & String & Yes & Global identifier for this attribute. \\
+	\param{Value} & String & Yes & Value for this attribute. \\
+\end{ApiTable}
+
+There is a single namespace for attributes shared across the entire sequence.
+
+\subsection{Data Submission to PDCA}
+
+Smokey defines \func{ReportData} as the main interface for generating parametric data
+for the PDCA system.  Each datum is uniquely identified for completeness.  See
+the section on design for factory use for more details on the exact conversion
+process.
+
+\subsection{Sequence Development Quick Start}
+
+The quickest way to start developing a Smokey sequence is to duplicate an
+existing one.  A member of the EFI diags team can provide these files.
+
+However, it's possible to start from scratch by taking note of the file
+organization described in the Smokey fundamentals section.  For example, the
+following commands will create a sequence named ``MySequence'' for the X99
+platform.  These commands need to be run at the command line of a host computer
+while in the Smokey folder of a file tree root.
+
+\begin{CommandLine}
+mkdir MySequence
+touch MySequence/X99.lua
+touch MySequence/X99.plist
+dd if=/dev/zero of=MySequence/PDCA.plist bs=1M count=1
+dd if=/dev/zero of=MySequence/Smokey.log bs=1M count=10
+echo SKIP > MySequence/.FactoryLogsWaitingToBeCollected
+dd if=/dev/zero \
+	of=MySequence/.FactoryLogsWaitingToBeCollected \
+	count=1020 bs=1 seek=4
+\end{CommandLine}
+
+The Lua file will be created, but empty.  A text editor can be used to fill it
+with the appropriate content.
+
+The plist file will likewise be empty.  A text editor can also be used to fill
+it, but a purpose-built application like Xcode is highly recommended.  At a
+minimum, the required properties and one test item must be defined.
+
+\CenterImage{Plist.png}
+
+Once the files are created, they should be rooted onto the
+DUT.\footnote{Consult iOS documentation for details on file roots, how they
+work, and how to apply them to a DUT.}
+
+\subsection{Developing Code with the Smokey Shell}
+
+Certain features of Smokey are available as an interactive shell running on the
+DUT.  This means that it is possible to test code snippets and EFI commands
+without loading files onto the DUT.
+
+Currently, this feature is limited to engineering hardware only.  Also, it must
+be enabled in the particular build of EFI diags.
+
+\subsubsection{Starting the Shell}
+
+\begin{CommandLine}
+smokeyshell
+\end{CommandLine}
+
+There are no command line options supported.
+
+\subsubsection{Executing Commands}
+
+The > (greater-than) prompt will be shown once the shell is running and ready
+to accept input.  At this point, it will be possible to type or paste code into
+the terminal window.
+
+The shell supports all of the standard Lua functions and libraries, as well as
+the standard interactive Lua shell conventions.  Additionally, the following
+Smokey API functions may be used:
+
+\begin{Definition}
+
+\item[Shell] Behaves the same as in Smokey.
+
+\end{Definition}
+
+\subsubsection{Exiting the Shell}
+
+Pressing \keys{\ctrl}\keys{D} will end input and quit Smokey Shell.
+
+\subsection{Developing Code on DUT}
+
+This feature is not yet available.
+
+\subsection{Developing Code with the Smokey Simulator}
+
+This feature is not yet available.
+
+\section{Smokey Internals}
+
+\subsection{Software Architecture}
+
+Documentation not yet available.
+
+\subsection{Control Files}
+
+Documentation not yet available.
+
+\subsection{Saving State}
+
+Documentation not yet available.
+
+\subsection{Schema Grammar}
+
+Documentation not yet available.
+
+\section{References}
+
+\subsection{Useful Lua Links}
+
+\subsubsection{Official Lua Home Page}
+
+http://www.lua.org/home.html
+
+\subsubsection{Lua Executable Binaries}
+
+http://luabinaries.sourceforge.net/download.html
+
+\subsubsection{Official Lua 5.2 Reference Manual}
+
+http://www.lua.org/manual/5.2/
+
+\subsubsection{Lua Programmer's Guide}
+
+http://www.lua.org/pil/
+
+\subsubsection{Lua Pitfalls and Gotchas}
+
+http://www.luafaq.org/gotchas.html
+
+\subsubsection{Lua Community Wiki}
+
+http://lua-users.org/wiki/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

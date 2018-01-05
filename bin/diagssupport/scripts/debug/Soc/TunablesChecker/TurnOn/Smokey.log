@@ -1,0 +1,281 @@
+Opened log at 2016-10-14 14:56:25
+
+Linked to device at /dev/cu.kanzi-3143C2
+
+Smokey Simulator - Copyright (C) 2012-2014 Apple Inc
+Simulator 147 (changelist 7074d15) 2016/09/25 11:01:10
+Myst23D master 23D53 (revision d863b95) 2016/09/16 18:51:32
+
+SrNm: DLXS7020HL0G
+MLB#: DLX632700D5H1X93V
+CFG#: J121-P2/*/*/05397/MI2-P21CB-12
+ECID: 001548E12861493A
+
+Control File:   TurnOn/J120/Main.plist
+Script File:    TurnOn/J120/Main.lua
+Log File:       TurnOn/Smokey.log
+Results File:   TurnOn/PDCA.plist
+Signature File: undefined
+Control Bit:    none
+
+Finished dumping pre-log buffer
+
+SequenceName:          TurnOn Sequence
+SequenceVersion:       20161013
+BehaviorOnFail:        KeepGoing
+ResultsBehavior:       Bookend
+ResultsActionBehavior: NoAction
+ResultsAction:         undefined
+LogBehavior:           Full
+LogFileBuffering:      WriteThrough
+BrickRequired:         None
+LogCollectorControl:   None
+ControlBitAccess:      Default
+
+Sequence syntax and sanity check passed
+
+Using cleaned output files
+
+Writing default results
+Skipping control bit write
+Writing PDCA plist file
+
+Initializing display
+Continuing without charger
+Device ready
+
+Sequence execution...
+
+Day/Time      Node
+------------- ----
+[14 14:56:25] N001 Repeating 1x
+[14 14:56:25] .... 	[1] Periodic tasks
+[14 14:56:25] N002 	[1] Repeating 1x "TurnOn"
+[14 14:56:25] N003 		[1] Repeating 1x "TurnOnAll"
+[14 14:56:25] .... 			[1] Action "TurnOnAll"
+[14 14:56:25] .... 				wifi --on
+------------------------------------------------------------------------------
+:-) wifi --on
+time-train: 1126 uS
+Link 2 speed negotiate to 1 
+Link 2 width negotiate to 1 
+APCIE power on completed
+Device 00:02:0 config space@0x610010000
+Vendor:106B Device:1009 Revision:01 ClassCode:060400 Type:01
+    PriBus:00 SecBus:03 SubBus:03
+    Capability 0x01 Offset:0x40 Address:0x610010040
+    Capability 0x05 Offset:0x50 Address:0x610010050
+    Capability 0x10 Offset:0x70 Address:0x610010070
+    Extended Capability 0x0001 Ver:0x02 Offset:0x0100 Address:0x610010100
+    Extended Capability 0x0019 Ver:0x01 Offset:0x0148 Address:0x610010148
+    Extended Capability 0x001E Ver:0x01 Offset:0x0160 Address:0x610010160
+Found device id 0x43DC
+_setUpMemmorySpaceMap 0 ARM offsetStart=0x0 hostBaseAddress  = 0x7E0000000
+_setUpMemmorySpaceMap 1 DmpWrapper offsetStart=0x1000 hostBaseAddress  = 0x7E0001000
+_setUpMemmorySpaceMap 2 PCIECoreEnum offsetStart=0x2000 hostBaseAddress  = 0x7E0002000
+_setUpMemmorySpaceMap 3 ChipCommon offsetStart=0x3000 hostBaseAddress  = 0x7E0003000
+_setUpMemmorySpaceMap 4 Dot11Mac offsetStart=0x4000 hostBaseAddress  = 0x7E0004000
+_setUpMemmorySpaceMap 5 Dot11MacWrapper offsetStart=0x5000 hostBaseAddress  = 0x7E0005000
+_setUpMemmorySpaceMap 6 PCIECoreEnum offsetStart=0x6000 hostBaseAddress  = 0x7E0006000
+_setUpMemmorySpaceMap 7 ChipCommon offsetStart=0x7000 hostBaseAddress  = 0x7E0007000
+Device 03:00:0 config space@0x610300000
+Vendor:14E4 Device:43DC Revision:0A ClassCode:028000 Type:00
+    BAR0 MEM E0000000/00008000
+    BAR1  IO 00000000/00000004
+    BAR2 MEM E0400000/00400000
+    BAR3  IO 00000000/00000004
+    Capability 0x01 Offset:0x48 Address:0x610300048
+    Capability 0x05 Offset:0x58 Address:0x610300058
+    Capability 0x09 Offset:0x68 Address:0x610300068
+    Capability 0x10 Offset:0xAC Address:0x6103000AC
+    Extended Capability 0x0001 Ver:0x01 Offset:0x0100 Address:0x610300100
+    Extended Capability 0x0003 Ver:0x01 Offset:0x013C Address:0x61030013C
+    Extended Capability 0x0004 Ver:0x01 Offset:0x0150 Address:0x610300150
+    Extended Capability 0x0002 Ver:0x01 Offset:0x0160 Address:0x610300160
+    Extended Capability 0x0018 Ver:0x01 Offset:0x01B0 Address:0x6103001B0
+    Extended Capability 0x0015 Ver:0x01 Offset:0x0220 Address:0x610300220
+    Extended Capability 0x001E Ver:0x01 Offset:0x0240 Address:0x610300240
+APCIE Enumerate on completed
+WiFi on success
+OK
+------------------------------------------------------------------------------
+[14 14:56:26] .... 				Exit code = 0x00000000
+[14 14:56:26] .... 				wifi --load_firmware
+------------------------------------------------------------------------------
+:-) wifi --load_firmware
+Firmware boot complete!
+OK
+------------------------------------------------------------------------------
+[14 14:56:27] .... 				Exit code = 0x00000000
+[14 14:56:27] .... 				baseband --on
+------------------------------------------------------------------------------
+:-) baseband --on
+PS_HOLD went high in 67ms!
+time-train: 1128 uS
+Writing 0xBFFFF000 @ 0x604004018
+Writing 0x1 to 0x604000124
+Writing 0x0 to 0x604000128
+Link 3 speed negotiate to 1 
+Link 3 width negotiate to 1 
+APCIE power on completed
+Device 00:03:0 config space@0x610018000
+Vendor:106B Device:100A Revision:01 ClassCode:060400 Type:01
+    PriBus:00 SecBus:04 SubBus:04
+    Capability 0x01 Offset:0x40 Address:0x610018040
+    Capability 0x05 Offset:0x50 Address:0x610018050
+    Capability 0x10 Offset:0x70 Address:0x610018070
+    Extended Capability 0x0001 Ver:0x02 Offset:0x0100 Address:0x610018100
+    Extended Capability 0x0019 Ver:0x01 Offset:0x0148 Address:0x610018148
+    Extended Capability 0x001E Ver:0x01 Offset:0x0160 Address:0x610018160
+Writing MSI cap 0x817005 @ 610400050
+Writing 0xBFFFF000 @ 610400054
+Found device id 0x301
+Device 04:00:0 config space@0x610400000
+Vendor:17CB Device:0301 Revision:00 ClassCode:FF0000 Type:00
+    BAR0 MEM F0000000/00001000
+    BAR1  IO 00000000/00000004
+    BAR2 MEM F0001000/00001000
+    BAR3  IO 00000000/00000004
+    Capability 0x01 Offset:0x40 Address:0x610400040
+    Capability 0x05 Offset:0x50 Address:0x610400050
+    Capability 0x10 Offset:0x70 Address:0x610400070
+    Extended Capability 0x0001 Ver:0x02 Offset:0x0100 Address:0x610400100
+    Extended Capability 0x0018 Ver:0x01 Offset:0x0148 Address:0x610400148
+    Extended Capability 0x001E Ver:0x01 Offset:0x0150 Address:0x610400150
+APCIE Enumerate on completed
+OK
+------------------------------------------------------------------------------
+[14 14:56:27] .... 				Exit code = 0x00000000
+[14 14:56:27] .... 				baseband --load_firmware
+------------------------------------------------------------------------------
+:-) baseband --load_firmware
+Baseband Load FirmwareFlags Len: 0, Max: 24
+Sending no flags
+Executing Firmware Load
+Interface 0: Firmware Load Interface
+Interface 1: Core Dumps Interface
+
+Path for efs1 file fs1:\bbfs\
+Path for prov,cal and pac files nandfs:\System\Library\Caches\com.apple.factorydata\
+Path for all other FW files nandfs:\usr\local\standalone\firmware\Baseband\Mav16\
+
+Loading firmware from NAND.................done
+Attempting flash on interface 0 (Firmware Load Interface) flags: 0x8
+Starting stage 1 boot.
+Chip ID 0x9540E1
+Serial Number 0x9CD72F96
+Starting Stage 1 boot
+Stage 1 Image transfer completion callback: status 0x0, code 0x0, size 0x39800
+Starting stage 2 boot.
+BB_RESET_DET_N went high!
+Device Flash done!
+Firmware load completed in 3289 ms!
+DATA: firmware-load="Passed"
+OK
+------------------------------------------------------------------------------
+[14 14:56:31] .... 				Exit code = 0x00000000
+[14 14:56:31] .... 				audio -r
+------------------------------------------------------------------------------
+:-) audio -r
+Resetting audmux...
+Resetting belfield...
+Resetting clifden...
+Resetting hawking...
+Resetting socmca...
+Resetting socpdm...
+Resetting spkl1...
+Speaker already powered off.
+Resetting spkl2...
+Speaker already powered off.
+Resetting spkr1...
+Speaker already powered off.
+Resetting spkr2...
+Speaker already powered off.
+OK
+------------------------------------------------------------------------------
+[14 14:56:31] .... 				Exit code = 0x00000000
+[14 14:56:31] .... 				sensor --sel accel --init
+------------------------------------------------------------------------------
+:-) sensor --sel accel --init
+Turning off power to 'accel' sensor...
+Carbon: MPU6900 is found.
+Turning on power to 'accel' sensor...
+Carbon: MPU6900 is found.
+Resetting 'accel' sensor...
+OK
+------------------------------------------------------------------------------
+[14 14:56:32] .... 				Exit code = 0x00000000
+[14 14:56:32] .... 				bluetooth --on
+------------------------------------------------------------------------------
+:-) bluetooth --on
+OK
+------------------------------------------------------------------------------
+[14 14:56:32] .... 				Exit code = 0x00000000
+[14 14:56:32] .... 				camisp --pick front
+------------------------------------------------------------------------------
+:-) camisp --pick front
+call pick sensor.
+picked : front 
+Pass
+------------------------------------------------------------------------------
+[14 14:56:33] .... 				Exit code = 0x00000000
+[14 14:56:33] .... 				camisp --on
+------------------------------------------------------------------------------
+:-) camisp --on
+RunOn 0 0 30
+Capture buffer allocated at: 0xCE679F400, 0xCE680FC00 of 460800 bytes each with default value of 0x0 width 640 height 480
+Pass
+------------------------------------------------------------------------------
+[14 14:56:33] .... 				Exit code = 0x00000000
+[14 14:56:33] .... 				camisp --preview on	
+------------------------------------------------------------------------------
+:-) camisp --preview on	
+RunDis on
+Pass
+------------------------------------------------------------------------------
+[14 14:56:33] .... 				Exit code = 0x00000000
+[14 14:56:33] .... 				aes --decrypt --keylen 16 --mode cbc --keytype soft --keyfunc none --iv "0x36 0x18 0xB5 0x58 0x78 0x30 0xDD 0x12 0xFE 0x4E 0xF7 0x58 0xEE 0xDE 0x51 0x34" --key "0xCD 0x90 0x1C 0x7E 0x55 0x6A 0xA0 0xEF 0x32 0xA5 0x8B 0xA2 0x0D 0xB3 0xFA 0x21" --message "0xF0 0x19 0x8D 0x38 0xBA 0xF0 0x40 0xD8 0x62 0x1E 0x25 0xE8 0x56 0x7C 0xD9 0x10 0x41 0x1F 0x57 0x65 0x23 0x67 0xE2 0x74 0xB6 0x3F 0x7B 0xDD 0xFF 0xB3 0x94 0x7B" --messagelen 32
+------------------------------------------------------------------------------
+:-) aes --decrypt --keylen 16 --mode cbc --keytype soft --keyfunc none --iv "0x36 0x18 0xB5 0x58 0x78 0x30 0xDD 0x12 0xFE 0x4E 0xF7 0x58 0xEE 0xDE 0x51 0x34" --key "0xCD 0x90 0x1C 0x7E 0x55 0x6A 0xA0 0xEF 0x32 0xA5 0x8B 0xA2 0x0D 0xB3 0xFA 0x21" --message "0xF0 0x19 0x8D 0x38 0xBA 0xF0 0x40 0xD8 0x62 0x1E 0x25 0xE8 0x56 0x7C 0xD9 0x10 0x41 0x1F 0x57 0x65 0x23 0x67 0xE2 0x74 0xB6 0x3F 0x7B 0xDD 0xFF 0xB3 0x94 0x7B" --messagelen 32
+0000000: 46 69 78 65 64 52 61 6E 64 6F 6D 4E 75 6D 62 65  FixedRandomNumbe
+0000010: 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10 10  ................
+
+OK
+------------------------------------------------------------------------------
+[14 14:56:34] .... 				Exit code = 0x00000000
+[14 14:56:34] .... 				sep --init
+------------------------------------------------------------------------------
+:-) sep --init
+OK
+------------------------------------------------------------------------------
+[14 14:56:35] .... 				Exit code = 0x00000000
+[14 14:56:35] .... 				wfi --off
+------------------------------------------------------------------------------
+:-) wfi --off
+------------------------------------------------------------------------------
+[14 14:56:35] .... 				Exit code = 0x00000000
+[14 14:56:35] .... 				usbfs --en
+------------------------------------------------------------------------------
+:-) usbfs --en
+Enabling UsbFs...
+usbfs client version 2.4.7
+[0;31mERROR: Timed out waiting for EzUsb host to connect!
+[0m
+[0;31mERROR: Time out: Failed to init FS!
+[0musbfs returned Time out error
+------------------------------------------------------------------------------
+[14 14:56:37] .... 				Exit code = 0x80000012
+[14 14:56:37] .... 				Shell command 14 failed
+[14 14:56:37] .... 				ActionToExecute failed
+[14 14:56:37] .... 			[1] Ignoring failure
+[14 14:56:37] N001 Sequence done
+
+Failed
+
+Writing final results
+Skipping control bit write
+Writing PDCA plist file
+
+All errors:
+	SmokeyResults: failed action "TurnOnAll" at node 3 iteration 1/1: EfiCommand: command 14 had errors: usbfs --en
+

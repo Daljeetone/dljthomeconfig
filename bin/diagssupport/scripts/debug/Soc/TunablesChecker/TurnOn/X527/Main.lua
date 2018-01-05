@@ -1,0 +1,12 @@
+function TurnOnAll()
+	Shell("wifi --on")
+	Shell("display --on")
+	Shell("wifi --load_firmware")
+	Shell("audio -r")
+	Shell("sensor --sel accel --init")
+	Shell("bluetooth --on")
+	Shell("baseband --on")
+	Shell("baseband --load_firmware")	
+	Shell("usbfs --en")
+	-- Shell("sep --init")
+end

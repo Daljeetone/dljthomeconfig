@@ -1,0 +1,181 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% vim: set noexpandtab tw=0 indentexpr=:                                   %%
+%% vim: set spelllang=en:                                                   %%
+%%      set spellfile=PdcaNaming.en.utf-8.add                               %%
+%%      set spell                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%                DO NOT CONVERT TABS TO SPACES IN THIS FILE                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Delete this project after integrating into the next Smokey manual
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[Pass & Fail & Incomplete]
+		\prop{overallResult} & \mc{1}{``PASS''} & \mc{2}{``FAIL''} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{OLD} Overall Sequence Result}
+	\label{tab:OldOverallSequenceResult}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[Pass & Fail & Incomplete]
+		\prop{testname}         & \mc{3}{Test item's \prop{TestName} or \prop{ActionToExecute} value}  \\
+		\prop{subtestname}      & \mc{3}{``Iteration '' + iteration number}                            \\
+		\prop{subsubtestname}   & \mc{3}{Not used}                                                     \\
+		\prop{result}           & \mc{1}{``PASS''} &  \mc{2}{``FAIL''}                                 \\
+		\prop{failure\_message} & \mc{1}{Not used} &  \mc{1}{Actual message} &  \mc{1}{``Incomplete''} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{OLD} Individual Test Results}
+	\label{tab:OldIndividualTestResults}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[Pass & Fail & Incomplete]
+		\prop{testname}         & \mc{3}{Test item's \prop{TestName} or \prop{ActionToExecute} value} \\
+		\prop{subtestname}      & \mc{3}{EFI command name}                                            \\
+		\prop{subsubtestname}   & \mc{3}{``Iteration '' + iteration number}                           \\
+		\prop{result}           & \mc{1}{Not used} &  \mc{1}{``FAIL''}       & \mc{1}{Not used}       \\
+		\prop{failure\_message} & \mc{1}{Not used} &  \mc{1}{Actual message} & \mc{1}{Not used}       \\
+	\end{PdcaTable}
+
+	\caption{\textbf{OLD} EFI Command Failure}
+	\label{tab:OldEfiCommandFailure}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[No Limits & Within Limits & Exceed Limits]
+		\prop{testname}         & \mc{3}{Test item's \prop{TestName} or \prop{ActionToExecute} value} \\
+		\prop{subtestname}      & \mc{3}{Sequence's data name}                                        \\
+		\prop{subsubtestname}   & \mc{3}{``Iteration '' + iteration number}                           \\
+		\prop{value}            & \mc{3}{Sequence's data value}                                       \\
+		\prop{units}            & \mc{3}{Sequence's data units (if provided)}                         \\
+		\prop{lowerlimit}       & \mc{1}{Not used} &  \mc{2}{Data lower limit (if provided)}          \\
+		\prop{upperlimit}       & \mc{1}{Not used} &  \mc{2}{Data upper limit (if provided)}          \\
+		\prop{result}           & \mc{2}{``PASS''} &  \mc{1}{``FAIL''}                                \\
+		\prop{failure\_message} & \mc{2}{Not used} &  \mc{1}{Automatic}                               \\
+	\end{PdcaTable}
+
+	\caption{\textbf{OLD} Test Data}
+	\label{tab:OldTestData}
+
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[Pass & Fail & Incomplete]
+		\prop{overallResult} & \mc{1}{``PASS''} & \mc{2}{``FAIL''} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Overall Sequence Result}
+	\label{tab:OverallSequenceResult}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[Pass & Fail & Incomplete]
+		\prop{testname}         & \mc{3}{Sequence's short name}                                       \\
+		\prop{subtestname}      & \mc{3}{Test item's \prop{TestName} or \prop{ActionToExecute} value} \\
+		\prop{subsubtestname}   & \mc{3}{``Iteration '' + iteration number}                           \\
+		\prop{result}           & \mc{1}{``PASS''} & \mc{2}{``FAIL''}                                 \\
+		\prop{failure\_message} & \mc{1}{Not used} & \mc{1}{Actual message} &  \mc{1}{``Incomplete''} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Individual Test Results}
+	\label{tab:IndividualTestResults}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[No Limits & Within Limits & Exceed Limits]
+		\prop{testname}         & \mc{3}{Sequence's short name}                              \\
+		\prop{subtestname}      & \mc{3}{Test's name + ``: '' + Test's data name}            \\
+		\prop{subsubtestname}   & \mc{3}{``Iteration '' + iteration number}                  \\
+		\prop{value}            & \mc{3}{Test's data value}                                  \\
+		\prop{units}            & \mc{3}{Test's data units (if provided)}                    \\
+		\prop{lowerlimit}       & \mc{1}{Not used} &  \mc{2}{Data lower limit (if provided)} \\
+		\prop{upperlimit}       & \mc{1}{Not used} &  \mc{2}{Data upper limit (if provided)} \\
+		\prop{result}           & \mc{2}{``PASS''} &  \mc{1}{``FAIL''}                       \\
+		\prop{failure\_message} & \mc{2}{Not used} &  \mc{1}{Automatic}                      \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Test Data}
+	\label{tab:TestData}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[ & Value & ]
+		\prop{testname}         & \mc{3}{Sequence's short name}                                        \\
+		\prop{subtestname}      & \mc{3}{``SequenceVersion''}                                          \\
+		\prop{subsubtestname}   & \mc{3}{Not used}                                                     \\
+		\prop{result}           & \mc{3}{``PASS''}                                                     \\
+		\prop{value}            & \mc{3}{Sequence's \prop{SequenceVersion} value or a 32-bit checksum} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Parametric Sequence Version Number}
+	\label{tab:SequenceVersion}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[ & Fail & ]
+		\prop{testname}         & \mc{3}{Sequence's short name}                               \\
+		\prop{subtestname}      & \mc{3}{Test's name + ``: EFI Command '' + EFI command name} \\
+		\prop{subsubtestname}   & \mc{3}{``Iteration '' + iteration number}                   \\
+		\prop{result}           & \mc{3}{``FAIL''}                                            \\
+		\prop{failure\_message} & \mc{3}{Actual message}                                      \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} EFI Command Failure}
+	\label{tab:EfiCommandFailure}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[ & Incomplete & ]
+		\prop{testname}         & \mc{3}{Sequence's short name}                   \\
+		\prop{subtestname}      & \mc{3}{``SequenceProgress''}                    \\
+		\prop{subsubtestname}   & \mc{3}{Not used}                                \\
+		\prop{result}           & \mc{3}{``FAIL''}                                \\
+		\prop{failure\_message} & \mc{3}{``Crash, hang, power loss, reset, etc''} \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Fallback Sequence Result}
+	\label{tab:FallbackSequenceResult}
+
+\end{table}
+
+\begin{table}[p]
+
+	\begin{PdcaTable}[ & Fail & ]
+		\prop{testname}         & \mc{3}{Sequence's short name}   \\
+		\prop{subtestname}      & \mc{3}{``SmokeyPeriodicTasks''} \\
+		\prop{subsubtestname}   & \mc{3}{Not used}                \\
+		\prop{result}           & \mc{3}{``FAIL''}                \\
+		\prop{failure\_message} & \mc{3}{Actual message}          \\
+	\end{PdcaTable}
+
+	\caption{\textbf{NEW} Periodic Tasks Failure}
+	\label{tab:PeriodicTasksFailure}
+
+\end{table}

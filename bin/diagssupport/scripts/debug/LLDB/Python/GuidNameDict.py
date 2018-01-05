@@ -1,0 +1,1577 @@
+#!/usr/bin/python
+#
+# Copyright (c) 2011 - 2012 Apple Inc. All rights reserved
+#
+# GuidNameDict that gives names for guid values
+# also provides globals with known guids for the LLDB scripts
+#
+
+APPLE_GENERIC_RESOLVABLE_DEVICE_GUID            = "4299611B-4CC9-43DF-882B-2A0707A4A95F"
+APPLE_THUNDERBOLT_UTDM_GUID                     = "EF93CFBB-231A-488B-83B5-D889F7612AA8"
+DEVICE_PATH_MESSAGING_ABNLF                     = "F890CD5D-15F4-496A-99D1-180C084E6B27"
+DEVICE_PATH_MESSAGING_ABNLF_IMAGE_ID            = "664B957E-C0E1-445C-9673-EAA8F2D6FAF9"
+DEVICE_PATH_MESSAGING_DISPLAY                   = "952DAE24-A51D-49C8-825D-91681E2C6F36"
+DEVICE_PATH_MESSAGING_DISPLAY_PORT_BRANCH       = "5DE81115-DAC2-40E9-BC5D-F70B59E63179"
+DEVICE_PATH_MESSAGING_GRAPHICS_CONNECTOR        = "E9D6CAFB-E58B-4781-A8F2-FB2F5752CAD6"
+DEVICE_PATH_MESSAGING_GRAPHICS_FRAMEBUFFER      = "79F42ED8-DCB3-47F4-B759-CD73B5026BA9"
+DEVICE_PATH_MESSAGING_SBP2_UNIT                 = "36F359D6-80F4-4C34-BD2B-8DB1E83D71A3"
+DEVICE_PATH_MESSAGING_SD_SLOT                   = "C063C579-9F78-4BA5-9F42-D0B0149597A6"
+DEVICE_PATH_MESSAGING_T29_UNIT                  = "C146AE60-CD8A-11DF-BD3B-0800200C9A66"
+UNKNOWN_DEVICE_GUID                             = "CF31FAC5-C24E-11D2-85F3-00A0C93EC93B"
+gAppleATAPassThruProtocolGuid                   = "19931CD1-FFA4-4F49-B8F3-BDC28701DE0B"
+gAppleAccessPoint80211ProtocolGuid              = "35ED76B7-57E8-4575-B686-67457D08A239"
+gAppleAnlfProtocolGuid                          = "D040351C-4C76-4457-9AB3-DA73716FEFCD"
+gAppleArrowCursorGuid                           = "1A10742F-FA80-4B79-9DA6-357058CC397B"
+gAppleBackButtonSmallGuid                       = "63FA7900-6DD2-4BB3-9976-870FE27A53C2"
+gAppleBacklightControllerProtocolGuid           = "066E1E40-FF9A-48F3-B9BF-2A677379C1BC"
+gAppleBacklightProtocolGuid                     = "E49D0DC9-9D03-4047-8CDC-812458BED435"
+gAppleBasicDiagnosticsProtocolGuid              = "EF19DAF2-28DE-40B6-B591-0C747D4CD9E1"
+gAppleBatteryPowerSourceGuid                    = "901759CE-AB13-426E-86DA-1BD76D670797"
+gAppleBatteryState0Guid                         = "6ECEFFFD-614D-452E-A81D-25E56B0DEF98"
+gAppleBatteryState1Guid                         = "23D1280D-43F0-4713-90B2-0E5E4221AF4C"
+gAppleBatteryState2Guid                         = "53531469-558E-4AF1-803A-F966F27C573B"
+gAppleBatteryState3Guid                         = "3BBCB209-26C8-4BA9-AD25-B95B45A04D26"
+gAppleBatteryState4Guid                         = "ED8DCDD5-D037-4B1F-98DD-BDFDAD4DD7DD"
+gAppleBatteryState5Guid                         = "637E0BA6-C5BB-41B7-A23B-3A65CFC3E9DB"
+gAppleBatteryState6Guid                         = "7A627E16-679D-4814-8F82-EEAF3881F098"
+gAppleBatteryStateGuid                          = "5B03C40F-246D-47A2-A4CB-6E5DBD85CCAB"
+gAppleBatteryTotalPowerLevelGuid                = "9A2028C5-AF2A-4C8C-A13A-B6CB65C54754"
+gAppleBdsHotPlugConnectRequestProtocolGuid      = "13ABBCB6-E0EC-4DBC-A5EC-D2436ECF42BB"
+gAppleBeginBootButtonGuid                       = "E8A59290-A2AF-4099-B0AF-323FF9B7AB41"
+gAppleBeginStickyBootButtonGuid                 = "B4339807-7CAC-49BA-9FB7-6231C622F270"
+gAppleBiosIdFileGuid                            = "C3E36D09-8294-4B97-A857-D5288FE33E28"
+gAppleBiosIdProtocolGuid                        = "896CA6FE-AF6D-4180-996D-B0DCCCC44958"
+gAppleBootBeepSignalProtocolGuid                = "74833284-39EB-414C-8544-59CFD6095DC9"
+gAppleBootPartitionTypeGuid                     = "426F6F74-0000-11AA-AA11-00306543ECAC"
+gAppleBootPickerGuid                            = "E1628C66-2A2D-4DC5-BD41-B20F3538AAF7"
+gAppleBootPickerIconOverrideProtocolGuid        = "3B63DC5E-BA60-4159-A2B4-9B91D2B8F009"
+gAppleBootPolicyProtocolGuid                    = "62257758-350C-4D0A-B0BD-F6BE2E1E272C"
+gAppleBootUIProtocolGuid                        = "A0041CFA-5705-4AEA-83E9-2433AB6F5931"
+gAppleBsdpProtocolGuid                          = "D040351C-4C76-4457-9AB3-DA73716F67F6"
+gAppleButtonBackgroundGuid                      = "1C06B2B6-D0B1-48CB-B729-ADE0AE0BA686"
+gAppleButtonBackgroundSelectedGuid              = "982B9930-9745-4691-B23E-DC238CFA7ED7"
+gAppleClockGuid                                 = "224FBFE4-ADB6-4DF2-B835-602182AEEF20"
+gAppleConsoleFontProtocolGuid                   = "69E12D5A-9D27-462C-93D1-C6DF5E896884"
+gAppleContinueButtonSmallGuid                   = "728CAE6C-1FFC-449B-8681-BB2A621E0022"
+gAppleCpuBusRatioGuid                           = "A734B117-29CA-4E8D-9CF1-0A8D5E3EBABC"
+gAppleCryptoProtocolGuid                        = "9D7B16E6-3473-4035-BA63-7D6A3BA39498"
+gAppleDebugInfoTableGuid                        = "026C0F80-22EC-11E2-AA02-3C07540E73B4"
+gAppleDebugPpiGuid                              = "349D6EAF-E0FB-5C4B-8ACE-96877311715D"
+gAppleDebugProtocolGuid                         = "3C630150-66B6-E345-B920-BDA012FAC443"
+gAppleDebugSupportHobGuid                       = "0967A8B4-0093-4756-B675-8B1B7E796A67"
+gAppleDefaultBackgroundGuid                     = "AEE3B11D-C207-411D-B467-5026B219ECA2"
+gAppleDeviceEarlyInitProtocolGuid               = "89342532-E9D4-447F-A856-0D98CF1341EF"
+gAppleDevicePathsSupportedGuid                  = "5BB91CF7-D816-404B-8672-68F27F7831DC"
+gAppleDhcp4ProtocolGuid                         = "5C4DE4E9-5143-4592-8015-2372427807E6"
+gAppleDhcp4ServiceBindingProtocolGuid           = "A6CEA0BD-80A6-4B5F-A290-A6801582E608"
+gAppleDiagLedProtocolGuid                       = "A9FBF34B-E2A2-41D1-BA00-A274A55CD164"
+gAppleDiagnosticVaultProtocolGuid               = "F76761DC-FF89-44E4-9C0C-CD0ADA4EF983"
+gAppleDiskImageProtocolGuid                     = "004B07E8-0B9C-427E-B0D4-A466E6E57A62"
+gAppleDnsResolverProtocolGuid                   = "1FBB9D23-0BD5-46F8-AB7D-BD3F23505233"
+gAppleDnsResolverServiceBindingProtocolGuid     = "081C8EB7-E98E-488A-A83F-035F520BC65C"
+gAppleDxeCoreInfoProtocolGuid                   = "35248736-F777-45F1-AA36-9DCD1659435B"
+gAppleEdidParserProtocolGuid                    = "D43E09B0-8B11-461D-8AC6-B34E97230B8F"
+gAppleEfiBootNameLabelGuid                      = "C0512F00-0181-48C0-8B71-90504B8F991E"
+gAppleEfiTokenSpaceGuid                         = "4F792E68-E8C8-794E-B1D8-3703F3F2D5A5"
+gAppleEfi_Pop_LfGuid                            = "2E5CFC2C-9CC0-4D78-BEAF-D84CBF20D1C8"
+gAppleEfi_Pop_Lf_PressedGuid                    = "B703C820-4D3D-4658-8EED-5B2F9DE54711"
+gAppleEfi_Pop_MidGuid                           = "BA658945-DEE1-42B3-9FA4-BB6B22FB03E4"
+gAppleEfi_Pop_Mid_PressedGuid                   = "795231E2-A205-4B8D-8C8D-7353B713DF7D"
+gAppleEfi_Pop_RtGuid                            = "2A9D5E7F-A43A-4FC7-A25E-6E28D412FA6F"
+gAppleEfi_Pop_Rt_PressedGuid                    = "8962C28B-0DFE-4739-A73F-092D374A7A13"
+gAppleEmbeddedFontGuid                          = "D0CFD67C-E8BE-499E-A6C7-5A90348A170B"
+gAppleEnclosureSerialNumberSubClassGuid         = "FAEBFEBC-E112-45A6-85FB-3C26AA08CB84"
+gAppleErrorGlobeBorderGuid                      = "022218B8-FE5E-4EBC-BC96-74058A4E7E83"
+gAppleErrorGlobeTileGuid                        = "AD0D149F-BA67-4E0B-A6A2-4E8853673EA5"
+gAppleErrorTonePpiGuid                          = "A6D08B81-06B3-4F98-970D-314178FEC93B"
+gAppleErrorTriangleGuid                         = "290B026F-6905-4612-BA0F-F635DDE35285"
+gAppleEventGroupSignalIdleLoop                  = "288E1B01-C589-AD46-9CB6-2AAE83794D32"
+gAppleEventGroupUnsignedCodeLoading             = "08CF8281-084B-4898-AF0A-D0A6FDC0FDAE"
+gAppleEventGroupUntrustedTransition             = "4E58CC45-3ED0-404A-B96A-44EF19BC67F1"
+gAppleExternalFontGuid                          = "32F2ADF8-9310-4866-9EA7-215C8FA436AB"
+gAppleFileBlessedAlternateOSInfoGuid            = "893CA450-5F5E-48BA-858F-08C45D802318"
+gAppleFileBlessedFolderInfoGuid                 = "7BD1F02D-9C2F-4581-BF12-D54ABA0D98D6"
+gAppleFileBooterFileInfoGuid                    = "CA7E4814-2ADC-4ADD-ABFF-734E3CFE13F3"
+gAppleFileSystemInitProtocolGuid                = "7542A2BB-D260-4CC2-896E-D613CD515069"
+gAppleFirmwareExtensionProtocolGuid             = "C21C44EA-489D-4EEF-9169-B6118D3DA846"
+gAppleFirmwareFeaturesProtocolGuid              = "998C6D8C-5500-4145-953E-B875517A7A34"
+gAppleFirmwareVolumeExtDataGuid                 = "7632F57B-C263-2F42-A82D-001484F1661D"
+gAppleFlashCapsuleUtilityGuid                   = "3849885C-1646-42A7-83A7-9BD9645E211B"
+gAppleFlashEfiUtilityGuid                       = "D0FE1B74-DEA6-4081-BFBF-3B720EB1386D"
+gAppleFlashSpiUtilityGuid                       = "5604D863-BF24-439B-BBF6-636D72036E07"
+gAppleFlashUnlockedGuid                         = "7992F20F-022D-4F3F-ADC8-981F416D6F46"
+gAppleFlashmapConfigurationGuid                 = "908B63A8-C7C8-493A-8072-9D58DBCF724D"
+gAppleFlashmapFvConnectAllGuid                  = "D5C5B21E-0D3E-4009-AEDF-D359EEBDED0C"
+gAppleFlashmapFvCsmGuid                         = "C5B15D09-BEB0-4D2C-9911-3F23E2160BF6"
+gAppleFlashmapFvImmutableGuid                   = "ACACC48E-9A78-4F47-961B-07F08580879B"
+gAppleFlashmapFvMainGuid                        = "5AEB048E-7851-48DC-AF2B-C7FFD326D027"
+gAppleFlashmapMicrocodeGuid                     = "7893A931-78A4-4F8A-A70E-9075504C1B8E"
+gAppleFlashmapNvStorageGuid                     = "BE1CC48B-E9F1-467B-A7BC-8B5AA77ED3EC"
+gAppleFlashmapRecoveryGuid                      = "395DEA15-817E-4E46-9DEB-E43D4F7DA71E"
+gAppleFlashmapSmuFirmwareGuid                   = "2345FEB1-F649-4AD4-AD37-3354B60896ED"
+gAppleFpcIoProtocolGuid                         = "D89ED0DA-AA71-4B8E-9AC5-62971BEAA9B4"
+gAppleFsbFrequencySubClassGuid                  = "D1A04D55-75B9-41A3-9036-8F4A261CBBA2"
+gAppleGammaTableProtocolGuid                    = "03622D6D-362A-4E47-9710-C238B23755C1"
+gAppleGear10Guid                                = "9759BD61-F11E-4FEE-9004-1E8C88E72223"
+gAppleGear11Guid                                = "8C542316-A1E5-4001-89E7-15EDFF12577D"
+gAppleGear12Guid                                = "BA87DD62-AB60-46DE-8FD8-023510D52D11"
+gAppleGear1Guid                                 = "386A4B1C-DDE4-4FC5-9B03-9C928FCC6FD2"
+gAppleGear2Guid                                 = "E1CF12E4-762B-4576-A158-9B255A828AA7"
+gAppleGear3Guid                                 = "FB547927-DAEC-4884-A12E-94109FEDF18C"
+gAppleGear4Guid                                 = "C9E057D7-3B6D-475C-B8C2-7C955D2F58B3"
+gAppleGear5Guid                                 = "5DF9946D-8170-4FB5-854F-A98865F9878F"
+gAppleGear6Guid                                 = "563C75D2-045D-43FD-A7C0-A472B0AD0255"
+gAppleGear7Guid                                 = "B7E329EC-AD60-4D61-86E3-01A7904E223D"
+gAppleGear8Guid                                 = "EA5D72C1-4455-4FF8-91A1-4352DC1EE112"
+gAppleGear9Guid                                 = "8977B212-0A43-4048-993B-B39AC7B0FE21"
+gAppleGenericExternalHardDisk                   = "D872AEFA-7C5F-4C66-8836-AA57EFF0D9F8"
+gAppleGetDhcpAckPkt                             = "20B4E947-D657-4481-92C4-71264BFD5710"
+gAppleGlobeBorderGuid                           = "6E66DAE5-4108-40B5-89A9-C6103F0639EC"
+gAppleGlobeMaskGuid                             = "FC788727-C2D0-469C-BD03-5AEA03323C67"
+gAppleGlobeTileGuid                             = "3BEB6B06-09CE-4386-8884-F323ADD04F1F"
+gAppleGraphicsDriverProtocolGuid                = "DD8E06AC-00E2-49A9-888F-FA46DED40A52"
+gAppleGraphicsPlatformProtocolGuid              = "63FAECF2-E7EE-4CB9-8A0C-11CE5E89E33C"
+gAppleGraphicsPolicyActiveProtocolGuid          = "D9DFF88F-F988-4995-A09F-0A018CCD4BBC"
+gAppleGraphicsPolicyProtocolGuid                = "A4BB4654-9F72-4BC8-93EB-659FD8708B10"
+gAppleHfsPartitionTypeGuid                      = "48465300-0000-11AA-AA11-00306543ECAC"
+gAppleHttpClientProtocolGuid                    = "0BCFEE5C-AAA7-4A4D-B109-AFDEA1170ACF"
+gAppleHttpClientServiceBindingProtocolGuid      = "392A63CC-9F4A-4DE0-BD73-9E049705D62D"
+gAppleIconBrokenBootGuid                        = "6776572C-FE56-42CA-9B93-3D0960E7583A"
+gAppleIconBrokenBootOffGuid                     = "46893E96-71F2-46BA-8AFD-36249AC367E1"
+gAppleIconHardDiskFireWireGuid                  = "410C1D0C-656F-4769-8DFB-90F9A0303E9F"
+gAppleIconHardDiskFireWireSelectedGuid          = "43C7D8D6-4E89-4AAB-9971-17113E4FA327"
+gAppleIconHardDiskInternalGuid                  = "809FBBFD-127A-4249-88BC-FD0E767F4FFD"
+gAppleIconHardDiskInternalSelectedGuid          = "BA7A243E-7CE9-41C5-9825-F108ECD5E24E"
+gAppleIconHardDiskUsbGuid                       = "1BFC532E-F48A-4EBE-B2FB-2B286D70A6EB"
+gAppleIconHardDiskUsbSelectedGuid               = "3FBFE29D-8CAA-4199-9C44-FD0387C48B1A"
+gAppleIconNetBootGuid                           = "13ECD928-87AB-4460-BBE0-B520F9EB1D32"
+gAppleIconNetworkRecoveryGuid                   = "6F92E393-03C0-427B-BBEB-4EF807B55BD8"
+gAppleIconNetworkVolumeGuid                     = "E6F930E0-BAE5-40E6-98C9-4CD2298278E7"
+gAppleIconNetworkVolumeSelectedGuid             = "FB72B1E5-9476-44F1-897F-404E9FFBC3CF"
+gAppleIconOnBatteryWarningGuid                  = "C8298C9B-FEFF-48E1-AA16-19D0E7986C98"
+gAppleIconOpticalDriveGuid                      = "21A05FD5-DB4A-4CFC-B84B-EB0DBB569934"
+gAppleIconOpticalDriveSelectedGuid              = "9022C0A2-018C-4023-A586-8A48AF5B7013"
+gAppleIconPasswordLockGuid                      = "BB1A3984-D171-4003-9094-46AF866B45A2"
+gAppleIconSDGuid                                = "5B6DAB96-195D-4D24-9727-A7D0E93665C6"
+gAppleIconSelectedGuid                          = "A0AAFF71-35DA-41EE-863F-A24F429E59E4"
+gAppleIconWirelessGuid                          = "E04E7F48-D38C-4A53-93C2-A859DEBD3EDE"
+gAppleIconWirelessSmallGuid                     = "2F08C089-2073-4BD9-9E7E-308A18327B53"
+gAppleImageConversionProtocolGuid               = "0DFCE9F6-C4E3-45EE-A06A-A8613B98A507"
+gAppleImageFPBEmptyLeftEndcapGuid               = "1448C340-0202-4711-9C4B-2D063AA6475B"
+gAppleImageFPBEmptyMiddleGuid                   = "EA449C41-8236-4B97-9FF9-084E4BA70020"
+gAppleImageFPBEmptyRightEndcapGuid              = "F5D14DB5-2F0C-4611-9DDC-7C182B173A71"
+gAppleImageFPBFullFlatEndcapGuid                = "6BD57CD8-8689-44FF-A3C1-3054725D9BD9"
+gAppleImageFPBFullLeftEndcapGuid                = "6B309956-6617-472B-BBC7-2A09E55E3E52"
+gAppleImageFPBFullMiddleGuid                    = "7EF21E8C-2FC1-4BC3-A84A-73025EAAB896"
+gAppleImageFPBFullRightEndcapGuid               = "B10ADFA1-9E43-487F-AAF3-A7A9BDEAF4AC"
+gAppleImagePasswordEditGuid                     = "8F98528C-F736-4A84-AAA3-376A8E43BF51"
+gAppleImagePasswordFillGuid                     = "71F3B066-936A-4C84-9228-23230FD47C79"
+gAppleImagePasswordProceedGuid                  = "689CDA29-29A8-42F6-93FC-46BA5F180651"
+gAppleImageProgressBarEmptyGuid                 = "38035EC0-F31A-4710-9F72-3FCABADFE993"
+gAppleImageProgressBarFillGuid                  = "034845DE-6063-4E2A-AB6B-57371EC8EA96"
+gAppleImageProgressBarFullGuid                  = "A16B726C-96AD-4BCF-B12F-969AAEB7CE61"
+gAppleImmutableFileSystemGuid                   = "04ADEEAD-61FF-4D31-B6BA-64F8BF901F5A"
+gAppleIpAgentGetIpAddr                          = "CD74DFE2-3FFA-46C5-96A9-72B05093F597"
+gAppleIpAgentGetIpv4DnsAddresses                = "3DC78217-EEB2-4C03-882B-5A58E5E01D83"
+gAppleIpAgentProtocolGuid                       = "EA0720C6-D05A-4BF0-B7F8-7FC1A7A97897"
+gAppleIpAgentServiceBindingProtocolGuid         = "133D863F-B44C-421D-BCAF-611AE0B2CCF7"
+gAppleKdpProtocolGuid                           = "5E2A5BBA-40D1-114B-898C-D90E3A153B15"
+gAppleKeyMapAggregatorProtocolGuid              = "584B9EBE-80C1-4BD6-98B0-A7786EC2F2E2"
+gAppleKeySwitchProtocolGuid                     = "2C7B7BEE-1B43-4485-AB0D-963BF193CFE1"
+gAppleKeyboardNotifyProtocolGuid                = "E82A0A1E-0E4D-45AC-A6DC-2AE05800D311"
+gAppleLSMReportsProtocolGuid                    = "35D15D9C-535B-4FCA-A536-2A4E9BE8FBA0"
+gAppleLinkStateProtocolGuid                     = "BF71D7E3-4AE8-47F1-8605-9D576AAB4478"
+gAppleLogo1394Guid                              = "F2C1819D-10F5-4223-9236-9B4EBF1B9AE7"
+gAppleLogoGuid                                  = "7914C493-F439-4C6C-AB23-7F72150E72D4"
+gAppleLogoThunderboltGuid                       = "E646C3A8-C7E2-4DC2-A7F2-E32A270B0B26"
+gAppleLokiTokenSpaceGuid                        = "0D5078B2-1CBA-3840-BD16-0F619ED7AD08"
+gAppleMACAddrSubClassGuid                       = "8CBDD607-CAB4-43A4-978B-AB8DEF11061C"
+gAppleMachinePersonalitySubClassGuid            = "2B6C7ADE-C5DA-474B-BA42-06BDDD4E3497"
+gAppleMenu_Bottom_LeftGuid                      = "704EA695-F373-42D4-BF1B-44BB7F60C295"
+gAppleMenu_Bottom_MidGuid                       = "0C5FCE90-1C03-4ED2-9EFE-B1D02E72B3B0"
+gAppleMenu_Bottom_RightGuid                     = "3399DA41-CE44-4FDD-8D32-E578381FEBE0"
+gAppleMenu_CheckedGuid                          = "DA9F192F-BAE4-4F20-8C6C-55C1ACDE80B0"
+gAppleMenu_Checked_SelectedGuid                 = "8D4A8276-1994-4E82-983A-A71753617797"
+gAppleMenu_DotsGuid                             = "94796E10-7CF6-4A20-A3A0-4CF1A8341A16"
+gAppleMenu_Dots_SelectedGuid                    = "21ADC483-021F-4F3B-8DCE-613CC981A269"
+gAppleMenu_Down_ArrowGuid                       = "47FD99EB-C1E6-4F77-A31A-9F7FB4A8E7DE"
+gAppleMenu_LockedGuid                           = "A6077307-B297-4051-9AC0-A0DC8147E601"
+gAppleMenu_Locked_SelectedGuid                  = "36B37F21-9D04-44B5-95EC-4DE4CB2FE6FB"
+gAppleMenu_Mid_LeftGuid                         = "C19783FD-E21E-451A-830E-C7CB23DB52CC"
+gAppleMenu_Mid_MidGuid                          = "A023D3F6-F297-4307-8552-E6572B30B520"
+gAppleMenu_Mid_RightGuid                        = "F866AD0F-1FBB-4D52-813D-7EB95E2F19D4"
+gAppleMenu_NoneGuid                             = "C54F4B67-E527-4379-BF61-193C7A68C661"
+gAppleMenu_None_SelectedGuid                    = "97E35ADE-233D-4F18-828A-8A0524EBEDDE"
+gAppleMenu_SelectionGuid                        = "0284F846-2CB7-4960-8DB2-47AA71513AD5"
+gAppleMenu_SeperatorGuid                        = "FB15CB3F-D373-45A1-B9B1-0079D4E9D6B2"
+gAppleMenu_Top_LeftGuid                         = "9DC0DDAA-56BD-447A-95CC-5180433110F9"
+gAppleMenu_Top_MidGuid                          = "6D5C61C2-7694-4775-9F03-ED1E80DEC318"
+gAppleMenu_Top_RightGuid                        = "180636A5-871B-496D-B8F3-E83EF196D100"
+gAppleMiscProducerGuid                          = "A38DA1AC-A626-4E18-9388-14B0E82A5404"
+gAppleModelNameSubClassGuid                     = "FA6AE23D-09BE-40A0-AFDE-0637859426C8"
+gAppleModelSpecificGuid                         = "BF7F6F3A-5523-488E-8A60-F04863B975C3"
+gAppleNamespaceGuid                             = "3F6E2EA8-7335-4B43-BBC4-7E67ED5C002C"
+gAppleNetBootAltBsdpGuid                        = "21EFB8D2-30CE-47C0-A44F-8AB9C83B5695"
+gAppleNetBootBsdpGuid                           = "1FC10099-9D57-4729-891C-9ED54816F804"
+gAppleNetBootPxeGuid                            = "FE3913DB-9AEE-4E40-A294-ABBE93A1A4B7"
+gAppleNetServicesBindingProtocolGuid            = "603AC561-8956-468F-954C-D543A1932C59"
+gAppleNetServicesProtocolGuid                   = "164D6286-7A30-4326-ADFA-6B280B84A3BE"
+gAppleNetVolumeProtocolGuid                     = "6046A06A-5FA2-48BF-AF2C-C7470FEE1828"
+gAppleNetbootProtocolGuid                       = "78EE99FB-6A5E-4186-97DE-CD0ABA345A74"
+gAppleNetworkRecoveryNameLabelGuid              = "D9F11A26-249C-46AC-9CB5-E4F77E035C90"
+gAppleOsBootDataProducerGuid                    = "64517CC8-6561-4051-B03C-5964B60F4C7A"
+gApplePESignatureVerificationProtocolGuid       = "6C6148A4-97B8-429C-955E-4103E8ACA0FA"
+gApplePartitionInfoProtocolGuid                 = "68425EE5-1C43-4BAA-84F7-9AA8A4D8E11E"
+gApplePasswordLockSmallGuid                     = "88C61F0D-DFA9-4087-8687-626A8B010E0C"
+gApplePasswordLockWhiteGuid                     = "9D60F495-DBF2-4B06-AFCA-F62C1C89647F"
+gApplePasswordUIGuid                            = "9EBA2D25-BBE3-4AC2-A2C6-C87F44A1278C"
+gApplePassword_Capslock_IndicatorGuid           = "5D8111C9-B4F9-46F3-9DDB-73A41AC696C5"
+gApplePciEnumerationDoneProtocolGuid            = "3489A5BC-18F8-45C4-BFBD-ED74512C180C"
+gApplePlatformAliasGuid                         = "B8E65062-FB30-4078-ABD3-A94E09CA9DE6"
+gApplePlatformFatalErrorProtocolGuid            = "5E7154F6-FE02-4B98-9CC3-6BDD8464F167"
+gApplePlatformIdGuid                            = "C78F061E-0290-4E4F-8DDC-5BDAAC837DE5"
+gApplePlatformInfoDatabasePpiGuid               = "08A0A8A0-E581-4BDF-B813-ED59116423DC"
+gApplePlatformInfoDatabaseProtocolGuid          = "AC5E4829-A8FD-440B-AF33-9FFE013B12D8"
+gApplePlatformInfoFileGuid                      = "5E7BE016-33CF-2D42-8758-C69FA5CDBB2F"
+gApplePlatformSecurityPolicyProtocolGuid        = "E4518E76-19D8-4475-9094-73BDABDC3B0C"
+gApplePoofAnimationState0Guid                   = "4308B1F6-60F0-49FE-9E51-3A25992515BF"
+gApplePoofAnimationState1Guid                   = "03DBB540-E186-4615-8A7F-A427863B4E56"
+gApplePoofAnimationState2Guid                   = "79C3AC4A-DEC6-48F1-AFFE-E7B95A1CCB32"
+gApplePoofAnimationState3Guid                   = "C6A957E4-8303-4761-A084-92C0692D90F9"
+gApplePoofAnimationState4Guid                   = "F38C34DE-9C38-438C-9AF6-69F584F17EC0"
+gApplePowerButtonProtocolGuid                   = "08F9977D-1141-4E84-9376-5706CCC388AD"
+gApplePowerStateProtocolGuid                    = "FAC84806-0C21-4A00-8719-6F56E27FADDC"
+gApplePxeBootProtocolGuid                       = "529A341B-A532-40F4-B6E5-CF6550B5EAFE"
+gAppleRamDiskProtocolGuid                       = "957932CC-7E8E-433B-8F41-D391EA3C10F8"
+gAppleReanimationProtocolGuid                   = "5B27263B-9083-415E-889E-6432CAA9B813"
+gAppleRecoveryPartitionTypeGuid                 = "5265636F-7665-11AA-AA11-00306543ECAC"
+gAppleRemoteSignalProtocolGuid                  = "EDA517B5-F953-40D6-B900-9AF50079CEE4"
+gAppleRemovableMediaProtocolGuid                = "2EA9743A-23D9-425E-872C-F615AA195788"
+gAppleRomInfoFileGuid                           = "F7B52AF5-871A-40B5-96C6-EE57A73DC0B6"
+gAppleRomInfoProtocolGuid                       = "86DE9EF3-E869-440F-836A-8B09AF7D2770"
+gAppleRomLockFeatureStateGuid                   = "E3CC8EC6-81C1-4271-ACBC-DB65086E8DC8"
+gAppleRomLockStateGuid                          = "31229466-E00F-4D83-8838-51FE310569C8"
+gAppleRomVersionGuid                            = "B535ABF6-967D-43F2-B494-A1EB8E21A28E"
+gAppleRtcRamProtocolGuid                        = "E121EC07-9C42-45EE-B0B6-FFF8EF03C521"
+gAppleSecurityProtocolGuid                      = "8FFEEB3A-4C98-4630-803F-740F9567091D"
+gAppleShmooDataGuid                             = "36115B7F-696A-4F3E-B7AF-9F43E875FDC4"
+gAppleSmcIoProtocolGuid                         = "17407E5A-AF6C-4EE8-98A8-00210453CDD9"
+gAppleSupportGuid                               = "FA4585F1-303B-4725-80E4-BB42BBD0249C"
+gAppleSystemIdSubClassGuid                      = "1485AFA4-F000-4E3E-81B4-A7EE104D5E30"
+gAppleSystemPowerRestartGuid                    = "D109139A-976B-4117-8E03-84D5D3F8E494"
+gAppleSystemPowerShutdownGuid                   = "00546CE4-1FFC-4BB6-A78B-3BE680CC9412"
+gAppleSystemSerialNumberSubClassGuid            = "4BAA44C3-9D4D-46A6-9913-AEF90D3C0CB1"
+gAppleTamperResistantBootSecureVariableGuid     = "F68DA75E-1B55-4E70-B41B-A7B7A5B758EA"
+gAppleTamperResistantBootVariableGuid           = "5D62B28D-6ED2-40B4-A560-6CD79B93D366"
+gAppleTargetDiskModeUIProtocolGuid              = "66E6E8AB-B0ED-4B43-B0F9-151817175FDB"
+gAppleThunderboltResolverProtocolGuid           = "73CDDA53-95F2-42B4-BC87-6E5F0D2C535B"
+gAppleUSBStorageSetPollingProtocolGuid          = "BC22EE2B-200A-4CF6-BA83-9FA2D018B7BD"
+gAppleUniversalTargetDiskModeUIProtocolGuid     = "2C1EA87A-FB9D-4540-A1EC-F2ABB82B913D"
+gAppleUnlockFlashDescriptorProtocolGuid         = "D08B4902-5C78-402C-B6EC-3DA3B1B1BC32"
+gAppleUsbProtocolGuid                           = "7737B6C2-5731-4A19-AF2D-70E4AE1B5670"
+gAppleUserInterfaceThemeProtocolGuid            = "D5B0AC65-9A2D-4D2A-BBD6-E871A95E0435"
+gAppleVariablePolicyProtocolGuid                = "C5306B69-BCA2-4335-8F20-86E27CEB4F8D"
+gAppleVendorOSVariableGuid                      = "7C436110-AB2A-4BBB-A880-FE41995C9F82"
+gAppleVendorProtectedSingleShotVariableGuid     = "37BCBEC7-A645-4215-979E-F5AE4D115F13"
+gAppleVendorVariableGuid                        = "4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14"
+gAppleWifiVariableGuid                          = "36C28AB5-6566-4C50-9EBD-CBB920F83843"
+gAppleWifi_1BarGuid                             = "04F75442-A593-4281-BD4B-095935B7D2F8"
+gAppleWifi_2BarsGuid                            = "3FFFB2AA-4692-42E8-865E-7E111986FABE"
+gAppleWifi_3BarsGuid                            = "16A4ADD0-EF11-4C86-B159-88A2A8C4501C"
+gAppleWifi_4BarsGuid                            = "81E67795-D8A3-43B2-8B5F-E0326F76AB91"
+gAppleWifi_NoneGuid                             = "73F70B77-943B-4090-99E8-4F8E4D824A43"
+gAppleWindowsNameLabelGuid                      = "6E72A82C-14A5-4F02-A377-4A423BB1817F"
+gAppleWirelessEditPencilGuid                    = "C7D782BC-BE13-442F-860B-6D4C57F45FAF"
+gAppleXtermColorGuid                            = "83E18829-59CD-5046-83BB-0731BD363FD3"
+gAprioriGuid                                    = "FC510EE7-FFDC-11D4-BD41-0080C73C8881"
+gBcmwlIoctlGuid                                 = "B4910A35-88C5-4328-9008-9FB200000000"
+gBdsConnectAllGuid                              = "0B1E615C-C27F-4AD5-8E30-7A25614C158B"
+gBootObjectAuthorizationParmsetGuid             = "EDD35E31-07B9-11D2-83A3-00A0C91FADCF"
+gCacheManagerProtocolGuid                       = "466F3AEC-C266-4BAB-9984-A74031000206"
+gCacheSubClassName                              = "7F0013A7-DC79-4B22-8099-11F75FDC829D"
+gChipsetGpioProtocolGuid                        = "0317C4ED-E25D-4431-9246-C13E38CA3D8A"
+gChunkManagerProtocolGuid                       = "2F18B731-C475-41F6-A210-69212F2E7796"
+gDUFontProtocolGuid                             = "7EC21E57-CE8A-4FDE-B147-0F7C0959CD3F"
+gDrawingUtilitiesProtocolGuid                   = "691E1AF0-8673-4C98-A9B3-042620E91498"
+gEfiAbsolutePointerProtocolGuid                 = "8D59D32B-C655-4AE9-9B15-F25904992A43"
+gEfiAcpi10TableGuid                             = "EB9D2D30-2D88-11D3-9A16-0090273FC14D"
+gEfiAcpiSdtProtocolGuid                         = "EB97088E-CFDF-49C6-BE4B-D906A5B20E86"
+gEfiAcpiTableGuid                               = "8868E871-E4F1-11D3-BC22-0080C73C8881"
+gEfiAcpiTableProtocolGuid                       = "FFE06BDD-6107-46A6-7BB2-5A9C7EC5275C"
+gEfiAlternateFvBlockGuid                        = "F496922D-172F-4BBC-A1EB-0EEB949C3486"
+gEfiAppleBeepGenProtocolGuid                    = "C32332DF-FC56-4FE1-9358-BA0D529B24CD"
+gEfiAppleNvramInterfaceProtocolGuid             = "C23DA58D-AEB4-4629-B115-01475FF20ABA"
+gEfiAppleSpiProtocolGuid                        = "B6F6833A-3035-4D92-95B9-0837756828D4"
+gEfiArpProtocolGuid                             = "F4B427BB-BA21-4F16-BC4E-43E416AB619C"
+gEfiArpServiceBindingProtocolGuid               = "F44C00EE-1F2C-4A00-AA09-1C9F3E0800A3"
+gEfiAtaPassThruProtocolGuid                     = "1D3DE7F0-0807-424F-AA69-11A54E19A46F"
+gEfiAuthenticationChapLocalGuid                 = "C280C73E-15CA-11DA-B0CA-001083FFCA4D"
+gEfiAuthenticationChapRadiusGuid                = "D6062B50-15CA-11DA-9219-001083FFCA4D"
+gEfiAuthenticationInfoProtocolGuid              = "7671D9D0-53DB-4173-AA69-2327F21F0BC7"
+gEfiBdsArchProtocolGuid                         = "665E3FF6-46CC-11D4-9A38-0090273FC14D"
+gEfiBisProtocolGuid                             = "0B64AAB0-5429-11D4-9816-00A0C91FADCF"
+gEfiBlockIo2ProtocolGuid                        = "A77B2472-E282-4E9F-A245-C2C0E27BBCC1"
+gEfiBlockIoProtocolGuid                         = "964E5B21-6459-11D2-8E39-00A0C969723B"
+gEfiBootScriptSaveGuid                          = "470E1529-B79E-4E32-A0FE-6A156D29F9B2"
+gEfiBootStateGuid                               = "60B5E939-0FCF-4227-BA83-6BBED45BC0E3"
+gEfiBusSpecificDriverOverrideProtocolGuid       = "3BC1B285-8A15-4A82-AABF-4D7D13FB3265"
+gEfiCapsuleArchProtocolGuid                     = "5053697E-2CBC-4819-90D9-0580DEEE5754"
+gEfiCertPkcs7Guid                               = "4AAFD29D-68DF-49EE-8AA9-347D375665A7"
+gEfiCertRsa2048Guid                             = "3C5766E8-269C-4E34-AA14-ED776E85B3B6"
+gEfiCertRsa2048Sha1Guid                         = "67F8444F-8743-48F1-A328-1EAAB8736080"
+gEfiCertRsa2048Sha256Guid                       = "E2B36190-879B-4A3D-AD8D-F2E7BBA32784"
+gEfiCertSha1Guid                                = "826CA512-CF10-4AC9-B187-BE01496631BD"
+gEfiCertSha224Guid                              = "0B6E5233-A65C-44C9-9407-D9AB83BFC8BD"
+gEfiCertSha256Guid                              = "C1C41626-504C-4092-ACA9-41F936934328"
+gEfiCertSha384Guid                              = "FF3E5307-9FD0-48C9-85F1-8AD56C701E01"
+gEfiCertSha512Guid                              = "093E0FAE-A6C4-4F50-9F1B-D41E2B89C19A"
+gEfiCertTypeRsa2048Sha256Guid                   = "A7717414-C616-4977-9420-844712A735BF"
+gEfiCertX509Guid                                = "A5C059A1-94E4-4AA7-87B5-AB155C2BF072"
+gEfiCompatibleMemoryTestedGuid                  = "64C475EF-344B-492C-93AD-AB9EB4395004"
+gEfiComponentName2ProtocolGuid                  = "6A7A5CFF-E8D9-4F70-BADA-75AB3025CE14"
+gEfiComponentNameProtocolGuid                   = "107A772C-D5E1-11D4-9A46-0090273FC14D"
+gEfiConsoleControlProtocolGuid                  = "F42F7782-012E-4C12-9956-49F94304F721"
+gEfiConsoleInDeviceGuid                         = "D3B36F2B-D551-11D4-9A46-0090273FC14D"
+gEfiConsoleOutDeviceGuid                        = "D3B36F2C-D551-11D4-9A46-0090273FC14D"
+gEfiConvergedIoProtocolGuid                     = "C649D4F3-D502-4DAA-A139-394ACCF2A63B"
+gEfiCpuApCountGuid                              = "175EC93E-9C02-4FF2-920E-3950AB8ECF77"
+gEfiCpuArchProtocolGuid                         = "26BACCB1-6F42-11D4-BCE7-0080C73C8881"
+gEfiCpuIo2ProtocolGuid                          = "AD61F191-AE5F-4C0E-B9FA-E869D288C64F"
+gEfiCpuIoProtocolGuid                           = "B0732526-38C8-4B40-8877-61C7B06AAC45"
+gEfiCrc32GuidedSectionExtractionProtocolGuid    = "FC1BCDB0-7D31-49AA-936A-A4600D9DD083"
+gEfiCustomizedDecompressProtocolGuid            = "9A44198E-A4A2-44E6-8A1F-39BEFDAC896F"
+gEfiDMArGenericErrorSectionGuid                 = "5B51FEF7-C79D-4434-8F1B-AA62DE3E2C64"
+gEfiDebugImageInfoTableGuid                     = "49152E77-1ADA-4764-B7A2-7AFEFED95E8B"
+gEfiDebugPortVariableGuid                       = "EBA4E8D2-3858-41EC-A281-2647BA9660D0"
+gEfiDebugSupportProtocolGuid                    = "2755590C-6F3C-42FA-9EA4-A3BA543CDA25"
+gEfiDecompressProtocolGuid                      = "D8117CFE-94A6-11D4-9A3A-0090273FC14D"
+gEfiDeferredImageLoadProtocolGuid               = "15853D7C-3DDF-43E0-A1CB-EBF85B8F872C"
+gEfiDeviceIoProtocolGuid                        = "AF6AC311-84C3-11D2-8E3C-00A0C969723B"
+gEfiDevicePathFromTextProtocolGuid              = "05C99A21-C70F-4AD2-8A5F-35DF3343F51E"
+gEfiDevicePathPropertyProtocolGuid              = "91BD12FE-F6C3-44FB-A5B7-5122AB303AE0"
+gEfiDevicePathProtocolGuid                      = "09576E91-6D3F-11D2-8E39-00A0C969723B"
+gEfiDevicePathToTextProtocolGuid                = "8B843E20-8132-4852-90CC-551A4E4A7F1C"
+gEfiDevicePathUtilitiesProtocolGuid             = "0379BE4E-D706-437D-B037-EDB82FB772A4"
+gEfiDhcp4ProtocolGuid                           = "8A219718-4EF5-4761-91C8-C0F04BDA9E56"
+gEfiDhcp4ServiceBindingProtocolGuid             = "9D9A39D8-BD42-4A73-A4D5-8EE94BE11380"
+gEfiDhcp6ProtocolGuid                           = "87C8BAD7-0595-4053-8297-DEDE395F5D5B"
+gEfiDhcp6ServiceBindingProtocolGuid             = "9FB9A8A1-2F4A-43A6-889C-D0F7B6C47AD5"
+gEfiDirectedIoDMArErrorSectionGuid              = "71761D37-32B2-45CD-A7D0-B0FEDD93E8CF"
+gEfiDiskInfoAhciInterfaceGuid                   = "9E498932-4ABC-45AF-A34D-0247787BE7C6"
+gEfiDiskInfoIdeInterfaceGuid                    = "5E948FE3-26D3-42B5-AF17-610287188DEC"
+gEfiDiskInfoProtocolGuid                        = "D432A67F-14DC-484B-B3BB-3F0291849327"
+gEfiDiskInfoScsiInterfaceGuid                   = "08F74BAA-EA36-41D9-9521-21A70F8780BC"
+gEfiDiskInfoUsbInterfaceGuid                    = "CB871572-C11A-47B5-B492-675EAFA77727"
+gEfiDiskIoProtocolGuid                          = "CE345171-BA0B-11D2-8E4F-00A0C969723B"
+gEfiDriverBindingProtocolGuid                   = "18A031AB-B443-4D1A-A5C0-0C09261E9F71"
+gEfiDriverConfiguration2ProtocolGuid            = "BFD7DC1D-24F1-40D9-82E7-2E09BB6B4EBE"
+gEfiDriverConfigurationProtocolGuid             = "107A772B-D5E1-11D4-9A46-0090273FC14D"
+gEfiDriverDiagnostics2ProtocolGuid              = "4D330321-025F-4AAC-90D8-5ED900173B63"
+gEfiDriverDiagnosticsProtocolGuid               = "0784924F-E296-11D4-9A49-0090273FC14D"
+gEfiDriverFamilyOverrideProtocolGuid            = "B1EE129E-DA36-4181-91F8-04A4923766A7"
+gEfiDriverHealthProtocolGuid                    = "2A534210-9280-41D8-AE79-CADA01A2B127"
+gEfiDriverSupportedEfiVersionProtocolGuid       = "5C198761-16A8-4E69-972C-89D67954F81D"
+gEfiDxeIplPpiGuid                               = "0AE8CE5D-E448-4437-A8D7-EBF5F194F731"
+gEfiDxeServicesTableGuid                        = "05AD34BA-6F02-4214-952E-4DA0398E2BB9"
+gEfiDxeSmmReadyToLockProtocolGuid               = "60FF8964-E906-41D0-AFED-F241E974E08E"
+gEfiEapManagementProtocolGuid                   = "BB62E663-625D-40B2-A088-BBE83623A245"
+gEfiEapProtocolGuid                             = "5D9F96DB-E731-4CAA-A00D-72E187CD7762"
+gEfiEbcProtocolGuid                             = "13AC6DD1-73D0-11D4-B06B-00AA00BD6DE7"
+gEfiEdidActiveProtocolGuid                      = "BD8C1056-9F36-44EC-92A8-A6337F817986"
+gEfiEdidDiscoveredProtocolGuid                  = "1C0C34F6-D380-41FA-A049-8AD06C1A66AA"
+gEfiEdidOverrideProtocolGuid                    = "48ECB431-FB72-45C0-A922-F458FE040BD5"
+gEfiEmulatorGuid                                = "AE635B51-F58B-4F80-B711-79DBA3B58A45"
+gEfiEndOfPeiSignalPpiGuid                       = "605EA650-C65C-42E1-BA80-91A52AB618C6"
+gEfiEventDxeDispatchGuid                        = "7081E22F-CAC6-4053-9468-675782CF88E5"
+gEfiEventExitBootServicesGuid                   = "27ABF055-B1B8-4C26-8048-748F37BAA2DF"
+gEfiEventLegacyBootGuid                         = "2A571201-4966-47F6-8B86-F31E41F32F10"
+gEfiEventMemoryMapChangeGuid                    = "78BEE926-692F-48FD-9EDB-01422EF0D7AB"
+gEfiEventNotificationTypeBootGuid               = "3D61A466-AB40-409A-A698-F362D464B38F"
+gEfiEventNotificationTypeCmcGuid                = "2DCE8BB1-BDD7-450E-B9AD-9CF4EBD4F890"
+gEfiEventNotificationTypeCpeGuid                = "4E292F96-D843-4A55-A8C2-D481F27EBEEE"
+gEfiEventNotificationTypeDmarGuid               = "667DD791-C6B3-4C27-8A6B-0F8E722DEB41"
+gEfiEventNotificationTypeInitGuid               = "CC5263E8-9308-454A-89D0-340BD39BC98E"
+gEfiEventNotificationTypeMceGuid                = "E8F56FFE-919C-4CC5-BA88-65ABE14913BB"
+gEfiEventNotificationTypeNmiGuid                = "5BAD89FF-B7E6-42C9-814A-CF2485D6E98A"
+gEfiEventNotificationTypePcieGuid               = "CF93C01F-1A16-4DFC-B8BC-9C4DAF67C104"
+gEfiEventReadyToBootGuid                        = "7CE88FB3-4BD7-4679-87A8-A8D8DEE50D2B"
+gEfiEventTrackingGuid                           = "3E8A8B65-25C4-4FCD-AEE6-FE84EA7C1296"
+gEfiEventUserProfileChangedGuid                 = "BAF1E6DE-209E-4ADB-8D96-FD8B71F3F683"
+gEfiEventVirtualAddressChangeGuid               = "13FA7698-C831-49C7-87EA-8F43FCC25196"
+gEfiExtScsiPassThruProtocolGuid                 = "143B7632-B81B-4CB7-ABD3-B625A5B9BFFE"
+gEfiExtendedSalBaseIoServicesProtocolGuid       = "5AEA42B5-31E1-4515-BC31-B8D5257565A6"
+gEfiExtendedSalBaseServicesProtocolGuid         = "D9E9FA06-0FE0-41C3-96FB-83425A3394F8"
+gEfiExtendedSalBootServiceProtocolGuid          = "DE0EE9A4-3C7A-44F2-B78B-E3CCD69C3AF7"
+gEfiExtendedSalCacheServicesProtocolGuid        = "0EDC9494-2743-4BA5-8818-0AEF5213F188"
+gEfiExtendedSalFvBlockServicesProtocolGuid      = "A2271DF1-BCBB-4F1D-98A9-06BC172F071A"
+gEfiExtendedSalMcaLogServicesProtocolGuid       = "CB3FD86E-38A3-4C03-9A5C-90CFA3A2AB7A"
+gEfiExtendedSalMcaServicesProtocolGuid          = "2A591128-6CC7-42B1-8AF0-58933B682DBB"
+gEfiExtendedSalMpServicesProtocolGuid           = "697D81A2-CF18-4DC0-9E0D-06113B618A3F"
+gEfiExtendedSalMtcServicesProtocolGuid          = "899AFD18-75E8-408B-A41A-6E2E7ECDF454"
+gEfiExtendedSalPalServicesProtocolGuid          = "E1CD9D21-0FC2-438D-9703-04E66D961E57"
+gEfiExtendedSalPciServicesProtocolGuid          = "A46B1A31-AD66-4905-92F6-2B4659DC3063"
+gEfiExtendedSalResetServicesProtocolGuid        = "7D019990-8CE1-46F5-A776-3C5198676AA0"
+gEfiExtendedSalRtcServicesProtocolGuid          = "7E97A470-EFDB-4D02-8FCE-6190D27BA296"
+gEfiExtendedSalStallServicesProtocolGuid        = "53A58D06-AC27-4D8C-B5E9-F08A80654170"
+gEfiExtendedSalStatusCodeServicesProtocolGuid   = "00DBD91D-55E9-420F-9639-5E9F8437B44F"
+gEfiExtendedSalVariableServicesProtocolGuid     = "4ECB6C53-C641-4370-8CB2-3B0E496E8378"
+gEfiFakeCioGuid                                 = "12E3BDD7-2C0D-1A45-B578-B414287A9664"
+gEfiFileInfoGuid                                = "09576E92-6D3F-11D2-8E39-00A0C969723B"
+gEfiFileSystemInfoGuid                          = "09576E93-6D3F-11D2-8E39-00A0C969723B"
+gEfiFileSystemVolumeLabelInfoIdGuid             = "DB47D7D3-FE81-11D3-9A35-0090273FC14D"
+gEfiFindFvPpiGuid                               = "36164812-A023-44E5-BD85-05BF3C7700AA"
+gEfiFireWireBusProtocolGuid                     = "67708AA8-2079-4E4F-B158-B15B1F6A6C92"
+gEfiFireWireStartingTDMGuid                     = "97076DDA-F565-4D4A-A82A-431DCA94188F"
+gEfiFirmwareErrorSectionGuid                    = "81212A96-09ED-4996-9471-8D729C8E69ED"
+gEfiFirmwareFileSystem2Guid                     = "8C8CE578-8A3D-4F1C-9935-896185C32DD3"
+gEfiFirmwareFileSystem3Guid                     = "5473C07A-3DCB-4DCA-BD6F-1E9689E7349A"
+gEfiFirmwareFileSystemGuid                      = "7A9354D9-0468-444A-81CE-0BF617D890DF"
+gEfiFirmwareManagementProtocolGuid              = "86C77A67-0B97-4633-A187-49104D0685C7"
+gEfiFirmwareVolume2ProtocolGuid                 = "220E73B6-6BDB-4413-8405-B974B108619A"
+gEfiFirmwareVolumeBlockProtocolGuid             = "8F644FA9-E850-4DB1-9CE2-0B44698E8DA4"
+gEfiFirmwareVolumeDispatchProtocolGuid          = "7AA35A69-506C-444F-A7AF-694BF56F71C8"
+gEfiFirmwareVolumeTopFileGuid                   = "1BA0062E-C779-4582-8566-336AE8F78F09"
+gEfiFlashMapHobGuid                             = "B091E7D2-05A0-4198-94F0-74B7B8C55459"
+gEfiFormBrowser2ProtocolGuid                    = "B9D4C360-BCFB-4F9B-9298-53C136982258"
+gEfiFtp4ProtocolGuid                            = "EB338826-681B-4295-B356-2B364C757B09"
+gEfiFtp4ServiceBindingProtocolGuid              = "0FAAECB1-226E-4782-AACE-7DB9BCBF4DAF"
+gEfiFvbExtensionProtocolGuid                    = "53A4C71B-B581-4170-91B3-8DB87A4B5C46"
+gEfiGlobalVariableGuid                          = "8BE4DF61-93CA-11D2-AA0D-00E098032B8C"
+gEfiGraphicsOutputProtocolGuid                  = "9042A9DE-23DC-4A38-96FB-7ADED080516A"
+gEfiHardwareErrorVariableGuid                   = "414E6BDD-E47B-47CC-B244-BB61020CF516"
+gEfiHashAlgorithmMD5Guid                        = "0AF7C79C-65B5-4319-B0AE-44EC484E4AD7"
+gEfiHashAlgorithmSha1Guid                       = "2AE9D80F-3FB2-4095-B7B1-E93157B946B6"
+gEfiHashAlgorithmSha1NoPadGuid                  = "24C5DC2F-53E2-40CA-9ED6-A5D9A49F463B"
+gEfiHashAlgorithmSha224Guid                     = "8DF01A06-9BD5-4BF7-B021-DB4FD9CCF45B"
+gEfiHashAlgorithmSha256Guid                     = "51AA59DE-FDF2-4EA3-BC63-875FB7842EE9"
+gEfiHashAlgorithmSha256NoPadGuid                = "8628752A-6CB7-4814-96FC-24A815AC2226"
+gEfiHashAlgorithmSha384Guid                     = "EFA96432-DE33-4DD2-AEE6-328C33DF777A"
+gEfiHashAlgorithmSha512Guid                     = "CAA4381E-750C-4770-B870-7A23B4E42130"
+gEfiHashProtocolGuid                            = "C5184932-DBA5-46DB-A5BA-CC0BDA9C1435"
+gEfiHashServiceBindingProtocolGuid              = "42881C98-A4F3-44B0-A39D-DFA18667D8CD"
+gEfiHeciProtocolGuid                            = "CFB33810-6E87-4284-B203-A66ABE07F6E8"
+gEfiHiiConfigRoutingProtocolGuid                = "587E72D7-CC50-4F79-8209-CA291FC1A10F"
+gEfiHiiDatabaseProtocolGuid                     = "EF9FC172-A1B2-4693-B327-6D32FC416042"
+gEfiHiiDriverHealthFormsetGuid                  = "F22FC20C-8CF4-45EB-8E06-AD4E50B95DD3"
+gEfiHiiFontProtocolGuid                         = "E9CA4775-8657-47FC-97E7-7ED65A084324"
+gEfiHiiImageProtocolGuid                        = "31A6406A-6BDF-4E46-B2A2-EBAA89C40920"
+gEfiHiiKeyBoardLayoutGuid                       = "14982A4F-B0ED-45B8-A811-5A7A9BC232DF"
+gEfiHiiPackageListProtocolGuid                  = "6A1EE763-D47A-43B4-AABE-EF1DE2AB56FC"
+gEfiHiiPlatformSetupFormsetGuid                 = "93039971-8545-4B04-B45E-32EB8326040E"
+gEfiHiiStandardFormGuid                         = "3BD2F4EC-E524-46E4-A9D8-510117425562"
+gEfiHiiStringProtocolGuid                       = "0FD96974-23AA-4CDC-B9CB-98D17750322A"
+gEfiHiiUserCredentialFormsetGuid                = "337F4407-5AEE-4B83-B2A7-4EADCA3088CD"
+gEfiHobListGuid                                 = "7739F24C-93D7-11D4-9A3A-0090273FC14D"
+gEfiHobMemoryAllocBspStoreGuid                  = "564B33CD-C92A-4593-90BF-2473E43C6322"
+gEfiHobMemoryAllocModuleGuid                    = "F8E21975-0899-4F58-A4BE-5525A9C6D77A"
+gEfiHobMemoryAllocStackGuid                     = "4ED4BF27-4092-42E9-807D-527B1D00C9BD"
+gEfiHotPlugDeviceGuid                           = "220AC432-1D43-49E5-A74F-4C9DA67AD23B"
+gEfiHtBistHobGuid                               = "BE644001-E7D4-48B1-B096-8BA047BC7AE7"
+gEfiIScsiInitiatorNameProtocolGuid              = "59324945-EC44-4C0D-B1CD-9DB139DF070C"
+gEfiIa32X64ErrorTypeBusCheckGuid                = "1CF3F8B3-C5B1-49A2-AA59-5EEF92FFA63C"
+gEfiIa32X64ErrorTypeCacheCheckGuid              = "A55701F5-E3EF-43DE-AC72-249B573FAD2C"
+gEfiIa32X64ErrorTypeMsCheckGuid                 = "48AB7F57-DC34-4F6C-A7D3-B0B5B0A74314"
+gEfiIa32X64ErrorTypeTlbCheckGuid                = "FC06B535-5E1F-4562-9F25-0A3B9ADB63C3"
+gEfiIdeControllerInitProtocolGuid               = "A1E37052-80D9-4E65-A317-3E9A55C43EC9"
+gEfiImageSecurityDatabaseGuid                   = "D719B2CB-3D3A-4596-A3BC-DAD00E67656F"
+gEfiIncompatiblePciDeviceSupportProtocolGuid    = "EB23F55A-7863-4AC2-8D3D-956535DE0375"
+gEfiIommuDMArErrorSectionGuid                   = "036F84E1-7F37-428C-A79E-575FDFAA84EC"
+gEfiIp4ConfigProtocolGuid                       = "3B95AA31-3793-434B-8667-C8070892E05E"
+gEfiIp4ProtocolGuid                             = "41D94CD2-35B6-455A-8258-D4E51334AADD"
+gEfiIp4ServiceBindingProtocolGuid               = "C51711E7-B4BF-404A-BFB8-0A048EF1FFE4"
+gEfiIp6ConfigProtocolGuid                       = "937FE521-95AE-4D1A-8929-48BCD90AD31A"
+gEfiIp6ProtocolGuid                             = "2C8759D5-5C2D-66EF-925F-B66C101957E2"
+gEfiIp6ServiceBindingProtocolGuid               = "EC835DD3-FE0F-617B-A621-B350C3E13388"
+gEfiIpSec2ProtocolGuid                          = "A3979E64-ACE8-4DDC-BC07-4D66B8FD0977"
+gEfiIpSecConfigProtocolGuid                     = "CE5E5929-C7A3-4602-AD9E-C9DAF94EBFCF"
+gEfiIpSecProtocolGuid                           = "DFB386F7-E100-43AD-9C9A-ED90D08A5E12"
+gEfiIsaIoProtocolGuid                           = "7EE2BD44-3DA0-11D4-9A38-0090273FC14D"
+gEfiKmsFormatAescbc128Guid                      = "A0E8EE6A-0E92-44D4-861B-0EAA4ACA44A2"
+gEfiKmsFormatAescbc256Guid                      = "D7E69789-1F68-45E8-96EF-3B6407A5B2DC"
+gEfiKmsFormatAesxts128Guid                      = "4776E33F-DB47-479A-A25F-A1CD0AFAB38B"
+gEfiKmsFormatAesxts256Guid                      = "DC7E8613-C4BB-4DB0-8462-13511357ABE2"
+gEfiKmsFormatGeneric1024Guid                    = "43BE0B44-874B-4EAD-B09C-241A4FBD7EB3"
+gEfiKmsFormatGeneric128Guid                     = "EC8A3D69-6DDF-4108-9476-7337FC522136"
+gEfiKmsFormatGeneric160Guid                     = "A3B3E6F8-EFCA-4BC1-88FB-CB87339B2579"
+gEfiKmsFormatGeneric2048Guid                    = "40093F23-630C-4626-9C48-40373B19CBBE"
+gEfiKmsFormatGeneric256Guid                     = "70F64793-C323-4261-AC2C-D876F27C5345"
+gEfiKmsFormatGeneric3072Guid                    = "B9237513-6C44-4411-A990-21E556E05ADE"
+gEfiKmsFormatGeneric512Guid                     = "978FE043-D7AF-422E-8A92-2B48E463BDE6"
+gEfiKmsFormatMd2128Guid                         = "78BE11C4-EE44-4A22-9F05-03852EC5C978"
+gEfiKmsFormatMd4128Guid                         = "D1C17AA1-CAC5-400F-BE17-E2A2AE06677C"
+gEfiKmsFormatMd5128Guid                         = "DCBC3662-9CDA-4B52-A04C-82EB1D2348C7"
+gEfiKmsFormatMd5sha128Guid                      = "1C178237-6897-459E-9D36-67CE8EF94F76"
+gEfiKmsFormatMdc2128Guid                        = "F7AD60F8-EFA8-44A3-9113-231F399EB4C7"
+gEfiKmsFormatMdc4128Guid                        = "3FA4F847-D8EB-4DF4-BD49-103A0A847BBC"
+gEfiKmsFormatRsasha11024Guid                    = "56417BED-6BBE-4882-86A0-3AE8BB17F8F9"
+gEfiKmsFormatRsasha12048Guid                    = "F66447D4-75A6-463E-A819-077F2DDA05E9"
+gEfiKmsFormatRsasha2562048Guid                  = "A477AF13-877D-4060-BAA1-25D1BEA08AD3"
+gEfiKmsFormatRsasha2563072Guid                  = "4E1356C2-0EED-463F-8147-9933ABDBC7D5"
+gEfiKmsFormatSha1160Guid                        = "453C5E5A-482D-43F0-87C9-5941F3A38AC2"
+gEfiKmsFormatSha256256Guid                      = "6BB4F5CD-8022-448D-BC6D-771BAE935FC6"
+gEfiKmsFormatSha512512Guid                      = "2F240E12-E14D-475C-83B0-EFFF22D77BE7"
+gEfiKmsProtocolGuid                             = "EC3A978D-7C4E-48FA-9ABE-6AD91CC8F811"
+gEfiLegacyRegion2ProtocolGuid                   = "70101EAF-0085-440C-B356-8EE36FEF24F0"
+gEfiLoadFile2ProtocolGuid                       = "4006C0C1-FCB3-403E-996D-4A6C8724E06D"
+gEfiLoadFileProtocolGuid                        = "56EC3091-954C-11D2-8E3F-00A0C969723B"
+gEfiLoadPeImageGuid                             = "5CB5C776-60D5-45EE-883C-452708CD743F"
+gEfiLoadedImageDevicePathProtocolGuid           = "BC62157E-3E33-4FEC-9920-2D3B36D750DF"
+gEfiLoadedImageProtocolGuid                     = "5B1B31A1-9562-11D2-8E3F-00A0C969723B"
+gEfiManagedNetworkProtocolGuid                  = "7AB33A91-ACE5-4326-B572-E7EE33D39F16"
+gEfiManagedNetworkServiceBindingProtocolGuid    = "F36FF770-A7E1-42CF-9ED2-56F0F271F44C"
+gEfiMdePkgTokenSpaceGuid                        = "914AEBE7-4635-459B-AA1C-11E219B03A10"
+gEfiMemoryConfigDataGuid                        = "80DBD530-B74C-4F11-8C03-418665532831"
+gEfiMemoryOverwriteControlDataGuid              = "E20939BE-32D4-41BE-A150-897F85D49829"
+gEfiMemorySubClassGuid                          = "4E8F4EBB-64B9-4E05-9B18-4CFE49235097"
+gEfiMetronomeArchProtocolGuid                   = "26BACCB2-6F42-11D4-BCE7-0080C73C8881"
+gEfiMiscSubClassGuid                            = "772484B2-7482-4B91-9F9A-AD43F81C5881"
+gEfiMonotonicCounterArchProtocolGuid            = "1DA97072-BDDC-4B30-99F1-72A0B56FFF2A"
+gEfiMpServiceProtocolGuid                       = "3FDDA605-A76E-4F46-AD29-12F4531B3D08"
+gEfiMpsTableGuid                                = "EB9D2D2F-2D88-11D3-9A16-0090273FC14D"
+gEfiMtftp4ProtocolGuid                          = "78247C57-63DB-4708-99C2-A8B4A9A61F6B"
+gEfiMtftp4ServiceBindingProtocolGuid            = "2FE800BE-8F01-4AA6-946B-D71388E1833F"
+gEfiMtftp6ProtocolGuid                          = "BF0A78BA-EC29-49CF-A1C9-7AE54EAB6A51"
+gEfiMtftp6ServiceBindingProtocolGuid            = "D9760FF3-3CCA-4267-80F9-7527FAFA4223"
+gEfiNetworkInterfaceIdentifierProtocolGuid      = "E18541CD-F755-4F73-928D-643C8A79B229"
+gEfiNicIp4ConfigProtocolGuid                    = "0DCA3D4D-12DA-4728-BF7E-86CEB928D067"
+gEfiNicIp4ConfigVariableGuid                    = "D8944553-C4DD-41F4-9B30-E1397CFB267B"
+gEfiNtLoadAsDllPpiGuid                          = "CCC53F6B-A03A-4ED8-839A-03D99C02B4E3"
+gEfiPartTypeLegacyMbrGuid                       = "024DEE41-33E7-11D3-9D69-0008C781F39F"
+gEfiPartTypeSystemPartGuid                      = "C12A7328-F81F-11D2-BA4B-00A0C93EC93B"
+gEfiPartTypeUnusedGuid                          = "00000000-0000-0000-0000-000000000000"
+gEfiPcAnsiGuid                                  = "E0C14753-F9BE-11D2-9A0C-0090273FC14D"
+gEfiPcdProtocolGuid                             = "13A3F0F6-264A-3EF0-F2E0-DEC512342F34"
+gEfiPchS3SupportProtocolGuid                    = "E287D20B-D897-4E1E-A5D9-977763936A04"
+gEfiPciBusErrorSectionGuid                      = "C5753963-3B84-4095-BF78-EDDAD3F9C9DD"
+gEfiPciCfg2PpiGuid                              = "057A449A-1FDC-4C06-BFC9-F53F6A99BB92"
+gEfiPciDevErrorSectionGuid                      = "EB5E4685-CA66-4769-B6A2-26068B001326"
+gEfiPciEnumerationCompleteProtocolGuid          = "30CFE3E7-3DE1-4586-BE20-DEABA1B3B793"
+gEfiPciHostBridgeResourceAllocationProtocolGuid = "CF8034BE-6768-4D8B-B739-7CCE683A9FBE"
+gEfiPciHotPlugInitProtocolGuid                  = "AA0E8BC1-DABC-46B0-A844-37B8169B2BEA"
+gEfiPciHotPlugRequestProtocolGuid               = "19CB87AB-2CB9-4665-8360-DDCF6054F79D"
+gEfiPciHotplugDeviceGuid                        = "0B280816-52E7-4E51-AA57-11BD41CBEFC3"
+gEfiPciIoProtocolGuid                           = "4CF5B200-68B8-4CA5-9EEC-B23E3F50029A"
+gEfiPciOptionRomTableGuid                       = "7462660F-1CBD-48DA-AD11-91717913831C"
+gEfiPciOverrideProtocolGuid                     = "B5B35764-460C-4A06-99FC-77A17C1B5CEB"
+gEfiPciPlatformProtocolGuid                     = "07D75280-27D4-4D69-90D0-5643E238B341"
+gEfiPciRootBridgeIoProtocolGuid                 = "2F707EBB-4A1A-11D4-9A38-0090273FC14D"
+gEfiPciThunderboltInitProtocolGuid              = "EFA6D060-4841-474B-9724-E1E40431C661"
+gEfiPcieErrorSectionGuid                        = "D995E954-BBC1-430F-AD91-B44DCB3C6F35"
+gEfiPeiBootInRecoveryModePpiGuid                = "17EE496A-D8E4-4B9A-94D1-CE8272300850"
+gEfiPeiCorePrivateGuid                          = "D641A0F5-CB7C-4846-A380-1D01B4D9E3B9"
+gEfiPeiCpuIoPpiInstalledGuid                    = "E6AF1F7B-FC3F-46DA-A828-A3B457A44282"
+gEfiPeiDecompressPpiGuid                        = "1A36E4E7-FAB6-476A-8E75-695A0576FDD7"
+gEfiPeiDeviceRecoveryModulePpiGuid              = "0DE2CE25-446A-45A7-BFC9-37DA26344B37"
+gEfiPeiFirmwareVolumeInfoPpiGuid                = "49EDB1C1-BF21-4761-BB12-EB0031AABB39"
+gEfiPeiFlushInstructionCacheGuid                = "D8117CFC-94A6-11D4-9A3A-0090273FC14D"
+gEfiPeiLoadFilePpiGuid                          = "B9E0ABFE-5979-4914-977F-6DEE78C278A6"
+gEfiPeiLoadedImagePpiGuid                       = "C1FCD448-6300-4458-B864-28DF015364BC"
+gEfiPeiMasterBootModePpiGuid                    = "7408D748-FC8C-4EE6-9288-C4BEC092A410"
+gEfiPeiMemoryDiscoveredPpiGuid                  = "F894643D-C449-42D1-8EA8-85BDD8C65BDE"
+gEfiPeiPcdPpiGuid                               = "01F34D25-4DE2-23AD-3FF3-36353FF323F1"
+gEfiPeiPeCoffLoaderGuid                         = "D8117CFF-94A6-11D4-9A3A-0090273FC14D"
+gEfiPeiPerformanceHobGuid                       = "10F432DE-DEEC-4631-80CD-47F65D8F80BB"
+gEfiPeiReadOnlyVariable2PpiGuid                 = "2AB86EF5-ECB5-4134-B556-3854CA1FE1B4"
+gEfiPeiRecoveryModulePpiGuid                    = "FB6D9542-612D-4F45-872F-5CFF52E93DCF"
+gEfiPeiResetPpiGuid                             = "EF398D58-9DFD-4103-BF94-78C6F4FE712F"
+gEfiPeiRscHandlerPpiGuid                        = "0065D394-9951-4144-82A3-0AFC8579C251"
+gEfiPeiS3Resume2PpiGuid                         = "6D582DBC-DB85-4514-8FCC-5ADF6227B147"
+gEfiPeiSecurity2PpiGuid                         = "DCD0BE23-9586-40F4-B643-06522CED4EDE"
+gEfiPeiSmbus2PpiGuid                            = "9CA93627-B65B-4324-A202-C0B461764543"
+gEfiPeiSmbusPpiGuid                             = "ABD42895-78CF-4872-8444-1B5C180BFBDA"
+gEfiPeiStallPpiGuid                             = "1F4C6F90-B06B-48D8-A201-BAE5F1CD7D56"
+gEfiPeiStatusCodePpiGuid                        = "229832D3-7A30-4B36-B827-F40CB7D45436"
+gEfiPeiTransferControlGuid                      = "D8117D02-94A6-11D4-9A3A-0090273FC14D"
+gEfiPeiVirtualBlockIoPpiGuid                    = "695D8AA1-42EE-4C46-805C-6EA6BCE799E3"
+gEfiPerformanceProtocolGuid                     = "FFECFFFF-923C-14D2-9E3F-22A0C969563B"
+gEfiPlatformDriverOverrideProtocolGuid          = "6B30C738-A391-11D4-9A3B-0090273FC14D"
+gEfiPlatformMemoryErrorSectionGuid              = "A5BC1114-6F64-4EDE-B863-3E83ED7C83B1"
+gEfiPlatformToDriverConfigurationClpGuid        = "345ECC0E-0CB6-4B75-BB57-1B129C47333E"
+gEfiPlatformToDriverConfigurationProtocolGuid   = "642CD590-8059-4C0A-A958-C5EC07D23C4B"
+gEfiPrimaryConsoleInDeviceGuid                  = "E451DCBE-96A1-4729-A5CF-6B9C2CFF47FD"
+gEfiPrimaryConsoleOutDeviceGuid                 = "62BDF38A-E3D5-492C-950C-23A7F66E672E"
+gEfiPrimaryStandardErrorDeviceGuid              = "5A68191B-9B97-4752-9946-E36A5DA942B1"
+gEfiPrintProtocolGuid                           = "DF2D868E-32FC-4CF0-8E6B-FFD95D1343D0"
+gEfiProcessorGenericErrorSectionGuid            = "9876CCAD-47B4-4BDB-B65E-16F193C4F3DB"
+gEfiProcessorSpecificErrorSectionGuid           = "DC3EA0B0-A144-4797-B95B-53FA242B6E1D"
+gEfiProgressPostCodeProtocolGuid                = "DA333D99-25F6-4BD0-BB24-7C70C6F14EAB"
+gEfiPxeBaseCodeCallbackProtocolGuid             = "245DCA21-FB7B-11D3-8F01-00A0C969723B"
+gEfiPxeBaseCodeProtocolGuid                     = "03C4E603-AC28-11D3-9A2D-0090273FC14D"
+gEfiRealTimeClockArchProtocolGuid               = "27CFAC87-46CC-11D4-9A38-0090273FC14D"
+gEfiResetArchProtocolGuid                       = "27CFAC88-46CC-11D4-9A38-0090273FC14D"
+gEfiRscHandlerProtocolGuid                      = "86212936-0E76-41C8-A03A-2AF2FC1C39E2"
+gEfiRuntimeArchProtocolGuid                     = "B7DFB4E1-052F-449F-87BE-9818FC91B733"
+gEfiS3SaveStateProtocolGuid                     = "E857CAF6-C046-45DC-BE3F-EE0765FBA887"
+gEfiS3SmmSaveStateProtocolGuid                  = "320AFE62-E593-49CB-A9F1-D4C2F4AF014C"
+gEfiSalMcaInitPmiProtocolGuid                   = "B60DC6E8-3B6F-11D5-AF09-00A0C944A05B"
+gEfiSalSystemTableGuid                          = "EB9D2D32-2D88-11D3-9A16-0090273FC14D"
+gEfiSasDevicePathGuid                           = "D487DDB4-008B-11D9-AFDC-001083FFCA4D"
+gEfiScsiIoProtocolGuid                          = "932F47E6-2362-4002-803E-3CD54B138F85"
+gEfiScsiPassThruProtocolGuid                    = "A59E8FCF-BDA0-43BB-90B1-D3732ECAA877"
+gEfiSecDebuggerInformationPpiGuid               = "695C4044-F84E-4FE8-9C72-09963487F361"
+gEfiSecPlatformInformationPpiGuid               = "6F8C2B35-FEF4-448D-8256-E11B19D61077"
+gEfiSectionExtractionProtocolGuid               = "448F5DA4-6DD7-4FE1-9307-69224192215D"
+gEfiSecurity2ArchProtocolGuid                   = "94AB2F58-1438-4EF1-9152-18941A3A0E68"
+gEfiSecurityArchProtocolGuid                    = "A46423E3-4617-49F1-B9FF-D1BFA9115839"
+gEfiSecurityPolicyProtocolGuid                  = "78E4D245-CD4D-4A05-A2BA-4743E86CFCAB"
+gEfiSerialIoProtocolGuid                        = "BB25CF6F-F1D4-11D2-9A0C-0090273FC1FD"
+gEfiSimpleFileSystemProtocolGuid                = "964E5B22-6459-11D2-8E39-00A0C969723B"
+gEfiSimpleNetworkProtocolGuid                   = "A19832B9-AC25-11D3-9A2D-0090273FC14D"
+gEfiSimplePointerProtocolGuid                   = "31878C87-0B75-11D5-9A4F-0090273FC14D"
+gEfiSimpleTextInProtocolGuid                    = "387477C1-69C7-11D2-8E39-00A0C969723B"
+gEfiSimpleTextInputExProtocolGuid               = "DD9E7534-7762-4698-8C14-F58517A625AA"
+gEfiSimpleTextOutProtocolGuid                   = "387477C2-69C7-11D2-8E39-00A0C969723B"
+gEfiSioProtocolGuid                             = "215FDD18-BD50-4FEB-890B-58CA0B4739E9"
+gEfiSmbiosProtocolGuid                          = "03583FF6-CB36-4940-947E-B9B39F4AFAF7"
+gEfiSmbiosTableGuid                             = "EB9D2D31-2D88-11D3-9A16-0090273FC14D"
+gEfiSmbusHcProtocolGuid                         = "E49D33ED-513D-4634-B698-6F55AA751C1B"
+gEfiSmmAccess2ProtocolGuid                      = "C2702B74-800C-4131-8746-8FB5B89CE4AC"
+gEfiSmmBase2ProtocolGuid                        = "F4CCBFB7-F6E0-47FD-9DD4-10A8F150C191"
+gEfiSmmCommunicationProtocolGuid                = "C68ED8E2-9DC6-4CBD-9D94-DB65ACC5C332"
+gEfiSmmConfigurationProtocolGuid                = "26EEB3DE-B689-492E-80F0-BE8BD7DA4BA7"
+gEfiSmmControl2ProtocolGuid                     = "843DC720-AB1E-42CB-9357-8A0078F3561B"
+gEfiSmmCpuIo2ProtocolGuid                       = "3242A9D8-CE70-4AA0-955D-5E7B140DE4D2"
+gEfiSmmCpuProtocolGuid                          = "EB346B97-975F-4A9F-8B22-F8E92BB3D569"
+gEfiSmmGpiDispatch2ProtocolGuid                 = "25566B03-B577-4CBF-958C-ED663EA24380"
+gEfiSmmIoTrapDispatch2ProtocolGuid              = "58DC368D-7BFA-4E77-ABBC-0E29418DF930"
+gEfiSmmPciRootBridgeIoProtocolGuid              = "8BC1714D-FFCB-41C3-89DC-6C74D06D98EA"
+gEfiSmmPeiSmramMemoryReserve                    = "6DADF1D1-D4CC-4910-BB6E-82B1FD80FF3D"
+gEfiSmmPeriodicTimerDispatch2ProtocolGuid       = "4CEC368E-8E8E-4D71-8BE1-958C45FC8A53"
+gEfiSmmPowerButtonDispatch2ProtocolGuid         = "1B1183FA-1823-46A7-8872-9C578755409D"
+gEfiSmmReadyToLockProtocolGuid                  = "47B7FA8C-F4BD-4AF6-8200-333086F0D2C8"
+gEfiSmmRscHandlerProtocolGuid                   = "2FF29FA7-5E80-4ED9-B380-017D3C554FF4"
+gEfiSmmStandbyButtonDispatch2ProtocolGuid       = "7300C4A1-43F2-4017-A51B-C81A7F40585B"
+gEfiSmmStatusCodeProtocolGuid                   = "6AFD2B77-98C1-4ACD-A6F9-8A9439DE0FB1"
+gEfiSmmSwDispatch2ProtocolGuid                  = "18A3C6DC-5EEA-48C8-A1C1-B53389F98999"
+gEfiSmmSxDispatch2ProtocolGuid                  = "456D2859-A84B-4E47-A2EE-3276D886997D"
+gEfiSmmUsbDispatch2ProtocolGuid                 = "EE9B8D90-C5A6-40A2-BDE2-52558D33CCA1"
+gEfiSpiProtocolGuid                             = "1156EFC6-EA32-4396-B5D5-26932E83C313"
+gEfiStandardErrorDeviceGuid                     = "D3B36F2D-D551-11D4-9A46-0090273FC14D"
+gEfiStatusCodeDataTypeAssertGuid                = "DA571595-4D99-487C-827C-2622677D3307"
+gEfiStatusCodeDataTypeErrorGuid                 = "AB359CE3-99B3-AE18-C89D-95D3B072E19B"
+gEfiStatusCodeDataTypeExceptionHandlerGuid      = "3BC2BD12-AD2E-11D5-87DD-00062945C3B9"
+gEfiStatusCodeDataTypeProgressCodeGuid          = "A356AB39-35C4-35DA-B37A-F8EA9E8B36A3"
+gEfiStatusCodeDataTypeStringGuid                = "92D11080-496F-4D95-BE7E-037488382B0A"
+gEfiStatusCodeGuid                              = "D083E94C-6560-42E4-B6D4-2DF75ADF6A2A"
+gEfiStatusCodeRuntimeProtocolGuid               = "D2B2B828-0826-48A7-B3DF-983C006024F0"
+gEfiStatusCodeSpecificDataGuid                  = "335984BD-E805-409A-B8F8-D27ECE5FF7A6"
+gEfiStorageSecurityCommandProtocolGuid          = "C88B0B6D-0DFC-49A7-9CB4-49074B4C3A78"
+gEfiSystemNvDataFvGuid                          = "FFF12B8D-7696-4C8B-A985-2747075B4F50"
+gEfiSystemNvDataHobGuid                         = "D6E5092D-C7B2-4872-AF66-FDC0E6F95E78"
+gEfiT29ParentBridgeGUID                         = "9F31F04E-0E3A-4EE2-A68A-95DF08C8E2C6"
+gEfiTapeIoProtocolGuid                          = "1E93E633-D65A-459E-AB84-93D9EC266D18"
+gEfiTcgProtocolGuid                             = "F541796D-A62E-4954-A775-9584F61B9CDD"
+gEfiTcp4ProtocolGuid                            = "65530BC7-A359-410F-B010-5AADC7EC2B62"
+gEfiTcp4ServiceBindingProtocolGuid              = "00720665-67EB-4A99-BAF7-D3C33A1C7CC9"
+gEfiTcp6ProtocolGuid                            = "46E44855-BD60-4AB7-AB0D-A679B9447D77"
+gEfiTcp6ServiceBindingProtocolGuid              = "EC20EB79-6C1A-4664-9A0D-D2E4CC16D664"
+gEfiTcpProtocolGuid                             = "02B3D5F2-AC28-11D3-9A2D-0090273FC14D"
+gEfiTestSILBlinkDataGuid                        = "4A80F428-8CF2-40B8-BFA8-2ACBB30F97C2"
+gEfiTianoDecompressProtocolGuid                 = "E84CF29C-191F-4EAE-96E1-F46AECEAEA0B"
+gEfiTimerArchProtocolGuid                       = "26BACCB3-6F42-11D4-BCE7-0080C73C8881"
+gEfiUartDevicePathGuid                          = "37499A9D-542F-4C89-A026-35DA142094E4"
+gEfiUdp4ProtocolGuid                            = "3AD9DF29-4501-478D-B1F8-7F7FE70E50F3"
+gEfiUdp4ServiceBindingProtocolGuid              = "83F01464-99BD-45E5-B383-AF6305D8E9E6"
+gEfiUdp6ProtocolGuid                            = "4F948815-B4B9-43CB-8A33-90E060B34955"
+gEfiUdp6ServiceBindingProtocolGuid              = "66ED4721-3C98-4D3E-81E3-D03DD39A7254"
+gEfiUgaDrawFramebufferInfoProtocolGuid          = "E316E100-0751-4C49-9056-486C7E472903"
+gEfiUgaDrawProtocolGuid                         = "982C298B-F4FA-41CB-B838-77AA688FB839"
+gEfiUgaIoProtocolGuid                           = "61A4D49E-6F68-4F1B-B922-A86EED0B07A2"
+gEfiUnicodeCollation2ProtocolGuid               = "A4C751FC-23AE-4C3E-92E9-4964CF63F349"
+gEfiUnicodeCollationProtocolGuid                = "1D85CD7F-F43D-11D2-9A0C-0090273FC14D"
+gEfiUnixAutoLaunchPickerGuid                    = "AB3337F3-F93E-4AAF-8D6D-81C18F3A735B"
+gEfiUnixAutoLaunchTdmGuid                       = "42A1E865-F23B-3A44-813B-28DF5355F2C0"
+gEfiUnixCPUModelGuid                            = "F2D3B330-8985-11DB-8AA3-0040D02B1835"
+gEfiUnixCPUSpeedGuid                            = "F2D74E5A-8985-11DB-9705-0040D02B1835"
+gEfiUnixConsoleGuid                             = "F2CC5D06-8985-11DB-BB19-0040D02B1835"
+gEfiUnixFileSystemGuid                          = "F2C16B9E-8985-11DB-92C8-0040D02B1835"
+gEfiUnixGopGuid                                 = "BACE07C2-8987-11DB-A59A-0040D02B1835"
+gEfiUnixIoProtocolGuid                          = "55BACB43-2DBB-43E3-8F36-759805CF1D1F"
+gEfiUnixMemoryGuid                              = "F2D006CC-8985-11DB-A472-0040D02B1835"
+gEfiUnixNetworkGuid                             = "081603B4-0F1D-4022-B6FD-4CE35E09A1A6"
+gEfiUnixPassThroughGuid                         = "5CA63419-7BE5-4E96-B672-1182D3B1B21A"
+gEfiUnixPhysicalDisksGuid                       = "F2BDCC96-8985-11DB-8719-0040D02B1835"
+gEfiUnixSerialPortGuid                          = "6D3A727D-66C8-4D19-87E6-0215861490F3"
+gEfiUnixVirtualDiskFilesGuid                    = "CA3121B8-C8A0-4743-A9A1-4C64E0B4DC89"
+gEfiUnixVirtualDisksGuid                        = "F2BA331A-8985-11DB-A406-0040D02B1835"
+gEfiUsb2HcProtocolGuid                          = "3E745226-9818-45B6-A2AC-D7CD0E8BA2BC"
+gEfiUsbHcProtocolGuid                           = "F5089266-1AA0-4953-97D8-562F8A73B519"
+gEfiUsbIoProtocolGuid                           = "2B2F68D6-0CD2-44CF-8E8B-BBA20B1B5B75"
+gEfiUserCredential2ProtocolGuid                 = "E98ADB03-B8B9-4AF8-BA20-26E9114CBCE5"
+gEfiUserCredentialClassFingerprintGuid          = "32CBA21F-F308-4CBC-9AB5-F5A3699F044A"
+gEfiUserCredentialClassHandprintGuid            = "5917EF16-F723-4BB9-A64B-D8C532F4D8B5"
+gEfiUserCredentialClassPasswordGuid             = "F8E5058C-CCB6-4714-B220-3F7E3A640BD1"
+gEfiUserCredentialClassSecureCardGuid           = "8A6B4A83-42FE-45D2-A2EF-46F06C7D9852"
+gEfiUserCredentialClassSmartCardGuid            = "5F03BA33-8C6B-4C24-AA2E-14A2657BD454"
+gEfiUserCredentialClassUnknownGuid              = "5CF32E68-7660-449B-80E6-7EA36E03F6A8"
+gEfiUserCredentialProtocolGuid                  = "71EE5E94-65B9-45D5-821A-3A4D86CFE6BE"
+gEfiUserInfoAccessSetupAdminGuid                = "85B75607-F7CE-471E-B7E4-2AEA5F7232EE"
+gEfiUserInfoAccessSetupNormalGuid               = "1DB29AE0-9DCB-43BC-8D87-5DA14964DDE2"
+gEfiUserInfoAccessSetupRestrictedGuid           = "BDB38125-4D63-49F4-8212-61CF5A190AF8"
+gEfiUserManagerProtocolGuid                     = "6FD5B00C-D426-4283-9887-6CF5CF1CB1FE"
+gEfiVT100Guid                                   = "DFA66065-B419-11D3-9A2D-0090273FC14D"
+gEfiVT100PlusGuid                               = "7BAEC70B-57E0-4C76-8E87-2F9E28088343"
+gEfiVTUTF8Guid                                  = "AD15A0D6-8BEC-4ACF-A073-D01DE77E2D88"
+gEfiVariableArchProtocolGuid                    = "1E5668E2-8481-11D4-BCF1-0080C73C8881"
+gEfiVariableStoreProtocolGuid                   = "F088CD91-A046-11D2-8E42-00A0C969723B"
+gEfiVariableWriteArchProtocolGuid               = "6441F818-6362-4E44-B570-7DBA31DD2453"
+gEfiVlanConfigProtocolGuid                      = "9E23D768-D2F3-4366-9FC3-3A7ABA864374"
+gEfiWatchdogTimerArchProtocolGuid               = "665E3FF5-46CC-11D4-9A38-0090273FC14D"
+gExitPmAuthProtocolGuid                         = "D088A413-0A70-4217-BA55-9A3CB65C41B3"
+gFrameworkEfiMpServiceProtocolGuid              = "F33261E7-23CB-11D5-BD5C-0080C73C8881"
+gIpmiProtocolGuid                               = "0A0DE05B-3FCD-4839-B4C5-4BA65259294E"
+gMemoryProducerGuid                             = "1D7ADD6E-B2DA-4B0B-B29F-49CB42F46356"
+gMiscProducerGuid                               = "62512C92-63C4-4D80-82B1-C1A4DC4480E5"
+gNetworkInterfacePolicyProtocolGuid             = "D94AD118-C02E-4DFC-860B-AFEA3442E627"
+gNetworkSystemRecoveryAppFileGuid               = "D5B366C7-DB85-455F-B50B-900A694E4C8C"
+gPcdPpiGuid                                     = "06E81C58-4AD7-44BC-8390-F10265F72480"
+gPcdProtocolGuid                                = "11B34006-D85B-4D0A-A290-D5A571310EF7"
+gPchDmiTcVcMapPpiGuid                           = "ED097352-9041-445A-80B6-B29D509E8845"
+gPchInitPpiGuid                                 = "908C7F8B-5C48-47FB-8357-F5FD4E235276"
+gPchMeUmaPpiGuid                                = "8C376010-2400-4D7D-B47B-9D851DF3C9D1"
+gPchPlatformPolicyPpiGuid                       = "22074E71-BCCC-4517-8757-7995EDFD8032"
+gPchResetCallbackPpiGuid                        = "433E0F9F-05AE-410A-A0C3-BF298ECB25AC"
+gPchResetCallbackProtocolGuid                   = "DB63592C-B8CC-44C8-918C-51F534598A5A"
+gPchUsbPolicyPpiGuid                            = "C02B0573-2B4E-4A31-A31A-94567B50442C"
+gPeiAhciControllerPpiGuid                       = "23E92FA4-9D3A-4B46-A6C6-6F4FAC802680"
+gPeiAppleFirstBootGuid                          = "EA56BECE-9211-42F9-AC95-C2E398F4A0AC"
+gPeiAppleFlashMapInitializedPpiGuid             = "CD2B2E8D-FB03-43A9-9C69-6E56B6EA939D"
+gPeiApplePlatformIdPpiGuid                      = "83780040-3E31-4415-8EA9-EE4194E2C210"
+gPeiAppleRecoveryToneGuid                       = "893A6D76-E553-471B-A3BF-C181DE429305"
+gPeiAppleRtcRamPpiGuid                          = "13CFE225-E07B-40F3-9703-EBE99318766E"
+gPeiAppleSmcIoPpiGuid                           = "6C83C560-C13F-450A-9993-F1DFDD2C3286"
+gPeiAprioriFileNameGuid                         = "1B45CC0A-156A-428A-AF62-49864DA0E6E6"
+gPeiAtaPolicyPpiGuid                            = "1B8DDEA4-DEB2-4152-91C2-B73CB16CE464"
+gPeiBaseMemoryTestPpiGuid                       = "B6EC423C-21D2-490D-85C6-DD5864EAA674"
+gPeiCachePpiGuid                                = "C153205A-E898-4C24-8689-A4B4BCC5C8A2"
+gPeiCapsuleOnDataCDGuid                         = "5CAC0099-0DC9-48E5-8068-BB95F5400A9F"
+gPeiCapsuleOnFatFloppyDiskGuid                  = "2E3D2E75-9B2E-412D-B4B1-70416B8700FF"
+gPeiCapsuleOnFatIdeDiskGuid                     = "B38573B6-6200-4AC5-B51D-82E65938D783"
+gPeiCapsuleOnFatUsbDiskGuid                     = "0FFBCE19-324C-4690-A009-98C6AE2EB186"
+gPeiCheckForCarEvictionsPpiGuid                 = "AB25694E-BD1E-4C4A-AF45-CF57A346D94F"
+gPeiChipsetGpioPpiGuid                          = "9BB3FD89-6AF5-4158-ACE8-E76591484D63"
+gPeiCpuPlatformPolicyPpiGuid                    = "7B8EE7A1-4E35-4556-BB56-6797E24445C2"
+gPeiEFIProgressPostCodeGuid                     = "EFF280DC-1826-48B7-9DE1-DBFDD9F99D08"
+gPeiFlashMapPpiGuid                             = "F34C2FA0-DE88-4270-8414-961222F4521C"
+gPeiFvFileLoaderPpiGuid                         = "7E1F0D85-04FF-4BB2-866A-31A2996A48A8"
+gPeiHeciPpiGuid                                 = "EE0EA811-FBD9-4777-B95A-BA4F71101F74"
+gPeiInMemoryGuid                                = "643B8786-B417-48D2-8F5E-7819931CAED8"
+gPeiMePlatformPolicyPpiGuid                     = "7AE3CEB7-2EE2-48FA-AA49-3510BC83CABF"
+gPeiPciCfgPpiInServiceTableGuid                 = "E1F2EBA0-F7B9-4A26-8620-131221642A90"
+gPeiPlatformFvHobsCreatedGuid                   = "F7426C2A-4C9B-4B21-83FA-6EBFE8A2AB3E"
+gPeiPlatformMemoryRangePpiGuid                  = "30EB2979-B0F7-4D60-B2DC-1A2C96CEB1F4"
+gPeiPlatformMemorySizePpiGuid                   = "9A7EF41E-C140-4BD1-B884-1E11240B4CE6"
+gPeiPlatformStage1CompletedGuid                 = "8A64FE63-44D4-4373-A98C-E352CD5ADA27"
+gPeiRomIntegrityCheckGuid                       = "31661829-F158-4E8E-95B7-68C05FE5B055"
+gPeiS3ResumePpiGuid                             = "4426CCB2-E684-4A8A-AE40-20D4B025B710"
+gPeiSerialOverrideModeGuid                      = "1B3CA622-6B3E-4D85-A3FE-156F923E3630"
+gPeiSerialRecoveryModeGuid                      = "92B330A7-A8FC-4FF1-A324-64C8C0DCA89E"
+gPeiSmbusPolicyPpiGuid                          = "63B6E435-32BC-49C6-81BD-B7A1A0FE1A6C"
+gPeiVariablePpiGuid                             = "CCEE425A-63DE-45AB-BA0F-E9D7AFC5DAC8"
+gPlatformConnectServicesProtocolGuid            = "8ECE08D8-A6D4-430B-A7B0-2DF318E7884A"
+gPlatformMeHookProtocolGuid                     = "BC52476E-F67E-4301-B262-369C4878AAC2"
+gProcessorProducerGuid                          = "1BF06AEA-5BEC-4A8D-9576-749B09562D30"
+gProcessorSubClassName                          = "26FDEB7E-B8AF-4CCF-AA97-02633CE48CA7"
+gSaLockHobGuid                                  = "21C11033-5B5A-40E1-8FBF-7A30DC3EC144"
+gSaPegDataHobGuid                               = "5F5D3502-8A4B-40CA-88A2-2305427A131A"
+gSaPegDataVariableGuid                          = "C4975200-64F1-4FB6-9773-F6A9F89D985E"
+gSaPeiInitPpiGuid                               = "09EA8911-BE0D-4230-A003-EDC693B48E11"
+gSaPlatformPolicyPpiGuid                        = "150CE416-EE63-46B6-8BA3-7322BBE04637"
+gSecureVariableProtocolGuid                     = "37FA0524-D0CE-4A7A-A6DF-40E5EEA88618"
+gSimpleSpiProtocolGuid                          = "BD7B48F2-15EE-48F4-8FCD-0A9BF02D4D92"
+gTDMApprovedGuid                                = "5C38EA59-554B-431C-B3F5-CD6EE3D48A3E"
+gTamperResistantBootProtocolGuid                = "75FAB4B4-6AC1-429A-A000-6B0B95E71CA1"
+gTrbAllUsers                                    = "FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF"
+gTrbEfiUser                                     = "4E8023FF-A79A-47D1-A342-7524CFC96DC4"
+gUTDMUIAppGuid                                  = "D3231048-B7D7-46FC-80F8-2F7B229586C5"
+gUnicodeUtilitiesProtocolGuid                   = "11BE2251-CDA0-4494-93E8-8130C8B044D2"
+gVariableIndexTable                             = "8CFDB8C8-D6B2-40F3-8E97-02307CC98B7C"
+gWdtPpiGuid                                     = "F38D1338-AF7A-4FB6-91DB-1A9C2183570D"
+
+GuidNameDict = {
+  APPLE_GENERIC_RESOLVABLE_DEVICE_GUID            : "APPLE_GENERIC_RESOLVABLE_DEVICE_GUID",
+  APPLE_THUNDERBOLT_UTDM_GUID                     : "APPLE_THUNDERBOLT_UTDM_GUID",
+  DEVICE_PATH_MESSAGING_ABNLF                     : "DEVICE_PATH_MESSAGING_ABNLF",
+  DEVICE_PATH_MESSAGING_ABNLF_IMAGE_ID            : "DEVICE_PATH_MESSAGING_ABNLF_IMAGE_ID",
+  DEVICE_PATH_MESSAGING_DISPLAY                   : "DEVICE_PATH_MESSAGING_DISPLAY",
+  DEVICE_PATH_MESSAGING_DISPLAY_PORT_BRANCH       : "DEVICE_PATH_MESSAGING_DISPLAY_PORT_BRANCH",
+  DEVICE_PATH_MESSAGING_GRAPHICS_CONNECTOR        : "DEVICE_PATH_MESSAGING_GRAPHICS_CONNECTOR",
+  DEVICE_PATH_MESSAGING_GRAPHICS_FRAMEBUFFER      : "DEVICE_PATH_MESSAGING_GRAPHICS_FRAMEBUFFER",
+  DEVICE_PATH_MESSAGING_SBP2_UNIT                 : "DEVICE_PATH_MESSAGING_SBP2_UNIT",
+  DEVICE_PATH_MESSAGING_SD_SLOT                   : "DEVICE_PATH_MESSAGING_SD_SLOT",
+  DEVICE_PATH_MESSAGING_T29_UNIT                  : "DEVICE_PATH_MESSAGING_T29_UNIT",
+  UNKNOWN_DEVICE_GUID                             : "UNKNOWN_DEVICE_GUID",
+  gAppleATAPassThruProtocolGuid                   : "gAppleATAPassThruProtocolGuid",
+  gAppleAccessPoint80211ProtocolGuid              : "gAppleAccessPoint80211ProtocolGuid",
+  gAppleAnlfProtocolGuid                          : "gAppleAnlfProtocolGuid",
+  gAppleArrowCursorGuid                           : "gAppleArrowCursorGuid",
+  gAppleBackButtonSmallGuid                       : "gAppleBackButtonSmallGuid",
+  gAppleBacklightControllerProtocolGuid           : "gAppleBacklightControllerProtocolGuid",
+  gAppleBacklightProtocolGuid                     : "gAppleBacklightProtocolGuid",
+  gAppleBasicDiagnosticsProtocolGuid              : "gAppleBasicDiagnosticsProtocolGuid",
+  gAppleBatteryPowerSourceGuid                    : "gAppleBatteryPowerSourceGuid",
+  gAppleBatteryState0Guid                         : "gAppleBatteryState0Guid",
+  gAppleBatteryState1Guid                         : "gAppleBatteryState1Guid",
+  gAppleBatteryState2Guid                         : "gAppleBatteryState2Guid",
+  gAppleBatteryState3Guid                         : "gAppleBatteryState3Guid",
+  gAppleBatteryState4Guid                         : "gAppleBatteryState4Guid",
+  gAppleBatteryState5Guid                         : "gAppleBatteryState5Guid",
+  gAppleBatteryState6Guid                         : "gAppleBatteryState6Guid",
+  gAppleBatteryStateGuid                          : "gAppleBatteryStateGuid",
+  gAppleBatteryTotalPowerLevelGuid                : "gAppleBatteryTotalPowerLevelGuid",
+  gAppleBdsHotPlugConnectRequestProtocolGuid      : "gAppleBdsHotPlugConnectRequestProtocolGuid",
+  gAppleBeginBootButtonGuid                       : "gAppleBeginBootButtonGuid",
+  gAppleBeginStickyBootButtonGuid                 : "gAppleBeginStickyBootButtonGuid",
+  gAppleBiosIdFileGuid                            : "gAppleBiosIdFileGuid",
+  gAppleBiosIdProtocolGuid                        : "gAppleBiosIdProtocolGuid",
+  gAppleBootBeepSignalProtocolGuid                : "gAppleBootBeepSignalProtocolGuid",
+  gAppleBootPartitionTypeGuid                     : "gAppleBootPartitionTypeGuid",
+  gAppleBootPickerGuid                            : "gAppleBootPickerGuid",
+  gAppleBootPickerIconOverrideProtocolGuid        : "gAppleBootPickerIconOverrideProtocolGuid",
+  gAppleBootPolicyProtocolGuid                    : "gAppleBootPolicyProtocolGuid",
+  gAppleBootUIProtocolGuid                        : "gAppleBootUIProtocolGuid",
+  gAppleBsdpProtocolGuid                          : "gAppleBsdpProtocolGuid",
+  gAppleButtonBackgroundGuid                      : "gAppleButtonBackgroundGuid",
+  gAppleButtonBackgroundSelectedGuid              : "gAppleButtonBackgroundSelectedGuid",
+  gAppleClockGuid                                 : "gAppleClockGuid",
+  gAppleConsoleFontProtocolGuid                   : "gAppleConsoleFontProtocolGuid",
+  gAppleContinueButtonSmallGuid                   : "gAppleContinueButtonSmallGuid",
+  gAppleCpuBusRatioGuid                           : "gAppleCpuBusRatioGuid",
+  gAppleCryptoProtocolGuid                        : "gAppleCryptoProtocolGuid",
+  gAppleDebugInfoTableGuid                        : "gAppleDebugInfoTableGuid",
+  gAppleDebugPpiGuid                              : "gAppleDebugPpiGuid",
+  gAppleDebugProtocolGuid                         : "gAppleDebugProtocolGuid",
+  gAppleDebugSupportHobGuid                       : "gAppleDebugSupportHobGuid",
+  gAppleDefaultBackgroundGuid                     : "gAppleDefaultBackgroundGuid",
+  gAppleDeviceEarlyInitProtocolGuid               : "gAppleDeviceEarlyInitProtocolGuid",
+  gAppleDevicePathsSupportedGuid                  : "gAppleDevicePathsSupportedGuid",
+  gAppleDhcp4ProtocolGuid                         : "gAppleDhcp4ProtocolGuid",
+  gAppleDhcp4ServiceBindingProtocolGuid           : "gAppleDhcp4ServiceBindingProtocolGuid",
+  gAppleDiagLedProtocolGuid                       : "gAppleDiagLedProtocolGuid",
+  gAppleDiagnosticVaultProtocolGuid               : "gAppleDiagnosticVaultProtocolGuid",
+  gAppleDiskImageProtocolGuid                     : "gAppleDiskImageProtocolGuid",
+  gAppleDnsResolverProtocolGuid                   : "gAppleDnsResolverProtocolGuid",
+  gAppleDnsResolverServiceBindingProtocolGuid     : "gAppleDnsResolverServiceBindingProtocolGuid",
+  gAppleDxeCoreInfoProtocolGuid                   : "gAppleDxeCoreInfoProtocolGuid",
+  gAppleEdidParserProtocolGuid                    : "gAppleEdidParserProtocolGuid",
+  gAppleEfiBootNameLabelGuid                      : "gAppleEfiBootNameLabelGuid",
+  gAppleEfiTokenSpaceGuid                         : "gAppleEfiTokenSpaceGuid",
+  gAppleEfi_Pop_LfGuid                            : "gAppleEfi_Pop_LfGuid",
+  gAppleEfi_Pop_Lf_PressedGuid                    : "gAppleEfi_Pop_Lf_PressedGuid",
+  gAppleEfi_Pop_MidGuid                           : "gAppleEfi_Pop_MidGuid",
+  gAppleEfi_Pop_Mid_PressedGuid                   : "gAppleEfi_Pop_Mid_PressedGuid",
+  gAppleEfi_Pop_RtGuid                            : "gAppleEfi_Pop_RtGuid",
+  gAppleEfi_Pop_Rt_PressedGuid                    : "gAppleEfi_Pop_Rt_PressedGuid",
+  gAppleEmbeddedFontGuid                          : "gAppleEmbeddedFontGuid",
+  gAppleEnclosureSerialNumberSubClassGuid         : "gAppleEnclosureSerialNumberSubClassGuid",
+  gAppleErrorGlobeBorderGuid                      : "gAppleErrorGlobeBorderGuid",
+  gAppleErrorGlobeTileGuid                        : "gAppleErrorGlobeTileGuid",
+  gAppleErrorTonePpiGuid                          : "gAppleErrorTonePpiGuid",
+  gAppleErrorTriangleGuid                         : "gAppleErrorTriangleGuid",
+  gAppleEventGroupSignalIdleLoop                  : "gAppleEventGroupSignalIdleLoop",
+  gAppleEventGroupUnsignedCodeLoading             : "gAppleEventGroupUnsignedCodeLoading",
+  gAppleEventGroupUntrustedTransition             : "gAppleEventGroupUntrustedTransition",
+  gAppleExternalFontGuid                          : "gAppleExternalFontGuid",
+  gAppleFileBlessedAlternateOSInfoGuid            : "gAppleFileBlessedAlternateOSInfoGuid",
+  gAppleFileBlessedFolderInfoGuid                 : "gAppleFileBlessedFolderInfoGuid",
+  gAppleFileBooterFileInfoGuid                    : "gAppleFileBooterFileInfoGuid",
+  gAppleFileSystemInitProtocolGuid                : "gAppleFileSystemInitProtocolGuid",
+  gAppleFirmwareExtensionProtocolGuid             : "gAppleFirmwareExtensionProtocolGuid",
+  gAppleFirmwareFeaturesProtocolGuid              : "gAppleFirmwareFeaturesProtocolGuid",
+  gAppleFirmwareVolumeExtDataGuid                 : "gAppleFirmwareVolumeExtDataGuid",
+  gAppleFlashCapsuleUtilityGuid                   : "gAppleFlashCapsuleUtilityGuid",
+  gAppleFlashEfiUtilityGuid                       : "gAppleFlashEfiUtilityGuid",
+  gAppleFlashSpiUtilityGuid                       : "gAppleFlashSpiUtilityGuid",
+  gAppleFlashUnlockedGuid                         : "gAppleFlashUnlockedGuid",
+  gAppleFlashmapConfigurationGuid                 : "gAppleFlashmapConfigurationGuid",
+  gAppleFlashmapFvConnectAllGuid                  : "gAppleFlashmapFvConnectAllGuid",
+  gAppleFlashmapFvCsmGuid                         : "gAppleFlashmapFvCsmGuid",
+  gAppleFlashmapFvImmutableGuid                   : "gAppleFlashmapFvImmutableGuid",
+  gAppleFlashmapFvMainGuid                        : "gAppleFlashmapFvMainGuid",
+  gAppleFlashmapMicrocodeGuid                     : "gAppleFlashmapMicrocodeGuid",
+  gAppleFlashmapNvStorageGuid                     : "gAppleFlashmapNvStorageGuid",
+  gAppleFlashmapRecoveryGuid                      : "gAppleFlashmapRecoveryGuid",
+  gAppleFlashmapSmuFirmwareGuid                   : "gAppleFlashmapSmuFirmwareGuid",
+  gAppleFpcIoProtocolGuid                         : "gAppleFpcIoProtocolGuid",
+  gAppleFsbFrequencySubClassGuid                  : "gAppleFsbFrequencySubClassGuid",
+  gAppleGammaTableProtocolGuid                    : "gAppleGammaTableProtocolGuid",
+  gAppleGear10Guid                                : "gAppleGear10Guid",
+  gAppleGear11Guid                                : "gAppleGear11Guid",
+  gAppleGear12Guid                                : "gAppleGear12Guid",
+  gAppleGear1Guid                                 : "gAppleGear1Guid",
+  gAppleGear2Guid                                 : "gAppleGear2Guid",
+  gAppleGear3Guid                                 : "gAppleGear3Guid",
+  gAppleGear4Guid                                 : "gAppleGear4Guid",
+  gAppleGear5Guid                                 : "gAppleGear5Guid",
+  gAppleGear6Guid                                 : "gAppleGear6Guid",
+  gAppleGear7Guid                                 : "gAppleGear7Guid",
+  gAppleGear8Guid                                 : "gAppleGear8Guid",
+  gAppleGear9Guid                                 : "gAppleGear9Guid",
+  gAppleGenericExternalHardDisk                   : "gAppleGenericExternalHardDisk",
+  gAppleGetDhcpAckPkt                             : "gAppleGetDhcpAckPkt",
+  gAppleGlobeBorderGuid                           : "gAppleGlobeBorderGuid",
+  gAppleGlobeMaskGuid                             : "gAppleGlobeMaskGuid",
+  gAppleGlobeTileGuid                             : "gAppleGlobeTileGuid",
+  gAppleGraphicsDriverProtocolGuid                : "gAppleGraphicsDriverProtocolGuid",
+  gAppleGraphicsPlatformProtocolGuid              : "gAppleGraphicsPlatformProtocolGuid",
+  gAppleGraphicsPolicyActiveProtocolGuid          : "gAppleGraphicsPolicyActiveProtocolGuid",
+  gAppleGraphicsPolicyProtocolGuid                : "gAppleGraphicsPolicyProtocolGuid",
+  gAppleHfsPartitionTypeGuid                      : "gAppleHfsPartitionTypeGuid",
+  gAppleHttpClientProtocolGuid                    : "gAppleHttpClientProtocolGuid",
+  gAppleHttpClientServiceBindingProtocolGuid      : "gAppleHttpClientServiceBindingProtocolGuid",
+  gAppleIconBrokenBootGuid                        : "gAppleIconBrokenBootGuid",
+  gAppleIconBrokenBootOffGuid                     : "gAppleIconBrokenBootOffGuid",
+  gAppleIconHardDiskFireWireGuid                  : "gAppleIconHardDiskFireWireGuid",
+  gAppleIconHardDiskFireWireSelectedGuid          : "gAppleIconHardDiskFireWireSelectedGuid",
+  gAppleIconHardDiskInternalGuid                  : "gAppleIconHardDiskInternalGuid",
+  gAppleIconHardDiskInternalSelectedGuid          : "gAppleIconHardDiskInternalSelectedGuid",
+  gAppleIconHardDiskUsbGuid                       : "gAppleIconHardDiskUsbGuid",
+  gAppleIconHardDiskUsbSelectedGuid               : "gAppleIconHardDiskUsbSelectedGuid",
+  gAppleIconNetBootGuid                           : "gAppleIconNetBootGuid",
+  gAppleIconNetworkRecoveryGuid                   : "gAppleIconNetworkRecoveryGuid",
+  gAppleIconNetworkVolumeGuid                     : "gAppleIconNetworkVolumeGuid",
+  gAppleIconNetworkVolumeSelectedGuid             : "gAppleIconNetworkVolumeSelectedGuid",
+  gAppleIconOnBatteryWarningGuid                  : "gAppleIconOnBatteryWarningGuid",
+  gAppleIconOpticalDriveGuid                      : "gAppleIconOpticalDriveGuid",
+  gAppleIconOpticalDriveSelectedGuid              : "gAppleIconOpticalDriveSelectedGuid",
+  gAppleIconPasswordLockGuid                      : "gAppleIconPasswordLockGuid",
+  gAppleIconSDGuid                                : "gAppleIconSDGuid",
+  gAppleIconSelectedGuid                          : "gAppleIconSelectedGuid",
+  gAppleIconWirelessGuid                          : "gAppleIconWirelessGuid",
+  gAppleIconWirelessSmallGuid                     : "gAppleIconWirelessSmallGuid",
+  gAppleImageConversionProtocolGuid               : "gAppleImageConversionProtocolGuid",
+  gAppleImageFPBEmptyLeftEndcapGuid               : "gAppleImageFPBEmptyLeftEndcapGuid",
+  gAppleImageFPBEmptyMiddleGuid                   : "gAppleImageFPBEmptyMiddleGuid",
+  gAppleImageFPBEmptyRightEndcapGuid              : "gAppleImageFPBEmptyRightEndcapGuid",
+  gAppleImageFPBFullFlatEndcapGuid                : "gAppleImageFPBFullFlatEndcapGuid",
+  gAppleImageFPBFullLeftEndcapGuid                : "gAppleImageFPBFullLeftEndcapGuid",
+  gAppleImageFPBFullMiddleGuid                    : "gAppleImageFPBFullMiddleGuid",
+  gAppleImageFPBFullRightEndcapGuid               : "gAppleImageFPBFullRightEndcapGuid",
+  gAppleImagePasswordEditGuid                     : "gAppleImagePasswordEditGuid",
+  gAppleImagePasswordFillGuid                     : "gAppleImagePasswordFillGuid",
+  gAppleImagePasswordProceedGuid                  : "gAppleImagePasswordProceedGuid",
+  gAppleImageProgressBarEmptyGuid                 : "gAppleImageProgressBarEmptyGuid",
+  gAppleImageProgressBarFillGuid                  : "gAppleImageProgressBarFillGuid",
+  gAppleImageProgressBarFullGuid                  : "gAppleImageProgressBarFullGuid",
+  gAppleImmutableFileSystemGuid                   : "gAppleImmutableFileSystemGuid",
+  gAppleIpAgentGetIpAddr                          : "gAppleIpAgentGetIpAddr",
+  gAppleIpAgentGetIpv4DnsAddresses                : "gAppleIpAgentGetIpv4DnsAddresses",
+  gAppleIpAgentProtocolGuid                       : "gAppleIpAgentProtocolGuid",
+  gAppleIpAgentServiceBindingProtocolGuid         : "gAppleIpAgentServiceBindingProtocolGuid",
+  gAppleKdpProtocolGuid                           : "gAppleKdpProtocolGuid",
+  gAppleKeyMapAggregatorProtocolGuid              : "gAppleKeyMapAggregatorProtocolGuid",
+  gAppleKeySwitchProtocolGuid                     : "gAppleKeySwitchProtocolGuid",
+  gAppleKeyboardNotifyProtocolGuid                : "gAppleKeyboardNotifyProtocolGuid",
+  gAppleLSMReportsProtocolGuid                    : "gAppleLSMReportsProtocolGuid",
+  gAppleLinkStateProtocolGuid                     : "gAppleLinkStateProtocolGuid",
+  gAppleLogo1394Guid                              : "gAppleLogo1394Guid",
+  gAppleLogoGuid                                  : "gAppleLogoGuid",
+  gAppleLogoThunderboltGuid                       : "gAppleLogoThunderboltGuid",
+  gAppleLokiTokenSpaceGuid                        : "gAppleLokiTokenSpaceGuid",
+  gAppleMACAddrSubClassGuid                       : "gAppleMACAddrSubClassGuid",
+  gAppleMachinePersonalitySubClassGuid            : "gAppleMachinePersonalitySubClassGuid",
+  gAppleMenu_Bottom_LeftGuid                      : "gAppleMenu_Bottom_LeftGuid",
+  gAppleMenu_Bottom_MidGuid                       : "gAppleMenu_Bottom_MidGuid",
+  gAppleMenu_Bottom_RightGuid                     : "gAppleMenu_Bottom_RightGuid",
+  gAppleMenu_CheckedGuid                          : "gAppleMenu_CheckedGuid",
+  gAppleMenu_Checked_SelectedGuid                 : "gAppleMenu_Checked_SelectedGuid",
+  gAppleMenu_DotsGuid                             : "gAppleMenu_DotsGuid",
+  gAppleMenu_Dots_SelectedGuid                    : "gAppleMenu_Dots_SelectedGuid",
+  gAppleMenu_Down_ArrowGuid                       : "gAppleMenu_Down_ArrowGuid",
+  gAppleMenu_LockedGuid                           : "gAppleMenu_LockedGuid",
+  gAppleMenu_Locked_SelectedGuid                  : "gAppleMenu_Locked_SelectedGuid",
+  gAppleMenu_Mid_LeftGuid                         : "gAppleMenu_Mid_LeftGuid",
+  gAppleMenu_Mid_MidGuid                          : "gAppleMenu_Mid_MidGuid",
+  gAppleMenu_Mid_RightGuid                        : "gAppleMenu_Mid_RightGuid",
+  gAppleMenu_NoneGuid                             : "gAppleMenu_NoneGuid",
+  gAppleMenu_None_SelectedGuid                    : "gAppleMenu_None_SelectedGuid",
+  gAppleMenu_SelectionGuid                        : "gAppleMenu_SelectionGuid",
+  gAppleMenu_SeperatorGuid                        : "gAppleMenu_SeperatorGuid",
+  gAppleMenu_Top_LeftGuid                         : "gAppleMenu_Top_LeftGuid",
+  gAppleMenu_Top_MidGuid                          : "gAppleMenu_Top_MidGuid",
+  gAppleMenu_Top_RightGuid                        : "gAppleMenu_Top_RightGuid",
+  gAppleMiscProducerGuid                          : "gAppleMiscProducerGuid",
+  gAppleModelNameSubClassGuid                     : "gAppleModelNameSubClassGuid",
+  gAppleModelSpecificGuid                         : "gAppleModelSpecificGuid",
+  gAppleNamespaceGuid                             : "gAppleNamespaceGuid",
+  gAppleNetBootAltBsdpGuid                        : "gAppleNetBootAltBsdpGuid",
+  gAppleNetBootBsdpGuid                           : "gAppleNetBootBsdpGuid",
+  gAppleNetBootPxeGuid                            : "gAppleNetBootPxeGuid",
+  gAppleNetServicesBindingProtocolGuid            : "gAppleNetServicesBindingProtocolGuid",
+  gAppleNetServicesProtocolGuid                   : "gAppleNetServicesProtocolGuid",
+  gAppleNetVolumeProtocolGuid                     : "gAppleNetVolumeProtocolGuid",
+  gAppleNetbootProtocolGuid                       : "gAppleNetbootProtocolGuid",
+  gAppleNetworkRecoveryNameLabelGuid              : "gAppleNetworkRecoveryNameLabelGuid",
+  gAppleOsBootDataProducerGuid                    : "gAppleOsBootDataProducerGuid",
+  gApplePESignatureVerificationProtocolGuid       : "gApplePESignatureVerificationProtocolGuid",
+  gApplePartitionInfoProtocolGuid                 : "gApplePartitionInfoProtocolGuid",
+  gApplePasswordLockSmallGuid                     : "gApplePasswordLockSmallGuid",
+  gApplePasswordLockWhiteGuid                     : "gApplePasswordLockWhiteGuid",
+  gApplePasswordUIGuid                            : "gApplePasswordUIGuid",
+  gApplePassword_Capslock_IndicatorGuid           : "gApplePassword_Capslock_IndicatorGuid",
+  gApplePciEnumerationDoneProtocolGuid            : "gApplePciEnumerationDoneProtocolGuid",
+  gApplePlatformAliasGuid                         : "gApplePlatformAliasGuid",
+  gApplePlatformFatalErrorProtocolGuid            : "gApplePlatformFatalErrorProtocolGuid",
+  gApplePlatformIdGuid                            : "gApplePlatformIdGuid",
+  gApplePlatformInfoDatabasePpiGuid               : "gApplePlatformInfoDatabasePpiGuid",
+  gApplePlatformInfoDatabaseProtocolGuid          : "gApplePlatformInfoDatabaseProtocolGuid",
+  gApplePlatformInfoFileGuid                      : "gApplePlatformInfoFileGuid",
+  gApplePlatformSecurityPolicyProtocolGuid        : "gApplePlatformSecurityPolicyProtocolGuid",
+  gApplePoofAnimationState0Guid                   : "gApplePoofAnimationState0Guid",
+  gApplePoofAnimationState1Guid                   : "gApplePoofAnimationState1Guid",
+  gApplePoofAnimationState2Guid                   : "gApplePoofAnimationState2Guid",
+  gApplePoofAnimationState3Guid                   : "gApplePoofAnimationState3Guid",
+  gApplePoofAnimationState4Guid                   : "gApplePoofAnimationState4Guid",
+  gApplePowerButtonProtocolGuid                   : "gApplePowerButtonProtocolGuid",
+  gApplePowerStateProtocolGuid                    : "gApplePowerStateProtocolGuid",
+  gApplePxeBootProtocolGuid                       : "gApplePxeBootProtocolGuid",
+  gAppleRamDiskProtocolGuid                       : "gAppleRamDiskProtocolGuid",
+  gAppleReanimationProtocolGuid                   : "gAppleReanimationProtocolGuid",
+  gAppleRecoveryPartitionTypeGuid                 : "gAppleRecoveryPartitionTypeGuid",
+  gAppleRemoteSignalProtocolGuid                  : "gAppleRemoteSignalProtocolGuid",
+  gAppleRemovableMediaProtocolGuid                : "gAppleRemovableMediaProtocolGuid",
+  gAppleRomInfoFileGuid                           : "gAppleRomInfoFileGuid",
+  gAppleRomInfoProtocolGuid                       : "gAppleRomInfoProtocolGuid",
+  gAppleRomLockFeatureStateGuid                   : "gAppleRomLockFeatureStateGuid",
+  gAppleRomLockStateGuid                          : "gAppleRomLockStateGuid",
+  gAppleRomVersionGuid                            : "gAppleRomVersionGuid",
+  gAppleRtcRamProtocolGuid                        : "gAppleRtcRamProtocolGuid",
+  gAppleSecurityProtocolGuid                      : "gAppleSecurityProtocolGuid",
+  gAppleShmooDataGuid                             : "gAppleShmooDataGuid",
+  gAppleSmcIoProtocolGuid                         : "gAppleSmcIoProtocolGuid",
+  gAppleSupportGuid                               : "gAppleSupportGuid",
+  gAppleSystemIdSubClassGuid                      : "gAppleSystemIdSubClassGuid",
+  gAppleSystemPowerRestartGuid                    : "gAppleSystemPowerRestartGuid",
+  gAppleSystemPowerShutdownGuid                   : "gAppleSystemPowerShutdownGuid",
+  gAppleSystemSerialNumberSubClassGuid            : "gAppleSystemSerialNumberSubClassGuid",
+  gAppleTamperResistantBootSecureVariableGuid     : "gAppleTamperResistantBootSecureVariableGuid",
+  gAppleTamperResistantBootVariableGuid           : "gAppleTamperResistantBootVariableGuid",
+  gAppleTargetDiskModeUIProtocolGuid              : "gAppleTargetDiskModeUIProtocolGuid",
+  gAppleThunderboltResolverProtocolGuid           : "gAppleThunderboltResolverProtocolGuid",
+  gAppleUSBStorageSetPollingProtocolGuid          : "gAppleUSBStorageSetPollingProtocolGuid",
+  gAppleUniversalTargetDiskModeUIProtocolGuid     : "gAppleUniversalTargetDiskModeUIProtocolGuid",
+  gAppleUnlockFlashDescriptorProtocolGuid         : "gAppleUnlockFlashDescriptorProtocolGuid",
+  gAppleUsbProtocolGuid                           : "gAppleUsbProtocolGuid",
+  gAppleUserInterfaceThemeProtocolGuid            : "gAppleUserInterfaceThemeProtocolGuid",
+  gAppleVariablePolicyProtocolGuid                : "gAppleVariablePolicyProtocolGuid",
+  gAppleVendorOSVariableGuid                      : "gAppleVendorOSVariableGuid",
+  gAppleVendorProtectedSingleShotVariableGuid     : "gAppleVendorProtectedSingleShotVariableGuid",
+  gAppleVendorVariableGuid                        : "gAppleVendorVariableGuid",
+  gAppleWifiVariableGuid                          : "gAppleWifiVariableGuid",
+  gAppleWifi_1BarGuid                             : "gAppleWifi_1BarGuid",
+  gAppleWifi_2BarsGuid                            : "gAppleWifi_2BarsGuid",
+  gAppleWifi_3BarsGuid                            : "gAppleWifi_3BarsGuid",
+  gAppleWifi_4BarsGuid                            : "gAppleWifi_4BarsGuid",
+  gAppleWifi_NoneGuid                             : "gAppleWifi_NoneGuid",
+  gAppleWindowsNameLabelGuid                      : "gAppleWindowsNameLabelGuid",
+  gAppleWirelessEditPencilGuid                    : "gAppleWirelessEditPencilGuid",
+  gAppleXtermColorGuid                            : "gAppleXtermColorGuid",
+  gAprioriGuid                                    : "gAprioriGuid",
+  gBcmwlIoctlGuid                                 : "gBcmwlIoctlGuid",
+  gBdsConnectAllGuid                              : "gBdsConnectAllGuid",
+  gBootObjectAuthorizationParmsetGuid             : "gBootObjectAuthorizationParmsetGuid",
+  gCacheManagerProtocolGuid                       : "gCacheManagerProtocolGuid",
+  gCacheSubClassName                              : "gCacheSubClassName",
+  gChipsetGpioProtocolGuid                        : "gChipsetGpioProtocolGuid",
+  gChunkManagerProtocolGuid                       : "gChunkManagerProtocolGuid",
+  gDUFontProtocolGuid                             : "gDUFontProtocolGuid",
+  gDrawingUtilitiesProtocolGuid                   : "gDrawingUtilitiesProtocolGuid",
+  gEfiAbsolutePointerProtocolGuid                 : "gEfiAbsolutePointerProtocolGuid",
+  gEfiAcpi10TableGuid                             : "gEfiAcpi10TableGuid",
+  gEfiAcpiSdtProtocolGuid                         : "gEfiAcpiSdtProtocolGuid",
+  gEfiAcpiTableGuid                               : "gEfiAcpiTableGuid",
+  gEfiAcpiTableProtocolGuid                       : "gEfiAcpiTableProtocolGuid",
+  gEfiAlternateFvBlockGuid                        : "gEfiAlternateFvBlockGuid",
+  gEfiAppleBeepGenProtocolGuid                    : "gEfiAppleBeepGenProtocolGuid",
+  gEfiAppleNvramInterfaceProtocolGuid             : "gEfiAppleNvramInterfaceProtocolGuid",
+  gEfiAppleSpiProtocolGuid                        : "gEfiAppleSpiProtocolGuid",
+  gEfiArpProtocolGuid                             : "gEfiArpProtocolGuid",
+  gEfiArpServiceBindingProtocolGuid               : "gEfiArpServiceBindingProtocolGuid",
+  gEfiAtaPassThruProtocolGuid                     : "gEfiAtaPassThruProtocolGuid",
+  gEfiAuthenticationChapLocalGuid                 : "gEfiAuthenticationChapLocalGuid",
+  gEfiAuthenticationChapRadiusGuid                : "gEfiAuthenticationChapRadiusGuid",
+  gEfiAuthenticationInfoProtocolGuid              : "gEfiAuthenticationInfoProtocolGuid",
+  gEfiBdsArchProtocolGuid                         : "gEfiBdsArchProtocolGuid",
+  gEfiBisProtocolGuid                             : "gEfiBisProtocolGuid",
+  gEfiBlockIo2ProtocolGuid                        : "gEfiBlockIo2ProtocolGuid",
+  gEfiBlockIoProtocolGuid                         : "gEfiBlockIoProtocolGuid",
+  gEfiBootScriptSaveGuid                          : "gEfiBootScriptSaveGuid",
+  gEfiBootStateGuid                               : "gEfiBootStateGuid",
+  gEfiBusSpecificDriverOverrideProtocolGuid       : "gEfiBusSpecificDriverOverrideProtocolGuid",
+  gEfiCapsuleArchProtocolGuid                     : "gEfiCapsuleArchProtocolGuid",
+  gEfiCertPkcs7Guid                               : "gEfiCertPkcs7Guid",
+  gEfiCertRsa2048Guid                             : "gEfiCertRsa2048Guid",
+  gEfiCertRsa2048Sha1Guid                         : "gEfiCertRsa2048Sha1Guid",
+  gEfiCertRsa2048Sha256Guid                       : "gEfiCertRsa2048Sha256Guid",
+  gEfiCertSha1Guid                                : "gEfiCertSha1Guid",
+  gEfiCertSha224Guid                              : "gEfiCertSha224Guid",
+  gEfiCertSha256Guid                              : "gEfiCertSha256Guid",
+  gEfiCertSha384Guid                              : "gEfiCertSha384Guid",
+  gEfiCertSha512Guid                              : "gEfiCertSha512Guid",
+  gEfiCertTypeRsa2048Sha256Guid                   : "gEfiCertTypeRsa2048Sha256Guid",
+  gEfiCertX509Guid                                : "gEfiCertX509Guid",
+  gEfiCompatibleMemoryTestedGuid                  : "gEfiCompatibleMemoryTestedGuid",
+  gEfiComponentName2ProtocolGuid                  : "gEfiComponentName2ProtocolGuid",
+  gEfiComponentNameProtocolGuid                   : "gEfiComponentNameProtocolGuid",
+  gEfiConsoleControlProtocolGuid                  : "gEfiConsoleControlProtocolGuid",
+  gEfiConsoleInDeviceGuid                         : "gEfiConsoleInDeviceGuid",
+  gEfiConsoleOutDeviceGuid                        : "gEfiConsoleOutDeviceGuid",
+  gEfiConvergedIoProtocolGuid                     : "gEfiConvergedIoProtocolGuid",
+  gEfiCpuApCountGuid                              : "gEfiCpuApCountGuid",
+  gEfiCpuArchProtocolGuid                         : "gEfiCpuArchProtocolGuid",
+  gEfiCpuIo2ProtocolGuid                          : "gEfiCpuIo2ProtocolGuid",
+  gEfiCpuIoProtocolGuid                           : "gEfiCpuIoProtocolGuid",
+  gEfiCrc32GuidedSectionExtractionProtocolGuid    : "gEfiCrc32GuidedSectionExtractionProtocolGuid",
+  gEfiCustomizedDecompressProtocolGuid            : "gEfiCustomizedDecompressProtocolGuid",
+  gEfiDMArGenericErrorSectionGuid                 : "gEfiDMArGenericErrorSectionGuid",
+  gEfiDebugImageInfoTableGuid                     : "gEfiDebugImageInfoTableGuid",
+  gEfiDebugPortVariableGuid                       : "gEfiDebugPortVariableGuid",
+  gEfiDebugSupportProtocolGuid                    : "gEfiDebugSupportProtocolGuid",
+  gEfiDecompressProtocolGuid                      : "gEfiDecompressProtocolGuid",
+  gEfiDeferredImageLoadProtocolGuid               : "gEfiDeferredImageLoadProtocolGuid",
+  gEfiDeviceIoProtocolGuid                        : "gEfiDeviceIoProtocolGuid",
+  gEfiDevicePathFromTextProtocolGuid              : "gEfiDevicePathFromTextProtocolGuid",
+  gEfiDevicePathPropertyProtocolGuid              : "gEfiDevicePathPropertyProtocolGuid",
+  gEfiDevicePathProtocolGuid                      : "gEfiDevicePathProtocolGuid",
+  gEfiDevicePathToTextProtocolGuid                : "gEfiDevicePathToTextProtocolGuid",
+  gEfiDevicePathUtilitiesProtocolGuid             : "gEfiDevicePathUtilitiesProtocolGuid",
+  gEfiDhcp4ProtocolGuid                           : "gEfiDhcp4ProtocolGuid",
+  gEfiDhcp4ServiceBindingProtocolGuid             : "gEfiDhcp4ServiceBindingProtocolGuid",
+  gEfiDhcp6ProtocolGuid                           : "gEfiDhcp6ProtocolGuid",
+  gEfiDhcp6ServiceBindingProtocolGuid             : "gEfiDhcp6ServiceBindingProtocolGuid",
+  gEfiDirectedIoDMArErrorSectionGuid              : "gEfiDirectedIoDMArErrorSectionGuid",
+  gEfiDiskInfoAhciInterfaceGuid                   : "gEfiDiskInfoAhciInterfaceGuid",
+  gEfiDiskInfoIdeInterfaceGuid                    : "gEfiDiskInfoIdeInterfaceGuid",
+  gEfiDiskInfoProtocolGuid                        : "gEfiDiskInfoProtocolGuid",
+  gEfiDiskInfoScsiInterfaceGuid                   : "gEfiDiskInfoScsiInterfaceGuid",
+  gEfiDiskInfoUsbInterfaceGuid                    : "gEfiDiskInfoUsbInterfaceGuid",
+  gEfiDiskIoProtocolGuid                          : "gEfiDiskIoProtocolGuid",
+  gEfiDriverBindingProtocolGuid                   : "gEfiDriverBindingProtocolGuid",
+  gEfiDriverConfiguration2ProtocolGuid            : "gEfiDriverConfiguration2ProtocolGuid",
+  gEfiDriverConfigurationProtocolGuid             : "gEfiDriverConfigurationProtocolGuid",
+  gEfiDriverDiagnostics2ProtocolGuid              : "gEfiDriverDiagnostics2ProtocolGuid",
+  gEfiDriverDiagnosticsProtocolGuid               : "gEfiDriverDiagnosticsProtocolGuid",
+  gEfiDriverFamilyOverrideProtocolGuid            : "gEfiDriverFamilyOverrideProtocolGuid",
+  gEfiDriverHealthProtocolGuid                    : "gEfiDriverHealthProtocolGuid",
+  gEfiDriverSupportedEfiVersionProtocolGuid       : "gEfiDriverSupportedEfiVersionProtocolGuid",
+  gEfiDxeIplPpiGuid                               : "gEfiDxeIplPpiGuid",
+  gEfiDxeServicesTableGuid                        : "gEfiDxeServicesTableGuid",
+  gEfiDxeSmmReadyToLockProtocolGuid               : "gEfiDxeSmmReadyToLockProtocolGuid",
+  gEfiEapManagementProtocolGuid                   : "gEfiEapManagementProtocolGuid",
+  gEfiEapProtocolGuid                             : "gEfiEapProtocolGuid",
+  gEfiEbcProtocolGuid                             : "gEfiEbcProtocolGuid",
+  gEfiEdidActiveProtocolGuid                      : "gEfiEdidActiveProtocolGuid",
+  gEfiEdidDiscoveredProtocolGuid                  : "gEfiEdidDiscoveredProtocolGuid",
+  gEfiEdidOverrideProtocolGuid                    : "gEfiEdidOverrideProtocolGuid",
+  gEfiEmulatorGuid                                : "gEfiEmulatorGuid",
+  gEfiEndOfPeiSignalPpiGuid                       : "gEfiEndOfPeiSignalPpiGuid",
+  gEfiEventDxeDispatchGuid                        : "gEfiEventDxeDispatchGuid",
+  gEfiEventExitBootServicesGuid                   : "gEfiEventExitBootServicesGuid",
+  gEfiEventLegacyBootGuid                         : "gEfiEventLegacyBootGuid",
+  gEfiEventMemoryMapChangeGuid                    : "gEfiEventMemoryMapChangeGuid",
+  gEfiEventNotificationTypeBootGuid               : "gEfiEventNotificationTypeBootGuid",
+  gEfiEventNotificationTypeCmcGuid                : "gEfiEventNotificationTypeCmcGuid",
+  gEfiEventNotificationTypeCpeGuid                : "gEfiEventNotificationTypeCpeGuid",
+  gEfiEventNotificationTypeDmarGuid               : "gEfiEventNotificationTypeDmarGuid",
+  gEfiEventNotificationTypeInitGuid               : "gEfiEventNotificationTypeInitGuid",
+  gEfiEventNotificationTypeMceGuid                : "gEfiEventNotificationTypeMceGuid",
+  gEfiEventNotificationTypeNmiGuid                : "gEfiEventNotificationTypeNmiGuid",
+  gEfiEventNotificationTypePcieGuid               : "gEfiEventNotificationTypePcieGuid",
+  gEfiEventReadyToBootGuid                        : "gEfiEventReadyToBootGuid",
+  gEfiEventTrackingGuid                           : "gEfiEventTrackingGuid",
+  gEfiEventUserProfileChangedGuid                 : "gEfiEventUserProfileChangedGuid",
+  gEfiEventVirtualAddressChangeGuid               : "gEfiEventVirtualAddressChangeGuid",
+  gEfiExtScsiPassThruProtocolGuid                 : "gEfiExtScsiPassThruProtocolGuid",
+  gEfiExtendedSalBaseIoServicesProtocolGuid       : "gEfiExtendedSalBaseIoServicesProtocolGuid",
+  gEfiExtendedSalBaseServicesProtocolGuid         : "gEfiExtendedSalBaseServicesProtocolGuid",
+  gEfiExtendedSalBootServiceProtocolGuid          : "gEfiExtendedSalBootServiceProtocolGuid",
+  gEfiExtendedSalCacheServicesProtocolGuid        : "gEfiExtendedSalCacheServicesProtocolGuid",
+  gEfiExtendedSalFvBlockServicesProtocolGuid      : "gEfiExtendedSalFvBlockServicesProtocolGuid",
+  gEfiExtendedSalMcaLogServicesProtocolGuid       : "gEfiExtendedSalMcaLogServicesProtocolGuid",
+  gEfiExtendedSalMcaServicesProtocolGuid          : "gEfiExtendedSalMcaServicesProtocolGuid",
+  gEfiExtendedSalMpServicesProtocolGuid           : "gEfiExtendedSalMpServicesProtocolGuid",
+  gEfiExtendedSalMtcServicesProtocolGuid          : "gEfiExtendedSalMtcServicesProtocolGuid",
+  gEfiExtendedSalPalServicesProtocolGuid          : "gEfiExtendedSalPalServicesProtocolGuid",
+  gEfiExtendedSalPciServicesProtocolGuid          : "gEfiExtendedSalPciServicesProtocolGuid",
+  gEfiExtendedSalResetServicesProtocolGuid        : "gEfiExtendedSalResetServicesProtocolGuid",
+  gEfiExtendedSalRtcServicesProtocolGuid          : "gEfiExtendedSalRtcServicesProtocolGuid",
+  gEfiExtendedSalStallServicesProtocolGuid        : "gEfiExtendedSalStallServicesProtocolGuid",
+  gEfiExtendedSalStatusCodeServicesProtocolGuid   : "gEfiExtendedSalStatusCodeServicesProtocolGuid",
+  gEfiExtendedSalVariableServicesProtocolGuid     : "gEfiExtendedSalVariableServicesProtocolGuid",
+  gEfiFakeCioGuid                                 : "gEfiFakeCioGuid",
+  gEfiFileInfoGuid                                : "gEfiFileInfoGuid",
+  gEfiFileSystemInfoGuid                          : "gEfiFileSystemInfoGuid",
+  gEfiFileSystemVolumeLabelInfoIdGuid             : "gEfiFileSystemVolumeLabelInfoIdGuid",
+  gEfiFindFvPpiGuid                               : "gEfiFindFvPpiGuid",
+  gEfiFireWireBusProtocolGuid                     : "gEfiFireWireBusProtocolGuid",
+  gEfiFireWireStartingTDMGuid                     : "gEfiFireWireStartingTDMGuid",
+  gEfiFirmwareErrorSectionGuid                    : "gEfiFirmwareErrorSectionGuid",
+  gEfiFirmwareFileSystem2Guid                     : "gEfiFirmwareFileSystem2Guid",
+  gEfiFirmwareFileSystem3Guid                     : "gEfiFirmwareFileSystem3Guid",
+  gEfiFirmwareFileSystemGuid                      : "gEfiFirmwareFileSystemGuid",
+  gEfiFirmwareManagementProtocolGuid              : "gEfiFirmwareManagementProtocolGuid",
+  gEfiFirmwareVolume2ProtocolGuid                 : "gEfiFirmwareVolume2ProtocolGuid",
+  gEfiFirmwareVolumeBlockProtocolGuid             : "gEfiFirmwareVolumeBlockProtocolGuid",
+  gEfiFirmwareVolumeDispatchProtocolGuid          : "gEfiFirmwareVolumeDispatchProtocolGuid",
+  gEfiFirmwareVolumeTopFileGuid                   : "gEfiFirmwareVolumeTopFileGuid",
+  gEfiFlashMapHobGuid                             : "gEfiFlashMapHobGuid",
+  gEfiFormBrowser2ProtocolGuid                    : "gEfiFormBrowser2ProtocolGuid",
+  gEfiFtp4ProtocolGuid                            : "gEfiFtp4ProtocolGuid",
+  gEfiFtp4ServiceBindingProtocolGuid              : "gEfiFtp4ServiceBindingProtocolGuid",
+  gEfiFvbExtensionProtocolGuid                    : "gEfiFvbExtensionProtocolGuid",
+  gEfiGlobalVariableGuid                          : "gEfiGlobalVariableGuid",
+  gEfiGraphicsOutputProtocolGuid                  : "gEfiGraphicsOutputProtocolGuid",
+  gEfiHardwareErrorVariableGuid                   : "gEfiHardwareErrorVariableGuid",
+  gEfiHashAlgorithmMD5Guid                        : "gEfiHashAlgorithmMD5Guid",
+  gEfiHashAlgorithmSha1Guid                       : "gEfiHashAlgorithmSha1Guid",
+  gEfiHashAlgorithmSha1NoPadGuid                  : "gEfiHashAlgorithmSha1NoPadGuid",
+  gEfiHashAlgorithmSha224Guid                     : "gEfiHashAlgorithmSha224Guid",
+  gEfiHashAlgorithmSha256Guid                     : "gEfiHashAlgorithmSha256Guid",
+  gEfiHashAlgorithmSha256NoPadGuid                : "gEfiHashAlgorithmSha256NoPadGuid",
+  gEfiHashAlgorithmSha384Guid                     : "gEfiHashAlgorithmSha384Guid",
+  gEfiHashAlgorithmSha512Guid                     : "gEfiHashAlgorithmSha512Guid",
+  gEfiHashProtocolGuid                            : "gEfiHashProtocolGuid",
+  gEfiHashServiceBindingProtocolGuid              : "gEfiHashServiceBindingProtocolGuid",
+  gEfiHeciProtocolGuid                            : "gEfiHeciProtocolGuid",
+  gEfiHiiConfigRoutingProtocolGuid                : "gEfiHiiConfigRoutingProtocolGuid",
+  gEfiHiiDatabaseProtocolGuid                     : "gEfiHiiDatabaseProtocolGuid",
+  gEfiHiiDriverHealthFormsetGuid                  : "gEfiHiiDriverHealthFormsetGuid",
+  gEfiHiiFontProtocolGuid                         : "gEfiHiiFontProtocolGuid",
+  gEfiHiiImageProtocolGuid                        : "gEfiHiiImageProtocolGuid",
+  gEfiHiiKeyBoardLayoutGuid                       : "gEfiHiiKeyBoardLayoutGuid",
+  gEfiHiiPackageListProtocolGuid                  : "gEfiHiiPackageListProtocolGuid",
+  gEfiHiiPlatformSetupFormsetGuid                 : "gEfiHiiPlatformSetupFormsetGuid",
+  gEfiHiiStandardFormGuid                         : "gEfiHiiStandardFormGuid",
+  gEfiHiiStringProtocolGuid                       : "gEfiHiiStringProtocolGuid",
+  gEfiHiiUserCredentialFormsetGuid                : "gEfiHiiUserCredentialFormsetGuid",
+  gEfiHobListGuid                                 : "gEfiHobListGuid",
+  gEfiHobMemoryAllocBspStoreGuid                  : "gEfiHobMemoryAllocBspStoreGuid",
+  gEfiHobMemoryAllocModuleGuid                    : "gEfiHobMemoryAllocModuleGuid",
+  gEfiHobMemoryAllocStackGuid                     : "gEfiHobMemoryAllocStackGuid",
+  gEfiHotPlugDeviceGuid                           : "gEfiHotPlugDeviceGuid",
+  gEfiHtBistHobGuid                               : "gEfiHtBistHobGuid",
+  gEfiIScsiInitiatorNameProtocolGuid              : "gEfiIScsiInitiatorNameProtocolGuid",
+  gEfiIa32X64ErrorTypeBusCheckGuid                : "gEfiIa32X64ErrorTypeBusCheckGuid",
+  gEfiIa32X64ErrorTypeCacheCheckGuid              : "gEfiIa32X64ErrorTypeCacheCheckGuid",
+  gEfiIa32X64ErrorTypeMsCheckGuid                 : "gEfiIa32X64ErrorTypeMsCheckGuid",
+  gEfiIa32X64ErrorTypeTlbCheckGuid                : "gEfiIa32X64ErrorTypeTlbCheckGuid",
+  gEfiIdeControllerInitProtocolGuid               : "gEfiIdeControllerInitProtocolGuid",
+  gEfiImageSecurityDatabaseGuid                   : "gEfiImageSecurityDatabaseGuid",
+  gEfiIncompatiblePciDeviceSupportProtocolGuid    : "gEfiIncompatiblePciDeviceSupportProtocolGuid",
+  gEfiIommuDMArErrorSectionGuid                   : "gEfiIommuDMArErrorSectionGuid",
+  gEfiIp4ConfigProtocolGuid                       : "gEfiIp4ConfigProtocolGuid",
+  gEfiIp4ProtocolGuid                             : "gEfiIp4ProtocolGuid",
+  gEfiIp4ServiceBindingProtocolGuid               : "gEfiIp4ServiceBindingProtocolGuid",
+  gEfiIp6ConfigProtocolGuid                       : "gEfiIp6ConfigProtocolGuid",
+  gEfiIp6ProtocolGuid                             : "gEfiIp6ProtocolGuid",
+  gEfiIp6ServiceBindingProtocolGuid               : "gEfiIp6ServiceBindingProtocolGuid",
+  gEfiIpSec2ProtocolGuid                          : "gEfiIpSec2ProtocolGuid",
+  gEfiIpSecConfigProtocolGuid                     : "gEfiIpSecConfigProtocolGuid",
+  gEfiIpSecProtocolGuid                           : "gEfiIpSecProtocolGuid",
+  gEfiIsaIoProtocolGuid                           : "gEfiIsaIoProtocolGuid",
+  gEfiKmsFormatAescbc128Guid                      : "gEfiKmsFormatAescbc128Guid",
+  gEfiKmsFormatAescbc256Guid                      : "gEfiKmsFormatAescbc256Guid",
+  gEfiKmsFormatAesxts128Guid                      : "gEfiKmsFormatAesxts128Guid",
+  gEfiKmsFormatAesxts256Guid                      : "gEfiKmsFormatAesxts256Guid",
+  gEfiKmsFormatGeneric1024Guid                    : "gEfiKmsFormatGeneric1024Guid",
+  gEfiKmsFormatGeneric128Guid                     : "gEfiKmsFormatGeneric128Guid",
+  gEfiKmsFormatGeneric160Guid                     : "gEfiKmsFormatGeneric160Guid",
+  gEfiKmsFormatGeneric2048Guid                    : "gEfiKmsFormatGeneric2048Guid",
+  gEfiKmsFormatGeneric256Guid                     : "gEfiKmsFormatGeneric256Guid",
+  gEfiKmsFormatGeneric3072Guid                    : "gEfiKmsFormatGeneric3072Guid",
+  gEfiKmsFormatGeneric512Guid                     : "gEfiKmsFormatGeneric512Guid",
+  gEfiKmsFormatMd2128Guid                         : "gEfiKmsFormatMd2128Guid",
+  gEfiKmsFormatMd4128Guid                         : "gEfiKmsFormatMd4128Guid",
+  gEfiKmsFormatMd5128Guid                         : "gEfiKmsFormatMd5128Guid",
+  gEfiKmsFormatMd5sha128Guid                      : "gEfiKmsFormatMd5sha128Guid",
+  gEfiKmsFormatMdc2128Guid                        : "gEfiKmsFormatMdc2128Guid",
+  gEfiKmsFormatMdc4128Guid                        : "gEfiKmsFormatMdc4128Guid",
+  gEfiKmsFormatRsasha11024Guid                    : "gEfiKmsFormatRsasha11024Guid",
+  gEfiKmsFormatRsasha12048Guid                    : "gEfiKmsFormatRsasha12048Guid",
+  gEfiKmsFormatRsasha2562048Guid                  : "gEfiKmsFormatRsasha2562048Guid",
+  gEfiKmsFormatRsasha2563072Guid                  : "gEfiKmsFormatRsasha2563072Guid",
+  gEfiKmsFormatSha1160Guid                        : "gEfiKmsFormatSha1160Guid",
+  gEfiKmsFormatSha256256Guid                      : "gEfiKmsFormatSha256256Guid",
+  gEfiKmsFormatSha512512Guid                      : "gEfiKmsFormatSha512512Guid",
+  gEfiKmsProtocolGuid                             : "gEfiKmsProtocolGuid",
+  gEfiLegacyRegion2ProtocolGuid                   : "gEfiLegacyRegion2ProtocolGuid",
+  gEfiLoadFile2ProtocolGuid                       : "gEfiLoadFile2ProtocolGuid",
+  gEfiLoadFileProtocolGuid                        : "gEfiLoadFileProtocolGuid",
+  gEfiLoadPeImageGuid                             : "gEfiLoadPeImageGuid",
+  gEfiLoadedImageDevicePathProtocolGuid           : "gEfiLoadedImageDevicePathProtocolGuid",
+  gEfiLoadedImageProtocolGuid                     : "gEfiLoadedImageProtocolGuid",
+  gEfiManagedNetworkProtocolGuid                  : "gEfiManagedNetworkProtocolGuid",
+  gEfiManagedNetworkServiceBindingProtocolGuid    : "gEfiManagedNetworkServiceBindingProtocolGuid",
+  gEfiMdePkgTokenSpaceGuid                        : "gEfiMdePkgTokenSpaceGuid",
+  gEfiMemoryConfigDataGuid                        : "gEfiMemoryConfigDataGuid",
+  gEfiMemoryOverwriteControlDataGuid              : "gEfiMemoryOverwriteControlDataGuid",
+  gEfiMemorySubClassGuid                          : "gEfiMemorySubClassGuid",
+  gEfiMetronomeArchProtocolGuid                   : "gEfiMetronomeArchProtocolGuid",
+  gEfiMiscSubClassGuid                            : "gEfiMiscSubClassGuid",
+  gEfiMonotonicCounterArchProtocolGuid            : "gEfiMonotonicCounterArchProtocolGuid",
+  gEfiMpServiceProtocolGuid                       : "gEfiMpServiceProtocolGuid",
+  gEfiMpsTableGuid                                : "gEfiMpsTableGuid",
+  gEfiMtftp4ProtocolGuid                          : "gEfiMtftp4ProtocolGuid",
+  gEfiMtftp4ServiceBindingProtocolGuid            : "gEfiMtftp4ServiceBindingProtocolGuid",
+  gEfiMtftp6ProtocolGuid                          : "gEfiMtftp6ProtocolGuid",
+  gEfiMtftp6ServiceBindingProtocolGuid            : "gEfiMtftp6ServiceBindingProtocolGuid",
+  gEfiNetworkInterfaceIdentifierProtocolGuid      : "gEfiNetworkInterfaceIdentifierProtocolGuid",
+  gEfiNicIp4ConfigProtocolGuid                    : "gEfiNicIp4ConfigProtocolGuid",
+  gEfiNicIp4ConfigVariableGuid                    : "gEfiNicIp4ConfigVariableGuid",
+  gEfiNtLoadAsDllPpiGuid                          : "gEfiNtLoadAsDllPpiGuid",
+  gEfiPartTypeLegacyMbrGuid                       : "gEfiPartTypeLegacyMbrGuid",
+  gEfiPartTypeSystemPartGuid                      : "gEfiPartTypeSystemPartGuid",
+  gEfiPartTypeUnusedGuid                          : "gEfiPartTypeUnusedGuid",
+  gEfiPcAnsiGuid                                  : "gEfiPcAnsiGuid",
+  gEfiPcdProtocolGuid                             : "gEfiPcdProtocolGuid",
+  gEfiPchS3SupportProtocolGuid                    : "gEfiPchS3SupportProtocolGuid",
+  gEfiPciBusErrorSectionGuid                      : "gEfiPciBusErrorSectionGuid",
+  gEfiPciCfg2PpiGuid                              : "gEfiPciCfg2PpiGuid",
+  gEfiPciDevErrorSectionGuid                      : "gEfiPciDevErrorSectionGuid",
+  gEfiPciEnumerationCompleteProtocolGuid          : "gEfiPciEnumerationCompleteProtocolGuid",
+  gEfiPciHostBridgeResourceAllocationProtocolGuid : "gEfiPciHostBridgeResourceAllocationProtocolGuid",
+  gEfiPciHotPlugInitProtocolGuid                  : "gEfiPciHotPlugInitProtocolGuid",
+  gEfiPciHotPlugRequestProtocolGuid               : "gEfiPciHotPlugRequestProtocolGuid",
+  gEfiPciHotplugDeviceGuid                        : "gEfiPciHotplugDeviceGuid",
+  gEfiPciIoProtocolGuid                           : "gEfiPciIoProtocolGuid",
+  gEfiPciOptionRomTableGuid                       : "gEfiPciOptionRomTableGuid",
+  gEfiPciOverrideProtocolGuid                     : "gEfiPciOverrideProtocolGuid",
+  gEfiPciPlatformProtocolGuid                     : "gEfiPciPlatformProtocolGuid",
+  gEfiPciRootBridgeIoProtocolGuid                 : "gEfiPciRootBridgeIoProtocolGuid",
+  gEfiPciThunderboltInitProtocolGuid              : "gEfiPciThunderboltInitProtocolGuid",
+  gEfiPcieErrorSectionGuid                        : "gEfiPcieErrorSectionGuid",
+  gEfiPeiBootInRecoveryModePpiGuid                : "gEfiPeiBootInRecoveryModePpiGuid",
+  gEfiPeiCorePrivateGuid                          : "gEfiPeiCorePrivateGuid",
+  gEfiPeiCpuIoPpiInstalledGuid                    : "gEfiPeiCpuIoPpiInstalledGuid",
+  gEfiPeiDecompressPpiGuid                        : "gEfiPeiDecompressPpiGuid",
+  gEfiPeiDeviceRecoveryModulePpiGuid              : "gEfiPeiDeviceRecoveryModulePpiGuid",
+  gEfiPeiFirmwareVolumeInfoPpiGuid                : "gEfiPeiFirmwareVolumeInfoPpiGuid",
+  gEfiPeiFlushInstructionCacheGuid                : "gEfiPeiFlushInstructionCacheGuid",
+  gEfiPeiLoadFilePpiGuid                          : "gEfiPeiLoadFilePpiGuid",
+  gEfiPeiLoadedImagePpiGuid                       : "gEfiPeiLoadedImagePpiGuid",
+  gEfiPeiMasterBootModePpiGuid                    : "gEfiPeiMasterBootModePpiGuid",
+  gEfiPeiMemoryDiscoveredPpiGuid                  : "gEfiPeiMemoryDiscoveredPpiGuid",
+  gEfiPeiPcdPpiGuid                               : "gEfiPeiPcdPpiGuid",
+  gEfiPeiPeCoffLoaderGuid                         : "gEfiPeiPeCoffLoaderGuid",
+  gEfiPeiPerformanceHobGuid                       : "gEfiPeiPerformanceHobGuid",
+  gEfiPeiReadOnlyVariable2PpiGuid                 : "gEfiPeiReadOnlyVariable2PpiGuid",
+  gEfiPeiRecoveryModulePpiGuid                    : "gEfiPeiRecoveryModulePpiGuid",
+  gEfiPeiResetPpiGuid                             : "gEfiPeiResetPpiGuid",
+  gEfiPeiRscHandlerPpiGuid                        : "gEfiPeiRscHandlerPpiGuid",
+  gEfiPeiS3Resume2PpiGuid                         : "gEfiPeiS3Resume2PpiGuid",
+  gEfiPeiSecurity2PpiGuid                         : "gEfiPeiSecurity2PpiGuid",
+  gEfiPeiSmbus2PpiGuid                            : "gEfiPeiSmbus2PpiGuid",
+  gEfiPeiSmbusPpiGuid                             : "gEfiPeiSmbusPpiGuid",
+  gEfiPeiStallPpiGuid                             : "gEfiPeiStallPpiGuid",
+  gEfiPeiStatusCodePpiGuid                        : "gEfiPeiStatusCodePpiGuid",
+  gEfiPeiTransferControlGuid                      : "gEfiPeiTransferControlGuid",
+  gEfiPeiVirtualBlockIoPpiGuid                    : "gEfiPeiVirtualBlockIoPpiGuid",
+  gEfiPerformanceProtocolGuid                     : "gEfiPerformanceProtocolGuid",
+  gEfiPlatformDriverOverrideProtocolGuid          : "gEfiPlatformDriverOverrideProtocolGuid",
+  gEfiPlatformMemoryErrorSectionGuid              : "gEfiPlatformMemoryErrorSectionGuid",
+  gEfiPlatformToDriverConfigurationClpGuid        : "gEfiPlatformToDriverConfigurationClpGuid",
+  gEfiPlatformToDriverConfigurationProtocolGuid   : "gEfiPlatformToDriverConfigurationProtocolGuid",
+  gEfiPrimaryConsoleInDeviceGuid                  : "gEfiPrimaryConsoleInDeviceGuid",
+  gEfiPrimaryConsoleOutDeviceGuid                 : "gEfiPrimaryConsoleOutDeviceGuid",
+  gEfiPrimaryStandardErrorDeviceGuid              : "gEfiPrimaryStandardErrorDeviceGuid",
+  gEfiPrintProtocolGuid                           : "gEfiPrintProtocolGuid",
+  gEfiProcessorGenericErrorSectionGuid            : "gEfiProcessorGenericErrorSectionGuid",
+  gEfiProcessorSpecificErrorSectionGuid           : "gEfiProcessorSpecificErrorSectionGuid",
+  gEfiProgressPostCodeProtocolGuid                : "gEfiProgressPostCodeProtocolGuid",
+  gEfiPxeBaseCodeCallbackProtocolGuid             : "gEfiPxeBaseCodeCallbackProtocolGuid",
+  gEfiPxeBaseCodeProtocolGuid                     : "gEfiPxeBaseCodeProtocolGuid",
+  gEfiRealTimeClockArchProtocolGuid               : "gEfiRealTimeClockArchProtocolGuid",
+  gEfiResetArchProtocolGuid                       : "gEfiResetArchProtocolGuid",
+  gEfiRscHandlerProtocolGuid                      : "gEfiRscHandlerProtocolGuid",
+  gEfiRuntimeArchProtocolGuid                     : "gEfiRuntimeArchProtocolGuid",
+  gEfiS3SaveStateProtocolGuid                     : "gEfiS3SaveStateProtocolGuid",
+  gEfiS3SmmSaveStateProtocolGuid                  : "gEfiS3SmmSaveStateProtocolGuid",
+  gEfiSalMcaInitPmiProtocolGuid                   : "gEfiSalMcaInitPmiProtocolGuid",
+  gEfiSalSystemTableGuid                          : "gEfiSalSystemTableGuid",
+  gEfiSasDevicePathGuid                           : "gEfiSasDevicePathGuid",
+  gEfiScsiIoProtocolGuid                          : "gEfiScsiIoProtocolGuid",
+  gEfiScsiPassThruProtocolGuid                    : "gEfiScsiPassThruProtocolGuid",
+  gEfiSecDebuggerInformationPpiGuid               : "gEfiSecDebuggerInformationPpiGuid",
+  gEfiSecPlatformInformationPpiGuid               : "gEfiSecPlatformInformationPpiGuid",
+  gEfiSectionExtractionProtocolGuid               : "gEfiSectionExtractionProtocolGuid",
+  gEfiSecurity2ArchProtocolGuid                   : "gEfiSecurity2ArchProtocolGuid",
+  gEfiSecurityArchProtocolGuid                    : "gEfiSecurityArchProtocolGuid",
+  gEfiSecurityPolicyProtocolGuid                  : "gEfiSecurityPolicyProtocolGuid",
+  gEfiSerialIoProtocolGuid                        : "gEfiSerialIoProtocolGuid",
+  gEfiSimpleFileSystemProtocolGuid                : "gEfiSimpleFileSystemProtocolGuid",
+  gEfiSimpleNetworkProtocolGuid                   : "gEfiSimpleNetworkProtocolGuid",
+  gEfiSimplePointerProtocolGuid                   : "gEfiSimplePointerProtocolGuid",
+  gEfiSimpleTextInProtocolGuid                    : "gEfiSimpleTextInProtocolGuid",
+  gEfiSimpleTextInputExProtocolGuid               : "gEfiSimpleTextInputExProtocolGuid",
+  gEfiSimpleTextOutProtocolGuid                   : "gEfiSimpleTextOutProtocolGuid",
+  gEfiSioProtocolGuid                             : "gEfiSioProtocolGuid",
+  gEfiSmbiosProtocolGuid                          : "gEfiSmbiosProtocolGuid",
+  gEfiSmbiosTableGuid                             : "gEfiSmbiosTableGuid",
+  gEfiSmbusHcProtocolGuid                         : "gEfiSmbusHcProtocolGuid",
+  gEfiSmmAccess2ProtocolGuid                      : "gEfiSmmAccess2ProtocolGuid",
+  gEfiSmmBase2ProtocolGuid                        : "gEfiSmmBase2ProtocolGuid",
+  gEfiSmmCommunicationProtocolGuid                : "gEfiSmmCommunicationProtocolGuid",
+  gEfiSmmConfigurationProtocolGuid                : "gEfiSmmConfigurationProtocolGuid",
+  gEfiSmmControl2ProtocolGuid                     : "gEfiSmmControl2ProtocolGuid",
+  gEfiSmmCpuIo2ProtocolGuid                       : "gEfiSmmCpuIo2ProtocolGuid",
+  gEfiSmmCpuProtocolGuid                          : "gEfiSmmCpuProtocolGuid",
+  gEfiSmmGpiDispatch2ProtocolGuid                 : "gEfiSmmGpiDispatch2ProtocolGuid",
+  gEfiSmmIoTrapDispatch2ProtocolGuid              : "gEfiSmmIoTrapDispatch2ProtocolGuid",
+  gEfiSmmPciRootBridgeIoProtocolGuid              : "gEfiSmmPciRootBridgeIoProtocolGuid",
+  gEfiSmmPeiSmramMemoryReserve                    : "gEfiSmmPeiSmramMemoryReserve",
+  gEfiSmmPeriodicTimerDispatch2ProtocolGuid       : "gEfiSmmPeriodicTimerDispatch2ProtocolGuid",
+  gEfiSmmPowerButtonDispatch2ProtocolGuid         : "gEfiSmmPowerButtonDispatch2ProtocolGuid",
+  gEfiSmmReadyToLockProtocolGuid                  : "gEfiSmmReadyToLockProtocolGuid",
+  gEfiSmmRscHandlerProtocolGuid                   : "gEfiSmmRscHandlerProtocolGuid",
+  gEfiSmmStandbyButtonDispatch2ProtocolGuid       : "gEfiSmmStandbyButtonDispatch2ProtocolGuid",
+  gEfiSmmStatusCodeProtocolGuid                   : "gEfiSmmStatusCodeProtocolGuid",
+  gEfiSmmSwDispatch2ProtocolGuid                  : "gEfiSmmSwDispatch2ProtocolGuid",
+  gEfiSmmSxDispatch2ProtocolGuid                  : "gEfiSmmSxDispatch2ProtocolGuid",
+  gEfiSmmUsbDispatch2ProtocolGuid                 : "gEfiSmmUsbDispatch2ProtocolGuid",
+  gEfiSpiProtocolGuid                             : "gEfiSpiProtocolGuid",
+  gEfiStandardErrorDeviceGuid                     : "gEfiStandardErrorDeviceGuid",
+  gEfiStatusCodeDataTypeAssertGuid                : "gEfiStatusCodeDataTypeAssertGuid",
+  gEfiStatusCodeDataTypeErrorGuid                 : "gEfiStatusCodeDataTypeErrorGuid",
+  gEfiStatusCodeDataTypeExceptionHandlerGuid      : "gEfiStatusCodeDataTypeExceptionHandlerGuid",
+  gEfiStatusCodeDataTypeProgressCodeGuid          : "gEfiStatusCodeDataTypeProgressCodeGuid",
+  gEfiStatusCodeDataTypeStringGuid                : "gEfiStatusCodeDataTypeStringGuid",
+  gEfiStatusCodeGuid                              : "gEfiStatusCodeGuid",
+  gEfiStatusCodeRuntimeProtocolGuid               : "gEfiStatusCodeRuntimeProtocolGuid",
+  gEfiStatusCodeSpecificDataGuid                  : "gEfiStatusCodeSpecificDataGuid",
+  gEfiStorageSecurityCommandProtocolGuid          : "gEfiStorageSecurityCommandProtocolGuid",
+  gEfiSystemNvDataFvGuid                          : "gEfiSystemNvDataFvGuid",
+  gEfiSystemNvDataHobGuid                         : "gEfiSystemNvDataHobGuid",
+  gEfiT29ParentBridgeGUID                         : "gEfiT29ParentBridgeGUID",
+  gEfiTapeIoProtocolGuid                          : "gEfiTapeIoProtocolGuid",
+  gEfiTcgProtocolGuid                             : "gEfiTcgProtocolGuid",
+  gEfiTcp4ProtocolGuid                            : "gEfiTcp4ProtocolGuid",
+  gEfiTcp4ServiceBindingProtocolGuid              : "gEfiTcp4ServiceBindingProtocolGuid",
+  gEfiTcp6ProtocolGuid                            : "gEfiTcp6ProtocolGuid",
+  gEfiTcp6ServiceBindingProtocolGuid              : "gEfiTcp6ServiceBindingProtocolGuid",
+  gEfiTcpProtocolGuid                             : "gEfiTcpProtocolGuid",
+  gEfiTestSILBlinkDataGuid                        : "gEfiTestSILBlinkDataGuid",
+  gEfiTianoDecompressProtocolGuid                 : "gEfiTianoDecompressProtocolGuid",
+  gEfiTimerArchProtocolGuid                       : "gEfiTimerArchProtocolGuid",
+  gEfiUartDevicePathGuid                          : "gEfiUartDevicePathGuid",
+  gEfiUdp4ProtocolGuid                            : "gEfiUdp4ProtocolGuid",
+  gEfiUdp4ServiceBindingProtocolGuid              : "gEfiUdp4ServiceBindingProtocolGuid",
+  gEfiUdp6ProtocolGuid                            : "gEfiUdp6ProtocolGuid",
+  gEfiUdp6ServiceBindingProtocolGuid              : "gEfiUdp6ServiceBindingProtocolGuid",
+  gEfiUgaDrawFramebufferInfoProtocolGuid          : "gEfiUgaDrawFramebufferInfoProtocolGuid",
+  gEfiUgaDrawProtocolGuid                         : "gEfiUgaDrawProtocolGuid",
+  gEfiUgaIoProtocolGuid                           : "gEfiUgaIoProtocolGuid",
+  gEfiUnicodeCollation2ProtocolGuid               : "gEfiUnicodeCollation2ProtocolGuid",
+  gEfiUnicodeCollationProtocolGuid                : "gEfiUnicodeCollationProtocolGuid",
+  gEfiUnixAutoLaunchPickerGuid                    : "gEfiUnixAutoLaunchPickerGuid",
+  gEfiUnixAutoLaunchTdmGuid                       : "gEfiUnixAutoLaunchTdmGuid",
+  gEfiUnixCPUModelGuid                            : "gEfiUnixCPUModelGuid",
+  gEfiUnixCPUSpeedGuid                            : "gEfiUnixCPUSpeedGuid",
+  gEfiUnixConsoleGuid                             : "gEfiUnixConsoleGuid",
+  gEfiUnixFileSystemGuid                          : "gEfiUnixFileSystemGuid",
+  gEfiUnixGopGuid                                 : "gEfiUnixGopGuid",
+  gEfiUnixIoProtocolGuid                          : "gEfiUnixIoProtocolGuid",
+  gEfiUnixMemoryGuid                              : "gEfiUnixMemoryGuid",
+  gEfiUnixNetworkGuid                             : "gEfiUnixNetworkGuid",
+  gEfiUnixPassThroughGuid                         : "gEfiUnixPassThroughGuid",
+  gEfiUnixPhysicalDisksGuid                       : "gEfiUnixPhysicalDisksGuid",
+  gEfiUnixSerialPortGuid                          : "gEfiUnixSerialPortGuid",
+  gEfiUnixVirtualDiskFilesGuid                    : "gEfiUnixVirtualDiskFilesGuid",
+  gEfiUnixVirtualDisksGuid                        : "gEfiUnixVirtualDisksGuid",
+  gEfiUsb2HcProtocolGuid                          : "gEfiUsb2HcProtocolGuid",
+  gEfiUsbHcProtocolGuid                           : "gEfiUsbHcProtocolGuid",
+  gEfiUsbIoProtocolGuid                           : "gEfiUsbIoProtocolGuid",
+  gEfiUserCredential2ProtocolGuid                 : "gEfiUserCredential2ProtocolGuid",
+  gEfiUserCredentialClassFingerprintGuid          : "gEfiUserCredentialClassFingerprintGuid",
+  gEfiUserCredentialClassHandprintGuid            : "gEfiUserCredentialClassHandprintGuid",
+  gEfiUserCredentialClassPasswordGuid             : "gEfiUserCredentialClassPasswordGuid",
+  gEfiUserCredentialClassSecureCardGuid           : "gEfiUserCredentialClassSecureCardGuid",
+  gEfiUserCredentialClassSmartCardGuid            : "gEfiUserCredentialClassSmartCardGuid",
+  gEfiUserCredentialClassUnknownGuid              : "gEfiUserCredentialClassUnknownGuid",
+  gEfiUserCredentialProtocolGuid                  : "gEfiUserCredentialProtocolGuid",
+  gEfiUserInfoAccessSetupAdminGuid                : "gEfiUserInfoAccessSetupAdminGuid",
+  gEfiUserInfoAccessSetupNormalGuid               : "gEfiUserInfoAccessSetupNormalGuid",
+  gEfiUserInfoAccessSetupRestrictedGuid           : "gEfiUserInfoAccessSetupRestrictedGuid",
+  gEfiUserManagerProtocolGuid                     : "gEfiUserManagerProtocolGuid",
+  gEfiVT100Guid                                   : "gEfiVT100Guid",
+  gEfiVT100PlusGuid                               : "gEfiVT100PlusGuid",
+  gEfiVTUTF8Guid                                  : "gEfiVTUTF8Guid",
+  gEfiVariableArchProtocolGuid                    : "gEfiVariableArchProtocolGuid",
+  gEfiVariableStoreProtocolGuid                   : "gEfiVariableStoreProtocolGuid",
+  gEfiVariableWriteArchProtocolGuid               : "gEfiVariableWriteArchProtocolGuid",
+  gEfiVlanConfigProtocolGuid                      : "gEfiVlanConfigProtocolGuid",
+  gEfiWatchdogTimerArchProtocolGuid               : "gEfiWatchdogTimerArchProtocolGuid",
+  gExitPmAuthProtocolGuid                         : "gExitPmAuthProtocolGuid",
+  gFrameworkEfiMpServiceProtocolGuid              : "gFrameworkEfiMpServiceProtocolGuid",
+  gIpmiProtocolGuid                               : "gIpmiProtocolGuid",
+  gMemoryProducerGuid                             : "gMemoryProducerGuid",
+  gMiscProducerGuid                               : "gMiscProducerGuid",
+  gNetworkInterfacePolicyProtocolGuid             : "gNetworkInterfacePolicyProtocolGuid",
+  gNetworkSystemRecoveryAppFileGuid               : "gNetworkSystemRecoveryAppFileGuid",
+  gPcdPpiGuid                                     : "gPcdPpiGuid",
+  gPcdProtocolGuid                                : "gPcdProtocolGuid",
+  gPchDmiTcVcMapPpiGuid                           : "gPchDmiTcVcMapPpiGuid",
+  gPchInitPpiGuid                                 : "gPchInitPpiGuid",
+  gPchMeUmaPpiGuid                                : "gPchMeUmaPpiGuid",
+  gPchPlatformPolicyPpiGuid                       : "gPchPlatformPolicyPpiGuid",
+  gPchResetCallbackPpiGuid                        : "gPchResetCallbackPpiGuid",
+  gPchResetCallbackProtocolGuid                   : "gPchResetCallbackProtocolGuid",
+  gPchUsbPolicyPpiGuid                            : "gPchUsbPolicyPpiGuid",
+  gPeiAhciControllerPpiGuid                       : "gPeiAhciControllerPpiGuid",
+  gPeiAppleFirstBootGuid                          : "gPeiAppleFirstBootGuid",
+  gPeiAppleFlashMapInitializedPpiGuid             : "gPeiAppleFlashMapInitializedPpiGuid",
+  gPeiApplePlatformIdPpiGuid                      : "gPeiApplePlatformIdPpiGuid",
+  gPeiAppleRecoveryToneGuid                       : "gPeiAppleRecoveryToneGuid",
+  gPeiAppleRtcRamPpiGuid                          : "gPeiAppleRtcRamPpiGuid",
+  gPeiAppleSmcIoPpiGuid                           : "gPeiAppleSmcIoPpiGuid",
+  gPeiAprioriFileNameGuid                         : "gPeiAprioriFileNameGuid",
+  gPeiAtaPolicyPpiGuid                            : "gPeiAtaPolicyPpiGuid",
+  gPeiBaseMemoryTestPpiGuid                       : "gPeiBaseMemoryTestPpiGuid",
+  gPeiCachePpiGuid                                : "gPeiCachePpiGuid",
+  gPeiCapsuleOnDataCDGuid                         : "gPeiCapsuleOnDataCDGuid",
+  gPeiCapsuleOnFatFloppyDiskGuid                  : "gPeiCapsuleOnFatFloppyDiskGuid",
+  gPeiCapsuleOnFatIdeDiskGuid                     : "gPeiCapsuleOnFatIdeDiskGuid",
+  gPeiCapsuleOnFatUsbDiskGuid                     : "gPeiCapsuleOnFatUsbDiskGuid",
+  gPeiCheckForCarEvictionsPpiGuid                 : "gPeiCheckForCarEvictionsPpiGuid",
+  gPeiChipsetGpioPpiGuid                          : "gPeiChipsetGpioPpiGuid",
+  gPeiCpuPlatformPolicyPpiGuid                    : "gPeiCpuPlatformPolicyPpiGuid",
+  gPeiEFIProgressPostCodeGuid                     : "gPeiEFIProgressPostCodeGuid",
+  gPeiFlashMapPpiGuid                             : "gPeiFlashMapPpiGuid",
+  gPeiFvFileLoaderPpiGuid                         : "gPeiFvFileLoaderPpiGuid",
+  gPeiHeciPpiGuid                                 : "gPeiHeciPpiGuid",
+  gPeiInMemoryGuid                                : "gPeiInMemoryGuid",
+  gPeiMePlatformPolicyPpiGuid                     : "gPeiMePlatformPolicyPpiGuid",
+  gPeiPciCfgPpiInServiceTableGuid                 : "gPeiPciCfgPpiInServiceTableGuid",
+  gPeiPlatformFvHobsCreatedGuid                   : "gPeiPlatformFvHobsCreatedGuid",
+  gPeiPlatformMemoryRangePpiGuid                  : "gPeiPlatformMemoryRangePpiGuid",
+  gPeiPlatformMemorySizePpiGuid                   : "gPeiPlatformMemorySizePpiGuid",
+  gPeiPlatformStage1CompletedGuid                 : "gPeiPlatformStage1CompletedGuid",
+  gPeiRomIntegrityCheckGuid                       : "gPeiRomIntegrityCheckGuid",
+  gPeiS3ResumePpiGuid                             : "gPeiS3ResumePpiGuid",
+  gPeiSerialOverrideModeGuid                      : "gPeiSerialOverrideModeGuid",
+  gPeiSerialRecoveryModeGuid                      : "gPeiSerialRecoveryModeGuid",
+  gPeiSmbusPolicyPpiGuid                          : "gPeiSmbusPolicyPpiGuid",
+  gPeiVariablePpiGuid                             : "gPeiVariablePpiGuid",
+  gPlatformConnectServicesProtocolGuid            : "gPlatformConnectServicesProtocolGuid",
+  gPlatformMeHookProtocolGuid                     : "gPlatformMeHookProtocolGuid",
+  gProcessorProducerGuid                          : "gProcessorProducerGuid",
+  gProcessorSubClassName                          : "gProcessorSubClassName",
+  gSaLockHobGuid                                  : "gSaLockHobGuid",
+  gSaPegDataHobGuid                               : "gSaPegDataHobGuid",
+  gSaPegDataVariableGuid                          : "gSaPegDataVariableGuid",
+  gSaPeiInitPpiGuid                               : "gSaPeiInitPpiGuid",
+  gSaPlatformPolicyPpiGuid                        : "gSaPlatformPolicyPpiGuid",
+  gSecureVariableProtocolGuid                     : "gSecureVariableProtocolGuid",
+  gSimpleSpiProtocolGuid                          : "gSimpleSpiProtocolGuid",
+  gTDMApprovedGuid                                : "gTDMApprovedGuid",
+  gTamperResistantBootProtocolGuid                : "gTamperResistantBootProtocolGuid",
+  gTrbAllUsers                                    : "gTrbAllUsers",
+  gTrbEfiUser                                     : "gTrbEfiUser",
+  gUTDMUIAppGuid                                  : "gUTDMUIAppGuid",
+  gUnicodeUtilitiesProtocolGuid                   : "gUnicodeUtilitiesProtocolGuid",
+  gVariableIndexTable                             : "gVariableIndexTable",
+  gWdtPpiGuid                                     : "gWdtPpiGuid",
+}
+
+# Initialized from build specific data
+GuidFileNameDict = {}
+

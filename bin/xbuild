@@ -1,0 +1,642 @@
+#!/usr/bin/env python
+
+import os
+import shutil
+import argparse
+import subprocess
+import logging
+from pprint import pprint
+import time
+
+try:
+    from watchdog.observers import Observer
+    from watchdog.events import PatternMatchingEventHandler
+    USE_WATCHDOG=True
+except ImportError:
+    USE_WATCHDOG=False
+
+APP_SWITCH_CMD = 'OSDToolbox appswitch -b'
+RSYNC_PORT_POSTFIX = '873'
+SSH_PORT_POSTFIX = '022'
+
+if USE_WATCHDOG:
+    class CodeChangeEventHandler(PatternMatchingEventHandler):
+
+        def build(self):
+            main()
+
+        def on_modified(self,event):
+            super(CodeChangeEventHandler, self).on_modified(event)
+            pprint(event)
+            self.build()
+
+        def on_created(self,event):
+            super(CodeChangeEventHandler, self).on_created(event)
+            pprint(event)
+            self.build()
+
+        def on_deleted(self, event):
+            super(CodeChangeEventHandler, self).on_deleted(event)
+            pprint(event)
+            self.build()
+
+        def on_moved(self, event):
+            super(CodeChangeEventHandler, self).on_moved(event)
+            pprint(event)
+            self.build()
+
+    event_handler = CodeChangeEventHandler(ignore_patterns=["*.git*","*build/*","*.xcodeproj*"], ignore_directories=True, case_sensitive=False)
+
+
+class BuildConfig:
+
+    def __init__(self):
+        self.sdk = None
+        self.platform = None
+        self.target = None
+
+    def __str__(self):
+        return '(Target = ' + self.target + ', Platform = ' + self.platform + ', SDK = ' + self.sdk + ')'
+
+
+class bcolors:
+    OKBLUE = '\033[34m\033[1m'
+    OKGREEN = '\033[32m\033[1m'
+    WARNING = '\033[35m\033[1m'
+    FAIL = '\033[31m\033[1m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+
+
+class SmartFormatter(argparse.HelpFormatter):
+
+    def _split_lines(self, text, width):
+        # this is the RawTextHelpFormatter._split_lines
+        if text.startswith('R|'):
+            return text[2:].splitlines()
+        return argparse.HelpFormatter._split_lines(self, text, width)
+
+description="Builds an Xcode project."
+
+if not USE_WATCHDOG:
+    description = description + " Some additional functionality can come from the watchdog python module. (pip install watchdog)"
+
+parser = argparse.ArgumentParser(
+    description=description, formatter_class=SmartFormatter)
+
+portGroup = parser.add_mutually_exclusive_group(required=False)
+portGroup.add_argument('-p', '--port', help='Port to use with rsync. Normal TCP Relay starts at 10' + RSYNC_PORT_POSTFIX,
+                       default=None)
+portGroup.add_argument('-o', '--portOffset', help='Port offset to use with rsync: -o 1 = 11' + RSYNC_PORT_POSTFIX + ', -o 13 = 13' + RSYNC_PORT_POSTFIX + ', etc',
+                       default=None)
+portGroup.add_argument('-n', '--ipAddress', '--hostname', help='ip address/hostname to rsync to',
+                       default=None)
+
+if USE_WATCHDOG:
+    parser.add_argument('--auto', help="Watches the current directory for file changes and runs the xbuild command automatically on change.",action='store_true')
+
+parser.add_argument('-s', '--sdk', help='Install products into SDK',
+                    default=None, action='store_true')
+parser.add_argument('-d', '--debug', help='Install DSYMs into the install root', default='',
+                    action='store_const', const='DWARF_DSYM_FILE_SHOULD_ACCOMPANY_PRODUCT=YES GCC_OPTIMIZATION_LEVEL=0')
+parser.add_argument('-r', '--rsyncOnly', help='Only rsync files to device.',
+                    default=False, action='store_true')
+parser.add_argument('-l', '--launch', help='Launch an app based on boot-arg by invoking OSDToolbox appswitch -b',
+                    default=False, action='store_true')
+parser.add_argument('-c', '--clean', help='Run clean before install.',
+                    default=False, action='store_true')
+parser.add_argument('-f', '--finder', help='Open the root in finder',
+                    default=False, action='store_true')
+parser.add_argument('-x', '--xcodeflags',
+                    help='Flags to pass to xcodebuild', default=[], nargs='*')
+parser.add_argument('-t', '--target', help='Build target. Will override any assumptions and fail if target is not found',
+                    dest='target', default='', type=str)
+parser.add_argument('-v', '--verbose', help='R|Level of verbosity.\nLevel 0: print status and errors\nLevel 1: print lines around errors with no status\nLevel 2: print everything ',
+                    default=0, type=int, choices=set((0, 1, 2)))
+parser.add_argument('-z', '--keep-install-root', help='Keep the install root directory', default=False, action='store_true')
+parser.add_argument('--asan', help='Use Address Sanitizer. Use of -d option is strongly recommended because you can get a symbolicated report at the time of failure.',
+                       default=False, action='store_true')
+
+sdkGroup = parser.add_mutually_exclusive_group(required=False)
+sdkGroup.add_argument('-i', '--ios', help='Builds using the iOS SDK. Also assumes target= Build All - iOS unless --notarget is passed',
+                      default=False, action='store_true')
+sdkGroup.add_argument('-w', '--watchos', help='Builds using the WatchOS SDK. Also assumes target= Build All - WatchOS unless --notarget is passed',
+                      default=False, action='store_true')
+sdkGroup.add_argument('-a', '--tvos', help='Builds using the TVOS SDK. Also assumes target= Build All - TVOS unless --notarget is passed',
+                      default=False, action='store_true')
+sdkGroup.add_argument(
+    '-b', '--bridgeos', help='Builds using the bridgeOS SDK. Also assumes target= Build All - bridgeOS unless --notarget is passed', default=False, action='store_true')
+sdkGroup.add_argument(
+    '-m', '--macosx', help='Builds using the Mac OSX SDK, also assumes target= Build All - OSX unless --notarget is passed', default=False, action='store_true')
+
+args = parser.parse_args()
+
+# Set up the watchdog stuff
+USE_WATCHDOG = USE_WATCHDOG and args.auto
+
+verboseFlags = ''  # assume level 2
+tvosTarget = 'Build All - TVOS'
+watchosTarget = 'Build All - WatchOS'
+bridgeosTarget = 'Build All - bridgeOS'
+iosTarget = 'Build All - iOS'
+macosxTarget = 'Build All - OSX'
+tvosSDK = 'appletvos.internal'
+iosSDK = 'iphoneos.internal'
+watchosSDK = 'watchos.internal'
+macosxSDK = 'macosx.internal'
+watchosPlatform = 'WatchOS.platform'
+tvosPlatform = 'AppleTVOS.platform'
+iosPlatform = 'iPhoneOS.platform'
+macosxPlatform = 'MacOSX.platform'
+searchForTarget = True
+
+iosConfig = BuildConfig()
+iosConfig.sdk = iosSDK
+iosConfig.platform = iosPlatform
+
+# Default to the platform target if args.target is not set.
+iosConfig.target = iosTarget if not args.target else args.target
+
+tvosConfig = BuildConfig()
+tvosConfig.sdk = tvosSDK
+tvosConfig.platform = tvosPlatform
+
+# Default to the platform target if args.target is not set.
+tvosConfig.target = tvosTarget if not args.target else args.target
+
+watchosConfig = BuildConfig()
+watchosConfig.sdk = watchosSDK
+watchosConfig.platform = watchosPlatform
+
+# Default to the platform target if args.target is not set.
+watchosConfig.target = watchosTarget if not args.target else args.target
+
+bridgeosConfig = BuildConfig()
+bridgeosConfig.sdk = watchosSDK
+bridgeosConfig.platform = watchosPlatform
+
+# Default to the platform target if args.target is not set.
+bridgeosConfig.target = bridgeosTarget if not args.target else args.target
+
+osxConfig = BuildConfig()
+osxConfig.sdk = macosxSDK
+osxConfig.platform = macosxPlatform
+
+# Default to the platform target if args.target is not set.
+osxConfig.target = macosxTarget if not args.target else args.target
+
+# Add custom target if applicable
+if args.target:
+    print 'Overriding default SDK target'
+    watchosConfig.target = args.target
+    tvosConfig.target = args.target
+    iosConfig.target = args.target
+    osxConfig.target = args.target
+    bridgeosConfig.target = args.target
+    searchForTarget = False
+
+
+if args.ios:
+    config = iosConfig
+elif args.tvos:
+    config = tvosConfig
+elif args.watchos:
+    config = watchosConfig
+elif args.bridgeos:
+    config = bridgeosConfig
+elif args.macosx:
+    config = osxConfig
+else:
+    # default to ios because no one likes TVs or Watches or Bridge or Mac
+    config = iosConfig
+
+if args.port is not None:
+    ports = args.port.split(',')
+    ip = None
+elif args.portOffset is not None:
+    ports = []
+    for offset in args.portOffset.split(','):
+        if int(offset) < 10:
+            ports.append('1' + str(offset) + RSYNC_PORT_POSTFIX)
+            ip = None
+        else:
+            ports.append(str(offset) + RSYNC_PORT_POSTFIX)
+            ip = None
+elif args.ipAddress is not None:
+    ip = args.ipAddress
+    ports = None
+    print 'Using ip address: ' + ip
+else:
+    ports = None
+    ip = None
+print "Args: " + str(args)
+hostSideContentExist = False
+platformPath = ""
+iPhoneSDKPath = ""
+installRoot = ""
+# xcodeenv takes a while to build, so might as well cache it for the --watch case
+xcodeenv = None
+
+
+def runProcess(exe):
+    # print "Running command: " + ' '.join(exe)
+    p = subprocess.Popen(exe, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    out, err = p.communicate()
+    # print out
+    return out
+
+
+def notify(title, text):
+    cmd = ["/usr/bin/osascript", "-e"]
+    cmd.append("display notification \"" + text +
+               "\" with title \"" + title + "\"")
+    subprocess.check_call(cmd)
+
+
+def xcodeList():
+    data = runProcess(['xcodebuild', '-sdk', sdk, '-list'])
+    targetsSection = False
+    targets = []
+    for line in data.split('\n'):
+
+        if 'Targets:' in line:
+            targetsSection = True
+        elif 'Build Configurations' in line or 'Build Configurations:' in line:
+            targetsSection = False
+        if targetsSection:
+            targets.append(line.strip())
+    return targets
+
+
+def xcodeEnvironment(xcodeflags):
+    global xcodeenv
+    xcodeenv = dict()
+    data = runProcess(['xcodebuild', '-sdk', sdk, '-showBuildSettings'] + xcodeflags)
+    for line in data.split('\n'):
+        splitLine = line.split('=')
+        if len(splitLine) == 2:
+            xcodeenv[splitLine[0].strip()] = splitLine[1].strip()
+    return xcodeenv
+
+
+def copyFrameworks():
+    global hostSideContentExist
+
+    for root, dirs, files in os.walk(installRoot):
+        for dir in dirs:
+            if ".framework" in dir:
+                srcPath = root + "/" + dir
+                cmds = []
+                if platform in root:
+                    print "Host framework"
+                    hostSideContentExist = True
+                    destPath = root[len(installRoot):] + "/"
+
+                    # Copy into platform
+                    cmds.append("sudo rm -rf " + destPath + dir)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                    # Copy into Host Frameworks
+                    destPath = destPath[len(platformPath):]
+                    cmds.append("sudo rm -rf " + destPath + dir)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                else:
+                    print "iOS framework"
+                    destPath = iPhoneSDKPath + root[len(installRoot):] + "/"
+                    cmds.append("sudo rm -rf " + destPath + dir)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                # Peform copy commands
+                for cmd in cmds:
+                    print cmd
+                    subprocess.check_call(cmd, shell=True)
+
+
+def copyIncludeAndLib():
+    global hostSideContentExist
+    global platform
+
+    for root, dirs, files in os.walk(installRoot):
+        for f in files:
+            pathComponents = root.split(os.path.sep)
+            if "include" in pathComponents or "lib" in pathComponents:
+                srcPath = root + "/" + f
+                cmds = []
+                if platform in root:
+                    print "Host Lib or Include"
+                    hostSideContentExist = True
+                    destPath = root[len(installRoot):] + "/"
+
+                    # Copy into platform
+                    cmds.append("sudo rm -rf " + destPath + f)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                    # Copy into Host Frameworks
+                    destPath = destPath[len(platformPath):]
+                    cmds.append("sudo rm -rf " + destPath + f)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                else:
+                    print "iOS Lib or Include"
+                    destPath = iPhoneSDKPath + root[len(installRoot):] + "/"
+                    cmds.append("sudo rm -rf " + destPath + f)
+                    cmds.append("sudo cp -rf " + srcPath + " " + destPath)
+
+                # Peform copy commands
+                for cmd in cmds:
+                    print cmd
+                    subprocess.check_call(cmd, shell=True)
+
+
+def copyAsanDylibToInstallRoot():
+    xcodePath = subprocess.check_output("xcode-select -p", shell=True).strip()
+
+    print "Looking for ASAN dylib..."
+
+    if args.ios:
+        platform = "ios"
+    elif args.watchos:
+        platform = "watchos"
+    elif args.macos:
+        platform = "macos"
+    elif args.tvos:
+        platform = "tvos"
+    elif args.bridgeos:
+        platform = "bridgeos"
+    else:
+        print "ERROR: Unknown platform."
+        return
+
+    sdkName = config.platform.replace(".platform", "")
+    dylibName = "libclang_rt.asan_%s_dynamic.dylib" % platform
+    asanDylibPaths = subprocess.check_output("find %s -name %s | grep %s" % (xcodePath, dylibName, sdkName), shell=True).split()
+
+    if len(asanDylibPaths) >= 2:
+        print "ERROR: Ambiguous dylib. Which one? " + str(asanDylibPaths)
+        return
+
+    foundDylib = asanDylibPaths[0]
+
+    print "Found: " + foundDylib
+
+    installRootLib = installRoot + "/usr/local/lib/"
+
+    os.makedirs(installRootLib)
+    shutil.copyfile(foundDylib, installRootLib + dylibName)
+
+
+def rsyncFiles():
+    if not hostSideContentExist:
+        try:
+            os.environ["RSYNC_PASSWORD"] = "alpine"
+            rsyncCmds = []
+            if ports:
+                for port in ports:
+                    rsyncCmds.append("rsync -av " + installRoot + "/* " +
+                                     "rsync://root@localhost:" + port + "/root/")
+            elif ip:
+                rsyncCmds.append("rsync -av " + installRoot +
+                                 "/* " + "root@" + ip + ":/")
+            else:
+                return
+            for rsyncCmd in rsyncCmds:
+                print "Rsync command: " + rsyncCmd
+                subprocess.check_call(rsyncCmd, shell=True)
+        finally:
+            del os.environ["RSYNC_PASSWORD"]
+
+    else:
+        print bcolors.WARNING + "Skipping rsync!  Host side frameworks existed!" + bcolors.ENDC
+
+
+def get_archs():
+    # Check foundation.framework for the architectures it suppoerts
+    if "MacOSX" in iPhoneSDKPath:
+        # 32 bit clang doesnt support ARC, so OSD wont support 32 bit clang.
+        return ["x86_64"]
+    foundation_path = os.path.join(
+        iPhoneSDKPath, "System/Library/Frameworks/Foundation.framework/Foundation")
+
+    out = subprocess.check_output("file " + foundation_path, shell=True)
+    colons = out.split(":")
+    archs = []
+    for line in colons:
+        if "for architecture" in line:
+            line[line.find("(") + 1:line.find(")")]
+            archs += [line.split("for architecture")
+                      [1].replace(")", "").strip()]
+    return archs
+
+
+def launch_app_on_device():
+    for rsyncPortNum in ports:
+        sshPortNum = rsyncPortNum.replace(RSYNC_PORT_POSTFIX, SSH_PORT_POSTFIX)
+        print "Invoking " + APP_SWITCH_CMD + " on " + sshPortNum + "..."
+        subprocess.check_call(['ssh', '-o StrictHostKeyChecking=no', '-o NoHostAuthenticationForLocalhost=yes',
+                               'root@localhost', '-p ' + sshPortNum, APP_SWITCH_CMD])
+
+
+def main():
+
+    global platformPath
+    global iPhoneSDKPath
+    global installRoot
+    global sdk
+    global platform
+    global target
+    global verboseFlags
+    global observer
+    global xcodeenv
+
+    if USE_WATCHDOG:
+        # Stop the watchdog as soon as we start building because we want to ignore file changes cuased by the build.
+        observer.stop()
+    try:
+        sdk = config.sdk
+        platform = config.platform
+        target = config.target
+
+        # Verify target exists:
+        if searchForTarget:
+            xcodetargets = xcodeList()
+            if target not in xcodetargets:
+                print bcolors.WARNING + "Did not find target \"" + str(target) + "\" in project, defaulting to none!" + bcolors.ENDC
+                target = ''
+
+        print bcolors.OKBLUE + 'Using sdk: ' + sdk
+        print 'Using platform: ' + platform
+        print 'Using target: ' + target
+        print 'Additional flags: ' + str(args.xcodeflags) + bcolors.ENDC
+        if ports is not None:
+            print bcolors.OKBLUE + 'Ports: ' + str(ports) + bcolors.ENDC
+
+        if xcodeenv == None:
+            # build the xcodeenv dictionary
+            xcodeenv = xcodeEnvironment(args.xcodeflags)
+        if args.verbose is 0:
+            try:
+                xcpretty_path = subprocess.check_output(
+                    ["/usr/bin/which", "xcpretty"]).rstrip()
+            except subprocess.CalledProcessError:
+                xcpretty_path = ""
+
+            if os.path.isfile(str(xcpretty_path)) and xcodeenv.get('PROJECT', "") != "EarthboundWorlds":
+                verboseFlags = ' | ' + xcpretty_path + \
+                    '; test ${PIPESTATUS[0]} -eq 0'
+            else:
+                verboseFlags = ' COLOR_DIAGNOSTICS=YES | egrep -e "((error|warning):|\*\* INSTALL (FAILED|SUCCEEDED) \*\*)" -e CompileC -e AnalyzeShallow -e Clean.Remove -e Ld -e CreateUniversalBinary -e CodeSign -e "Created world"; test ${PIPESTATUS[0]} -eq 0'
+        elif args.verbose is 1:
+            verboseFlags = 'COLOR_DIAGNOSTICS=YES | egrep -A 5 -e "((error|warning):|\*\* INSTALL (FAILED|SUCCEEDED) \*\*)" -e "CLEAN SUCCEEDED" -e "CLEAN FAILED" ; test ${PIPESTATUS[0]} -eq 0'
+        try:
+            installRoot = xcodeenv['INSTALL_ROOT']
+        except KeyError as e:
+            err = "ERROR: Unable to read required xcode build settings. Could not find key:" + \
+                str(e)
+            print bcolors.FAIL + err + bcolors.ENDC
+            print bcolors.FAIL + "ERROR: Ensure you are in a directory with a valid xcode project!" + bcolors.ENDC
+
+        try:
+            if 'ASPEN_PLATFORM_PATH' in xcodeenv:
+                platformPath = xcodeenv['ASPEN_PLATFORM_PATH']
+            elif 'DEVICE_PLATFORM_INSTALL_DIR' in xcodeenv:
+                platformPath = xcodeenv['DEVICE_PLATFORM_INSTALL_DIR']
+            else:
+                platformPath = xcodeenv['PLATFORM_DIR']
+
+            if 'DEVICE_SDK_INSTALL_DIR' in xcodeenv:
+                iPhoneSDKPath = xcodeenv['DEVICE_SDK_INSTALL_DIR']
+
+            else:
+                iPhoneSDKPath = xcodeenv['SDK_DIR']
+        except KeyError as e:
+            err = "ERROR: Unable to read required xcode build settings. Could not find key:" + \
+                str(e)
+            print bcolors.FAIL + err + bcolors.ENDC
+            print bcolors.FAIL + "ERROR: Ensure that the project configuration is set to \"AspenFamily\"." + bcolors.ENDC
+            print bcolors.FAIL + "ERROR: Also ensure your xcode has the requested SDK!" + bcolors.ENDC
+            print bcolors.FAIL + "ERROR: Also ensure you are in a directory with an xcode project!" + bcolors.ENDC
+            raise Exception(err)
+
+        if any("ARCHS" in x for x in args.xcodeflags):
+            raise Exception("Custom defining ARCHS is not supported by xbuild")
+        else:
+            archs = get_archs()
+
+        if args.sdk:
+            subprocess.check_call(
+                "sudo echo \"Yay I'm able to sudo now!\n\n\"", shell=True)
+
+            if platformPath is None:
+                err = "ERROR: Unable to determine Platform path!"
+                print bcolors.FAIL + err + bcolors.ENDC
+                raise Exception(err)
+
+            if installRoot is None:
+                err = "ERROR: Unable to determine Install Root path!"
+                print bcolors.FAIL + err + bcolors.ENDC
+                raise Exception(err)
+
+            print "Platform path: " + platformPath
+            print "SDK path: " + iPhoneSDKPath
+            print "Install root: " + installRoot
+            print "==================================="
+
+        if args.rsyncOnly:
+            print bcolors.OKBLUE + "Only running rsync command!" + bcolors.ENDC
+            rsyncFiles()
+            if args.launch:
+                launch_app_on_device()
+            return 0
+
+        targetString = ""
+        if target is not '':
+            targetString = "-target \"" + target + "\""
+
+        if args.clean:
+            # Clean the Xcode project
+            clean_command = "xcodebuild -sdk " + sdk + "  clean " + targetString + " " + verboseFlags
+            logging.debug("Clean command: %s", clean_command)
+            subprocess.check_call(clean_command, shell=True)
+            print "==================================="
+
+        if not args.keep_install_root:
+            # Clean up the INSTALL_ROOT dir
+            print "Removing INSTALL_ROOT dir: " + installRoot
+            shutil.rmtree(installRoot, ignore_errors=True)
+            print "==================================="
+
+        asanFlag = ""
+        if args.asan:
+            asanFlag = "-enableAddressSanitizer YES"
+
+        # Build the project
+        build_command = "xcodebuild -sdk " + sdk + " " + asanFlag + " install " + targetString + " " + args.debug + " " + ' '.join(args.xcodeflags) + " ARCHS=\'" + " ".join(archs) + "\' " + verboseFlags
+
+        logging.debug("Build Command: %s", build_command)
+        subprocess.check_call(build_command, shell=True)
+        print "==================================="
+
+        # Copy frameworks into the SDK
+        if args.sdk:
+            copyFrameworks()
+            copyIncludeAndLib()
+            print "==================================="
+
+        if args.asan:
+            copyAsanDylibToInstallRoot()
+
+        # Rsync files to device if port is not None and no host side
+        # frameworks exist
+        if ports is not None or ip is not None:
+            rsyncFiles()
+            print "==================================="
+
+        if args.finder:
+            subprocess.check_call(['open', installRoot])
+        print bcolors.OKGREEN + "Build Complete for config:  " + str(config) + bcolors.ENDC
+        print "==================================="
+        print bcolors.OKBLUE + "Built Target: " + config.target + " using SDK: " + config.sdk + bcolors.ENDC
+        print bcolors.OKGREEN + "OSD BUILD COMPLETE!" + bcolors.ENDC
+        print "==================================="
+        try:
+            notify(title=xcodeenv['PROJECT'], text="xBuild Success!")
+        except:
+            pass
+
+        if args.launch:
+            launch_app_on_device()
+
+    except Exception as e:
+        logging.exception("Exception")
+        print bcolors.FAIL + str(e).replace(verboseFlags, '') + bcolors.ENDC
+        print bcolors.FAIL + "OSD BUILD FAILED!" + bcolors.ENDC
+        print "==================================="
+        try:
+            notify(title=xcodeenv['PROJECT'], text="xBuild Failed, womp womp!")
+        except:
+            pass
+        return -1
+    finally:
+        if USE_WATCHDOG:
+            # reschedule the watchdog
+            observer = Observer()
+            observer.schedule(event_handler, os.getcwd(), recursive=True)
+            observer.start()
+
+if __name__ == "__main__":
+    if USE_WATCHDOG:
+        # Run the build the first time
+
+        observer = Observer()
+        observer.schedule(event_handler, os.getcwd(), recursive=True)
+        observer.start()
+        main()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            observer.stop()
+        observer.join()
+    else:
+        main()

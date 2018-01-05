@@ -1,0 +1,35 @@
+\documentclass[11pt]{article}
+
+\usepackage{Smokey}
+
+% Comment out these lines for release
+%\usepackage{draftwatermark}
+%\SetWatermarkText{DRAFT}
+%\SetWatermarkScale{1}
+%\SetWatermarkLightness{0.95}
+
+% Create a formatted table command for the sample text
+\NewCenteredSmokeyTable%
+	{SampleTable}%
+	{lll}%
+	{One & Two & Three}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\SmokeyTitlePageFormat
+
+\include{DebugTitle}
+
+\SmokeyTocPageFormat
+
+\setcounter{tocdepth}{4}
+\tableofcontents
+
+
+\SmokeyBodyPageFormat
+
+\include{DebugBody}
+
+\end{document}

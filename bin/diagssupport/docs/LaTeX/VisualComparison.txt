@@ -1,0 +1,24 @@
+To visually compare one build of the manual PDF against another build:
+
+# Install Image Magick
+sudo port install ImageMagick
+
+# Build two versions of the manual
+make -B
+mv SmokeyManual.pdf SmokeyManual-Before.pdf
+mv SmokeyManual.pdf SmokeyManual-After.pdf
+
+# Run comparison
+# Replace 93 with the actual number of pages
+# Replace 8 with 1x or 2x the number of cores on your system
+for ((j=0;j<93;j+=8)); do for ((i=j;i<j+8 && i<93;++i)); do echo $i; compare -density 300 SmokeyManual-Before.pdf[$i] SmokeyManual-After.pdf[$i] -compose src delta-$i.gif & done; wait; done
+
+# This is slow, but will print the number of PDF pages from the command line
+identify -density 10 -format "%n" SmokeyManual-Before.pdf
+
+# All the output files should be the same if there are no visual changes
+md5 delta-* | cut -d= -f2 | uniq
+
+# For 300 DPI, 8.5"x11" pages, the MD5 should be 
+md5 delta-* | cut -d= -f2 | uniq
+ c885527c001060ae97811603da423253

@@ -1,0 +1,184 @@
+
+::namespace eval ::user::reconfig {
+
+	::namespace path [list ::astris ::astris::console ::astris::console::native ::astris::soc]
+
+	proc reconfig_dump {} {
+		#set reconfig_base 0x210000200
+		set reconfig_base 0x210000100
+		set aop_sram_base 0x210e00000
+		set table_base_addr [expr $reconfig_base + 0x0]
+		set table_base [expr $aop_sram_base + [mem -memap 4 $table_base_addr]]
+
+		set sequences [list \
+			[dict create name S2R_AOP_TO_AOP_DDR abbrev S->D offset 0x4] \
+			[dict create name AOP_DDR_TO_S2R_AOP abbrev D->S offset 0x8] \
+			[dict create name AOP_DDR_TO_AWAKE abbrev D->A offset 0xc] \
+			[dict create name AWAKE_TO_AOP_DDR abbrev A->D offset 0x10] \
+			[dict create name AWAKE_TO_OFF abbrev A->O offset 0x14] \
+			[dict create name AWAKE_TO_S2R_NOAOP abbrev A->C offset 0x18]]
+
+		echo "======== Table Bases ========"
+		echo [format "TABLE_BASE (0x%09x): 0x%09x" $table_base_addr $table_base]
+		foreach sequence $sequences {
+			set name [dict get $sequence name]
+			set offset [dict get $sequence offset]
+
+			set reconfig_reg_addr [expr $reconfig_base + $offset]
+			set config_reg [mem -memap 4 $reconfig_reg_addr]
+
+			echo [format "%s (0x%09x): 0x%08x" $name $reconfig_reg_addr $config_reg]
+		}
+
+		foreach sequence $sequences {
+			set name [dict get $sequence name]
+			set offset [dict get $sequence offset]
+			set abbrev [dict get $sequence abbrev]
+
+			set config_reg [mem -memap 4 [expr $reconfig_base + $offset]]
+
+			set pre_enable [expr (($config_reg >> 8) & 1)]
+			set pre_index [expr (($config_reg >> 0) & 0x1f)]
+			set post_enable [expr (($config_reg >> 24) & 1)]
+			set post_index [expr (($config_reg >> 16) & 0x1f)]
+
+			echo
+			echo ======== $name ========
+			if $pre_enable {
+				set pre_pointer_address [expr $table_base + ($pre_index) * 4]
+				set pre_address [expr [mem -memap 4 $pre_pointer_address] * 16]
+				echo [format "== %s Preamble: Table %02d at 0x%09x ==" $abbrev $pre_index $pre_address]
+				dump_sequence $pre_address
+			} else {
+				echo [format "== %s Preamble: disabled ==" $abbrev]
+			}
+			if $post_enable {
+				set post_pointer_address [expr $table_base + ($post_index) * 4]
+				set post_address [expr [mem -memap 4 $post_pointer_address] * 16]
+				echo [format "== %s Postamble: Table %02d at 0x%09x ==" $abbrev $post_index $post_address]
+				dump_sequence $post_address
+			} else {
+				echo [format "== %s Postamble: disabled ==" $abbrev]
+			}
+		}
+	}
+
+	proc dump_sequence {addr} {
+		while {1} {
+			set command [mem -memap 4 $addr]
+			set command_addr $addr
+			incr addr 4
+
+			set opcode [expr $command & 0x3f]
+
+			if {[expr $opcode & 1] == 1} {
+				# write command
+				set write_base [expr ($command >> 6) << 10]
+				set write_count [expr (($command >> 2) & 0xf) + 1]
+				set write_64bit [expr ($command >> 1) & 1]
+
+				puts [format "    0x%08x /* %d-word write base=0x%09x (%d) */" $command $write_count $write_base $write_64bit]
+
+				set i 0
+				set write_offsets {}
+				while {$i < $write_count} {
+					set write_offsets_word [mem -memap 4 $addr]
+
+					puts [format "    0x%08x /*     Offset */" $write_offsets_word]
+
+					incr addr 4
+
+					set j 0
+					while {($i < $write_count) && ($j < 4)} {
+						lappend write_offsets [expr ($write_offsets_word & 0xff) * 4]
+						set write_offsets_word [expr $write_offsets_word >> 8]
+						incr i
+						incr j
+					}
+				}
+
+				if {$write_64bit && [expr $addr & 0x7] != 0} {
+					set write_skip [mem -memap 4 $addr]
+					puts [format "    0x%08x (Skipped)" $write_skip ]
+					incr addr 4
+				}
+
+				foreach write_offset $write_offsets {
+					set write_addr [expr $write_base + $write_offset]
+					if $write_64bit {
+						set write_value [mem -memap 4 -64 $addr]
+
+						puts [format "    0x%016llx /* Data, Addr=0x%9x */" $write_value $write_addr]
+						incr addr 8
+					} else {
+						set write_value [mem -memap 4 $addr]
+
+						puts [format "    0x%08x /*     Data, Addr=0x%9x */" $write_value $write_addr]
+						incr addr 4
+					}
+				}
+			} elseif {[expr $opcode & 0xf] == 2} {
+				# Read/poll command
+				set read_base [expr ($command >> 6) << 10]
+				set read_64bit [expr ($command >> 5) & 1]
+
+				puts [format "    0x%08x /* Poll BASE=0x%08x (%d) */" $command $read_base $read_64bit]
+
+				set read_offset_word [mem -memap 4 $addr]
+				set read_offset [expr (($read_offset_word & 0xff) << 2)]
+				set read_retry_en [expr (($read_offset_word >> 16) & 1)]
+				set read_retry_cnt [expr (($read_offset_word >> 8) & 0xff)]
+
+				set read_addr [expr $read_base + $read_offset]
+
+				puts [format "    0x%08x /*     Offset %02x Retry_en=%d Retry_cnt=%d */" $read_offset_word $read_offset $read_retry_en $read_retry_cnt]
+
+				incr addr 4
+
+				if $read_64bit {
+					if {[expr $addr & 0x7] != 0} {
+						set read_skip [mem -memap 4 $addr]
+						puts [format "    0x%08x (Skipped)" $read_skip ]
+						incr addr 4
+					}
+
+					set read_mask [mem -memap 4 -64 $addr]
+					puts [format "    0x%016llx /*     Mask */" $read_mask]
+					incr addr 8
+
+					set read_data [mem -memap 4 -64 $addr]
+					puts [format "    0x%016llx /*     Data, Addr=0x%x */" $read_data $read_addr]
+					incr addr 8
+				} else {
+					set read_mask [mem -memap 4 $addr]
+					puts [format "    0x%08x /*     Mask */" $read_mask]
+					incr addr 4
+
+					set read_data [mem -memap 4 $addr]
+					puts [format "    0x%08x /*     Data, Addr=0x%x */" $read_data $read_addr]
+					incr addr 4
+				}
+			} elseif {$opcode == 4} {
+				# Delay command
+				set count [expr $command >> 6]
+				puts [format "    0x%08x /* Delay %d*/" $command $count]
+
+			} elseif {$opcode == 0} {
+				# End command
+				puts [format "    0x%08x /* Cfg End */" $command]
+				break
+			} else {
+				puts [format "    0x%08x /* Unknown opcode 0x%3x */" $command $opcode]
+				break
+			}
+		}
+
+	}
+}
+
+
+::namespace eval ::console {
+
+    # make our commands visible to the console
+    ::namespace path [list {*}[namespace path] ::user::reconfig]
+}

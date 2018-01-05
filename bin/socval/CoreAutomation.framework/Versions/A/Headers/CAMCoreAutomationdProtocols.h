@@ -1,0 +1,61 @@
+//
+//  CAMCoreAutomationdProtocols.h
+//  CoreAutomation
+//
+//  Umbrella header for coreautomationd protocols.
+//
+//  Created by Chris Whitney on 3/8/12.
+//  Copyright (c) 2012 Apple Inc. All rights reserved.
+//
+
+#import "CAMRemotingKeys.h"
+#import "CAMReturnValues.h"
+
+#import "CAMAccessibility.h"
+#import "CAMAWDL.h"
+#import "CAMAddressBook.h"
+#import "CAMArchive.h"
+#import "CAMC26.h"
+#import "CAMCapabilities.h"
+#import "CAMCarPlay.h"
+#import "CAMSharing.h"
+#import "CAMCoreLocation.h"
+#import "CAMCoreMotion.h"
+#import "CAMCoreRoutine.h"
+#import "CAMCoreTelephony.h"
+#import "CAMDevice.h"
+#import "CAMExternalAccessory.h"
+#import "CAMFaceTime.h"
+#import "CAMGameController.h"
+#import "CAMGraphicsUtilities.h"
+#import "CAMHID.h"
+#import "CAMHomeKit.h"
+#import "CAMiCloud.h"
+#import "CAMPassbook.h"
+#import "CAMIdentityServices.h"
+#import "CAMImageTech.h"
+#import "CAMiMessage.h"
+#import "CAMContacts.h"
+#import "CAMLocaleUtilities.h"
+#import "CAMMediaPlayer.h"
+#import "CAMMediaLibrary.h"
+#import "CAMMediaRemote.h"
+#import "CAMMesa.h"
+#import "CAMMobileBluetooth.h"
+#import "CAMMultipeerConnectivity.h"
+#import "CAMNearField.h"
+#import "CAMMobileSafari.h"
+#import "CAMNetworking.h"
+#import "CAMSettings.h"
+#import "CAMShell.h"
+#import "CAMSpringBoard.h"
+#import "CAMStoreServices.h"
+#import "CAMAssistantServices.h"
+#import "CAMSystem.h"
+#import "CAMTelephonyUtilities.h"
+#import "CAMVPN.h"
+#import "CAMWiFi.h"
+#import "CAMObliteration.h"
+#import "CAMWirelessProximity.h"
+#import "CAMAsync.h"
+#import "CAMSimpleAutomationProtocol.h"

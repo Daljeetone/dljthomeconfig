@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>RestoreOptions</key>
+	<dict>
+		<key>AllowBasebandRollbacks</key>
+		<true/>
+		<key>AllowUntetheredRestore</key>
+		<false/>
+		<key>AuthInstallEnableSso</key>
+		<true/>
+		<key>AuthInstallSigningServerURL</key>
+		<string>https://gs.apple.com:443</string>
+		<key>AuthInstallVariant</key>
+		<string>Internal Development</string>
+		<key>AutoBootDelay</key>
+		<integer>5</integer>
+		<key>AutoPersonalizeBaseband</key>
+		<true/>
+		<key>ClearNVRAM</key>
+		<false/>
+		<key>ClearPersistentBootArgs</key>
+		<false/>
+		<key>CloseModemTickets</key>
+		<false/>
+		<key>CreateFactoryRestoreMarker</key>
+		<false/>
+		<key>CreateFilesystemPartitions</key>
+		<true/>
+		<key>DataEncryptionType</key>
+		<string>Device Default</string>
+		<key>EncryptDataPartition</key>
+		<true/>
+		<key>FlashNOR</key>
+		<true/>
+		<key>ForceBasebandUpdate</key>
+		<true/>
+		<key>FormatForLwVM</key>
+		<true/>
+		<key>IgnoreBadStaticEEPBackup</key>
+		<false/>
+		<key>IsLegacy</key>
+		<false/>
+		<key>LetBatteryCharge</key>
+		<true/>
+		<key>MinimumBatteryVoltage</key>
+		<integer>0</integer>
+		<key>PostRestoreAction</key>
+		<string>Reboot</string>
+		<key>ReadOnlyRootFilesystem</key>
+		<false/>
+		<key>RestoreBootArgs</key>
+		<string>debug=0x14e serial=3 rd=md0 nand-enable-reformat=1 -progress</string>
+		<key>RestoreBundlePath</key>
+		<string>nfs://ifscluster4/ifs/Images/iOSRestoreImages/Innsbruck/CurrentInnsbruck</string>
+		<key>ShouldRestoreSystemImage</key>
+		<true/>
+		<key>SystemPartitionSize</key>
+		<integer>0</integer>
+		<key>UncollectedLogsAction</key>
+		<string>Ignore</string>
+		<key>UpdateBaseband</key>
+		<true/>
+		<key>UpdateGasGauge</key>
+		<true/>
+		<key>UpdateStaticEEPOnly</key>
+		<false/>
+		<key>WaitForStorageDevice</key>
+		<true/>
+		<key>WipeStorageDevice</key>
+		<false/>
+	</dict>
+	<key>Version</key>
+	<integer>2</integer>
+</dict>
+</plist>

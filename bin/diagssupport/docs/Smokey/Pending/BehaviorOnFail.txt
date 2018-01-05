@@ -1,0 +1,49 @@
+Changes to Smokey manual:
+
+The Lua function denoted by "FailScript" will be invoked when a failure is
+detected in the sequence.  This happens for all values of "BehaviorOnFail",
+including "KeepGoing".
+
+New Text:
+
+The "BehaviorOnFail" property controls the way Smokey handles the remainder of
+a test sequence when a failure is encountered.  Four values are defined:
+
+	- KeepGoing - Ignore the failure and continue the rest of the
+	  sequence.  No failure is propogated to the parent test.
+	- StopAfterFailedAction - Stop the current test immediately and
+	  propogate the failure upwards.
+	- StopAfterFailedIteration - Execute the remaining items in the
+	  current iteration.  Afterwards, stop the current test and propogate
+	  the failure upwards.
+	- StopAfterFailedTest - Execute the remainder of the current iteration
+	  and complete the remaining iterations.  Afterwards, propogate the
+	  failure upwards.
+
+Tests that define the "ActionToExecute" property but not the "Tests" property
+will behave identically for "StopAfterFailedAction" and
+"StopAfterFailedIteration".  For either value, Smokey stops the test
+immediately and notifies the parent test of the failure.  There are effectively
+only three behaviors.
+
+Tests that define the "Tests" property have four distinct failure behaviors, as
+described above.  After each subtest immediately defined in the "Tests" array,
+Smokey acts upon subtest failure according to "BehaviorOnFail".  Developers
+have the option of stopping the test immediately, deferring the stop until the
+end of the current iteration through "Tests", or running the testing to
+completion.  In all three cases, the failure will be reported to the parent
+test so that it can respond according to its "BehaviorOnFail".  A fourth option
+is to complete testing without propogating the failure upwards.
+
+The "BehaviorOnFail" property is inherited.  The required definition at the
+root of the test sequence sets the default failure behavior of all tests.
+Individual tests that specify their own "BehaviorOnFail" can override the
+inherited value and set the failure behavior for themselves as well as all
+tests beneath them.
+
+The test sequence definition can locally override the inherited value of
+"BehaviorOnFail" with the "ThisBehaviorOnFail" property, whose values and
+meanings exactly match thsoe of "BehaviorOnFail".  The override applies only to
+the test that defines it and it is not inherited.  Both "BehaviorOnFail" and
+"ThisBehaviorOnFail" may be defined in the same test to set different behaviors
+for parent and child tests in the sequence.

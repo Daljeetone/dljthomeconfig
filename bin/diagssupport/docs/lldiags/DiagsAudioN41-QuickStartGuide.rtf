@@ -1,0 +1,480 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1038\cocoasubrtf360
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww25100\viewh21840\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b\fs30 \cf0 N41 Sample Audio Command Sequence
+\b0\fs24 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 General usage:\
+\
+audio --reset			: Resets the audio subsystem as whole, including clearing routes, volumes, parameters\
+audio --listblocks			: Lists all the blocks in the system\
+routeaudio --listports		: Lists all the ports in the system\
+audioparam --listtypes		: Lists all the param types in the system\
+audioparam --listvalues		: Lists all the param values in the system\
+processaudio --listbuffers	: Lists all the audio buffers available in the system\
+playaudio -u [buffername]	: Use audio buffer "buffername" during playback - useful for playing back processed/recorded data\
+playaudio -f [filename]		; Play out WAVE file on the filesystem\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i \cf0 1. Initial setup (doesn't have to be run again for each of the tests below)
+\i0\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --reset
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 > Playing out audio\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i0\b0 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 1. I2S0 -> L19 Speaker
+\i0\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock speaker\
+routeaudio --route --block speaker --in spk-i2s --out spk-out\
+playaudio -b soci2s -p ap-i2s2 -l 500\
+
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 2. I2S0 -> ASP (L65) -> Headphone
+\i0\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 -l 500
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 3. MCA0 (I2S4) -> VSP (L65) -> Headphone
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+playaudio -b socmca -p ap-mca0 -l 500
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 4. I2S0 -> ASP (L65) -> AO1
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out ao1\
+playaudio -b soci2s -p ap-i2s0 -l 500
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 5. MCA0 (I2S4) -> VSP (L65) -> AO1
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in vsp[1:0] --out ao1\
+playaudio -b socmca -p ap-mca0 -l 500\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 < Recording in audio
+\i0\b0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 6. MIC2 -> ASP (L65) -> I2S0, then playback recorded data through HP\ul \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 \ulnone audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out asp[1:0]\
+recordaudio -b soci2s -p ap-i2s0\
+routeaudio --route --block codec --in asp[1:0] --out hp\
+playaudio -b soci2s -p ap-i2s0 -u record0
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 \
+7. MIC2 -> VSP (L65) -> MCA0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out vsp[1:0]\
+recordaudio -b socmca -p ap-mca0\
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+playaudio -b socmca -p ap-mca0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 8. MIC3 -> ASP (L65) -> I2S0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic3 --out asp[1:0]\
+recordaudio -b soci2s -p ap-i2s0\
+routeaudio --route --block codec --in asp[1:0] --out hp\
+playaudio -b soci2s -p ap-i2s0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 9. MIC3 -> VSP (L65) -> MCA0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic3 --out vsp[1:0]\
+recordaudio -b socmca -p ap-mca0\
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+playaudio -b socmca -p ap-mca0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 10. MIC4 -> ASP (L65) -> I2S0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic4 --out asp[1:0]\
+recordaudio -b soci2s -p ap-i2s0\
+routeaudio --route --block codec --in asp[1:0] --out hp\
+playaudio -b soci2s -p ap-i2s0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 11. MIC4 -> VSP (L65) -> MCA0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic4 --out vsp[1:0]\
+recordaudio -b socmca -p ap-mca0\
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+playaudio -b socmca -p ap-mca0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 12. LINEIN -> ASP (L65) -> I2S0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in linein --out asp[1:0]\
+recordaudio -b soci2s -p ap-i2s0\
+routeaudio --route --block codec --in asp[1:0] --out hp\
+playaudio -b soci2s -p ap-i2s0 -u record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 13. LINEIN -> VSP (L65) -> MCA0, then playback recorded data through HP
+\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in linein --out vsp[1:0]\
+recordaudio -b socmca -p ap-mca0\
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+playaudio -b socmca -p ap-mca0 -u record0\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 < Doing full-duplex audio\
+\
+1. (ASP -> ASP, then playing recorded data through HP)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec \
+routeaudio --route --block codec --in asp --out asp\
+loopaudio --block soci2s --txport ap-i2s0 --rxport ap-i2s0\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 -u looprx0
+\f0\i\b \
+\
+2. (ASP -> HP and MIC2 -> ASP, then playing recorded data through HP)\
+
+\f1\i0\b0 audio --resetblock codec \
+routeaudio --route --block codec --in asp --out hp\
+routeaudio --route --block codec --in mic2 --out asp\
+loopaudio --block soci2s --txport ap-i2s0 --rxport ap-i2s0\
+playaudio -b soci2s -p ap-i2s0 -u looprx0
+\f0\i\b \
+\
+3. (MCA) (VSP->HP, MIC2->VSP, then playing recorded data through HP)\
+
+\f1\i0\b0 audio --resetblock codec \
+routeaudio --route --block codec --in vsp[1:0] --out hp\
+routeaudio --route --block codec --in mic2 --out vsp[1:0]\
+loopaudio --block socmca --txport ap-mca0 --rxport ap-mca0\
+playaudio -b socmca -p ap-mca0 -u looprx0
+\f0\i\b \
+\
+> Playing out different samples rates (only working on L65)\
+\
+1. Playing out 8Khz tone\
+
+\f1\i0\b0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 --rate 8000\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 1. Playing out 8Khz file\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 --file tone8khz.wav\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 > Playing/Recording/Looping out different samples rates (only working on L65)\
+\
+1. Playing out 8Khz tone\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 --rate 8000\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 2. Playing out 8Khz file\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 --file tone8khz.wav\
+
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 3. Recording in 8Khz, and saving to file\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out asp\
+recordaudio -b soci2s -p ap-i2s0 --rate 8000\
+processaudio --writebuffer record0 --writefile test.wav\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 3. Loop audio at 32Khz\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out asp\
+routeaudio --route --block codec --in asp --out hp\
+loopaudio -b soci2s -p ap-i2s0 -x ap-i2s0 -r 32000\
+
+\f0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 > Playing/Recording/Looping different bit depths (working on both L65/L19)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i0\b0 \cf0 Both however, only support either 16-bit or 24-bit audio.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 1. Playing out 24-bit audio\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in asp --out hp\
+playaudio -b soci2s -p ap-i2s0 --bitdepth 24
+\f0\i\b \
+\
+1. Recording 24-bit audio\
+
+\f1\i0\b0 audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out asp\
+recordaudio -b soci2s -p ap-i2s0 --bitdepth 24\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 1. Loopaudio'ing 24-bit audio\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 audio --resetblock codec\
+routeaudio --route --block codec --in mic2 --out asp\
+routeaudio --route --block codec --in asp --out hp\
+loopaudio -b soci2s -p ap-i2s0 -x ap-i2s0 --bitdepth 24\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 \
+< Setting/Getting Volumes\
+\
+1. Getting all volumes\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 getvol\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 1. Getting all volumes in a block\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 getvol --block codec\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 \
+2. Getting a specific volume\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 getvol --block codec --volume adc1a-pga\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 3. Getting a specific volume (with more verbosity - the verbose flag can be used any time)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 getvol --block codec --volume adc1a-pga --verbose\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 3. Setting a volume (units are in dB)\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 setvol --block codec --volume adc1a-pga --value 12\
+
+\f0 \
+The test layer will warn you if the value that was actually set in the HW is slightly different from what you requested (due to rounding, step sizes etc).\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i\b \cf0 < Diag OK\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\i0\b0 \cf0 All commands now show "OK" after successful completion - all errors are flagged with "ERROR".\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 < Processaudio\
+\
+1. Writing recordaudio's contents to a file\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 To write to a file, you have to use "processaudio" and select a buffer for writing. There are a few major classes of buffers available in the system:\
+"play" - Buffers generated by playaudio\
+"record" - Buffers generated by recordaudio\
+"looprx" - Buffers generated on the RX side by loopaudio\
+"looptx" - Buffers generated on the TX side by loopaudio\
+"process" - Buffers generated by filters in processaudio\
+\
+E.g\
+
+\f1 processaudio --writefile output.wav --writebuffer record0
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 2. Listing all buffers\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 processaudio --listbuffers
+\f0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 2. Clearing out all buffers\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 processaudio --freebufs all
+\f0 \
+
+\f1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 3. Clearing out just playaudio's buffers\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 processaudio --freebufs play*
+\f0 \
+
+\f1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 4. Clearing out a specific buffer\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 processaudio --freebufs play0\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 < L19 Voltage Data\
+\
+1. To list all filters in the system\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\i0\b0 \cf0 processaudio --listfilters
+\f0\i\b \
+\
+2. Voltage/Current Data retrieval
+\i0\b0 \
+\
+To get the voltage/current data from L19, loopaudio has to be run in 24-bit mode. Then, the received buffer has to be pass through the L19 filter.\
+
+\f1 audio --resetblock speaker\
+routeaudio --route --block speaker --in spk-i2s --out spk-out\
+loopaudio --block soci2s --txport ap-i2s2 --rxport ap-i2s2 --bitdepth 24 \
+processaudio --filter CS35L19 --inbufs looprx0 --options "--bins 30"\
+\
+
+\f0 Note that options can be passed into the filter, specifically the number of bins to divide the received data into, as well as viewing the data in raw form. \
+The options for each filter can be found by doing the "processaudio --listfilters" command.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b \cf0 < AudioParam\
+\
+1. Listing all values of parameters in the system\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f1\b0 \cf0 audioparam --listvalues
+\f0 \
+
+\f1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\b \cf0 < Retrieving WAV files from the unit\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\b0 \cf0 1. Ensure you have the DFUSlurper app running on your Mac\
+2. On the target, run:\
+
+\f1 dfufile --read \\AppleInternal\\Diags\\AudioTests\\N41\\output.wav --dest /\
+
+\f0 \
+(if output.wav is what you want to send over to the Mac)\
+3. DFUSlurper should automatically start downloading it to your Mac - depending on the folder you've setup, it should download it to that location
+\f1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
+
+\f0\i\b \cf0 \
+\
+\
+\
+\
+}
