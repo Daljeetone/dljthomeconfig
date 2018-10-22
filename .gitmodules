@@ -1,9 +1,6 @@
 [submodule ".vim/bundle/Vundle.vim"]
 	path = .vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
-[submodule "bin/arcanist"]
-	path = bin/arcanist
-	url = https://gitlab.sd.apple.com/hwte-build-engineering/arcanist.git
-[submodule "bin/libphutil"]
-	path = bin/libphutil
-	url = https://gitlab.sd.apple.com/hwte-build-engineering/libphutil.git
+[submodule ".fzf"]
+	path = .fzf
+	url = https://github.com/junegunn/fzf.git

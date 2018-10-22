@@ -161,7 +161,7 @@ set encoding=utf-8
 nmap <F8> :TagbarToggle<CR>
 
 set runtimepath^=~/.vim/bundle/cscope_maps.vim
-set runtimepath^=/usr/local/opt/fzf/
+set runtimepath^=~/.fzf/
 source ~/.vim/bundle/cscope_maps.vim/cscope_maps.vim
 
 nmap <C-F> :Files<CR>

@@ -1,6 +1,0 @@
-framework module CoreAutomation {
-  umbrella header "CoreAutomation.h"
-
-  export *
-  module * { export * }
-}
