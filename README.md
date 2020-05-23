@@ -1,3 +1,4 @@
 # My Space
 
-Don't forget to do ~/.fzf/install after doing a clone + copy to ~
+The repository contains shared config for vim and neovim.
+Simply run the "install.sh" script and enjoy...

@@ -21,17 +21,12 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
 
-" Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
-
 " Avoid a name conflict with L9
 " Plugin 'user/L9', {'name': 'newL9'}
 
 Plugin 'https://github.com/ctrlpvim/ctrlp.vim'
 
 Plugin 'scrooloose/nerdtree'
-
-Plugin 'jistr/vim-nerdtree-tabs'
 
 Plugin 'vim-airline/vim-airline'
 
