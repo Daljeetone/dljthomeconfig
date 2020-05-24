@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install curl
+
 #Install Node.js, needed to run coc.nvim
 curl -sL install-node.now.sh/lts | sudo bash
 
