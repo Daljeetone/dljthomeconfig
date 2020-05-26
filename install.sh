@@ -16,6 +16,7 @@ echo "Neovim config dir located at:$NEOVIM_CONFIG_DIR"
 
 cp -r "$CONFIG_SRC_DIR/.vim" "$HOME/"
 cp -r "$CONFIG_SRC_DIR/.vimrc" "$HOME/"
+cp -r "$CONFIG_SRC_DIR/.coc.vim" "$HOME/"
 cp -r "$CONFIG_SRC_DIR/.fzf" "$HOME/"
 
 pushd ~/.fzf
