@@ -2,6 +2,14 @@
 
 The repository contains shared config for vim and neovim.
 
+If you build NVIM from source, do this:
+" sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+" sudo update-alternatives --config vi
+" sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+" sudo update-alternatives --config vim
+" sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+" sudo update-alternatives --config editor
+
 Run the "install.sh" script first.
 
 If you do not want to use autocompletion features (Language Server Plugin),
