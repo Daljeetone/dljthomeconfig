@@ -87,4 +87,5 @@ export PATH=$PATH:"/home/daljeet/.config/coc/extensions/coc-clangd-data/install/
 | `ctrl` + `i` | Go forward |
 | `space` + `s` | Search for symbol (fuzzy) |
 | `ctrl` + `a` | Grep |
+| `<F8>` | Open/Close Sidebar with Symbols |
 
