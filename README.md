@@ -51,7 +51,8 @@ Open Vim and execute the following command, do not worry about the errors that s
 
 ## Install Language Server Extensions for Vim (On demand)
 
-For each language server you want to use, install the coc plugin for it 
+For each language server you want to use, install the coc plugin for it.
+
 Open Vim and execute:
 
 `:CocInstall coc-clangd`   #C/C++
