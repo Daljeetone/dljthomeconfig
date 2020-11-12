@@ -25,8 +25,6 @@ sudo luarocks build mpack
 sudo luarocks build lpeg
 sudo luarocks build inspect
 
-
-
 make CMAKE_BUILD_TYPE=RelWithDebInfo
 sudo make install
 
@@ -55,8 +53,10 @@ Open Vim and execute the following command, do not worry about the errors that s
 
 For each language server you want to use, install the coc plugin for it 
 Open Vim and execute:
+
 `:CocInstall coc-clangd`   #C/C++
+
 `:CocInstall coc-go`       #Go
+
 `:CocInstall coc-rls`      #Rust
-)
 
