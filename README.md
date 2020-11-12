@@ -58,13 +58,16 @@ Open Vim and execute:
 
 ### C/C++
 
-Open any .c or .cpp file and execute the following commands (Important, refer: [](https://github.com/clangd/coc-clangd/issues/61))
-
 `:CocInstall coc-clangd`  # Install clangd-plugin
+
+Open any .c or .cpp file and execute the following command (It is imperative to open a source file, refer: <https://github.com/clangd/coc-clangd/issues/61>)
+
 `:CocCommand clangd.install`  # Install clangd
 
-The above commands install clangd under `~/.config/coc/extensions/coc-clangd-data/install/<version>/clangd_<version>/bin`
-You need to add the above path to the `$PATH` environment variable permanently, preferably in `~/.bashrc`.
+The above command installs clangd under `~/.config/coc/extensions/coc-clangd-data/install/<version>/clangd_<version>/bin`.
+
+You need to add the above path to the `$PATH` environment variable, preferably in `~/.bashrc` to ensure it is persistent.
+
 Example:
 ```
 export PATH=$PATH:"/home/daljeet/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin"
@@ -76,7 +79,13 @@ export PATH=$PATH:"/home/daljeet/.config/coc/extensions/coc-clangd-data/install/
 ### Rust
 `:CocInstall coc-rls`
 
+### Other languages
+
+Just try `:CocInstall coc-<language_name>`, and it will most likely work.
+
 ## Usage
+
+You can use the following key-combinations, regardless of the language of the program
 
 | Key | Action |
 | ---------- | ---------- |
