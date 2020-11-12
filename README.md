@@ -1,6 +1,7 @@
 # My Space
 
-The repository contains shared config for vim and neovim.
+The repository contains shared config for Vim and Neovim.
+Before proceeding, back up your existing Vim configuration if you need because it will be replaced with the one in this repo.
 
 ## Clone this repository recursively
 
@@ -12,7 +13,7 @@ git clone --recursive git@github.com:Daljeetone/dljthomeconfig.git
 
 The language server plugin (coc.nvim) needs vim >= `8.1.1719` and neovim >= `0.4.3` to support features like popup and text property.
 
-Currently, Ubuntu 18:04 does not have the required minimum version of Vim/Neovim in its PPA repositories and therefore we need to install it manually. I prefer Neovim over regular Vim so the instructions to install latest Neovim are as follows:
+Currently, Ubuntu 18:04 does not have the required minimum version of Vim/Neovim in its PPA repositories and therefore we need to install it manually. I prefer Neovim over regular Vim, so the instructions to install latest Neovim are as follows:
 
 ```
 git clone https://github.com/neovim/neovim.git
@@ -36,7 +37,7 @@ sudo update-alternatives --install /usr/bin/editor editor $(which nvim) 60
 sudo update-alternatives --config editor
 ```
 
-## Copy configuration files, download and install utilities (fzf, clangd, nodejs) required by language server
+## Copy configuration files, download and install utilities (fzf, nodejs, etc.) required by language server
 
 ```
 ./install-tools.sh
@@ -55,11 +56,25 @@ For each language server you want to use, install the coc plugin for it.
 
 Open Vim and execute:
 
-`:CocInstall coc-clangd`   #C/C++
+### C/C++
 
-`:CocInstall coc-go`       #Go
+Open any .c or .cpp file and execute the following commands (Important, refer: [](https://github.com/clangd/coc-clangd/issues/61))
 
-`:CocInstall coc-rls`      #Rust
+`:CocInstall coc-clangd`  # Install clangd-plugin
+`:CocCommand clangd.install`  # Install clangd
+
+The above commands install clangd under `~/.config/coc/extensions/coc-clangd-data/install/<version>/clangd_<version>/bin`
+You need to add the above path to the `$PATH` environment variable permanently, preferably in `~/.bashrc`.
+Example:
+```
+export PATH=$PATH:"/home/daljeet/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin"
+```
+
+### Go
+`:CocInstall coc-go`
+
+### Rust
+`:CocInstall coc-rls`
 
 ## Usage
 
