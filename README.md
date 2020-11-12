@@ -61,3 +61,15 @@ Open Vim and execute:
 
 `:CocInstall coc-rls`      #Rust
 
+## Usage
+
+| Key | Action |
+| ---------- | ---------- |
+| `ctrl` + `f` | Find files (fuzzy) |
+| `g` + `d` | Go to definition |
+| `g` + `r` | Go to references |
+| `ctrl` + `o` | Go back |
+| `ctrl` + `i` | Go forward |
+| `space` + `s` | Search for symbol (fuzzy) |
+| `ctrl` + `a` | Grep |
+
