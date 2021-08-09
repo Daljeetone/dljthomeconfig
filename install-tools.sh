@@ -18,8 +18,12 @@ cp -r "$CONFIG_SRC_DIR/.vim" "$HOME/"
 cp -r "$CONFIG_SRC_DIR/.vimrc" "$HOME/"
 cp -r "$CONFIG_SRC_DIR/.coc.vim" "$HOME/"
 cp -r "$CONFIG_SRC_DIR/.fzf" "$HOME/"
+cp -r "$CONFIG_SRC_DIR/.set-title.sh" "$HOME/"
 
-pushd ~/.fzf
+grep --quiet ".set-title.sh" ~/.bashrc ||
+  echo "source $HOME/.set-title.sh" >> "$HOME/.bashrc"
+
+pushd ~/.fzf || exit
 ./install
 popd
 
@@ -35,7 +39,7 @@ sudo npm install -g yarn
 
 CONFIG_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-pushd "$HOME/.vim/bundle/coc.nvim"
+pushd "$HOME/.vim/bundle/coc.nvim" || exit
 
 yarn install --frozen-lockfile
 
