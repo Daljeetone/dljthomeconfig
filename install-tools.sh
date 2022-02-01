@@ -27,15 +27,17 @@ pushd ~/.fzf || exit
 ./install
 popd
 
-sudo apt install silversearcher-ag
+# ToDo: Install brew
 
-sudo apt install curl
+brew install the_silver_searcher
 
 #Install Node.js, needed to run coc.nvim
-curl -sL install-node.now.sh/lts | sudo bash
+brew install node
+
+export PATH=${PATH}:/usr/local/bin/
 
 #Install Yarn Package Manager needed to build coc.nvim
-sudo npm install -g yarn
+npm install -g yarn
 
 CONFIG_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
