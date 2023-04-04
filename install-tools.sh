@@ -37,7 +37,7 @@ curl -sL install-node.now.sh/lts | sudo bash
 #Install Yarn Package Manager needed to build coc.nvim
 sudo npm install -g yarn
 
-CONFIG_SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+vim +PluginInstall +qall
 
 pushd "$HOME/.vim/bundle/coc.nvim" || exit
 
@@ -47,5 +47,5 @@ popd
 echo "set completion-ignore-case On" > "$HOME/.inputrc"
 
 echo ""
-echo -e "\e[32m"You should open Vim and do ":PluginInstall" "\e[0m"
-echo "Refer to README for further instructions after doing :PluginInstall"
+echo -e "\e[32m" Your Vim configuration is complete. "\e[0m"
+echo "Refer to README for further instructions to set up language support"

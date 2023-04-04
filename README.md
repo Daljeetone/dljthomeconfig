@@ -43,13 +43,6 @@ sudo update-alternatives --config editor
 ./install-tools.sh
 ```
 
-## Install the Vim plugins
-
-Open Vim and execute the following command, do not worry about the errors that show up when opening Vim.
-```
-:PluginInstall
-```
-
 ## Install Language Server Extensions for Vim (On demand)
 
 For each language server you want to use, install the coc plugin for it.
