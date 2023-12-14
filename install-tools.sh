@@ -27,9 +27,9 @@ pushd ~/.fzf || exit
 ./install
 popd
 
-sudo apt install silversearcher-ag
+sudo dnf install the_silver_searcher
 
-sudo apt install curl
+sudo yum install curl
 
 #Install Node.js, needed to run coc.nvim
 curl -sL install-node.now.sh/lts | sudo bash
