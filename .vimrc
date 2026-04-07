@@ -157,13 +157,15 @@ if has('langmap') && exists('+langnoremap')
 	set langnoremap
 endif
 
-source ~/.coc.vim
+if exists('g:coc_global_extensions') || !has('vim_starting') || filereadable(expand('~/.vim/bundle/coc.nvim/autoload/coc.vim'))
+  source ~/.coc.vim
+endif
 
 " My Key mappings and default settings
 set number
 set tabstop=4 shiftwidth=4 expandtab
 set scrolloff=10
-colorscheme jellybeans
+silent! colorscheme jellybeans
 set encoding=utf-8 
 
 nmap <F8> :TagbarToggle<CR>
