@@ -124,6 +124,18 @@ fi
 grep --quiet ".set-title.sh" "$SHELL_RC" 2>/dev/null ||
   echo "source $HOME/.set-title.sh" >> "$SHELL_RC"
 
+# --- Word navigation with Alt+Left/Right arrow keys (zsh only) ---
+if [ "$(basename "$SHELL")" = "zsh" ]; then
+    if ! grep --quiet 'backward-word' "$SHELL_RC" 2>/dev/null; then
+        cat >> "$SHELL_RC" << 'EOF'
+
+# Word navigation with Alt+Left/Right arrow keys
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
+EOF
+    fi
+fi
+
 # --- Install fzf ---
 pushd ~/.fzf || exit
 ./install --all
